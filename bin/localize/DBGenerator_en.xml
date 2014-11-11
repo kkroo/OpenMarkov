@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+  <DBGenerator>
+    <Label value="Database generator"/>
+    <IncorrectFileFormat value="Unsupported data file format.&#xA;Supported formats are: .elv y .xml" />
+    <UnableToLoadNet value="Unable to load net." />
+    <Open value="Open" />
+    <ChooseNet value="Choose Net" />
+    <TakeOpenModelNet value="Use net already opened in OpenMarkov" />
+    <Net value="Net:" />
+    <Finished value="Database generated successfully." />
+    <Cancel value="Cancel" />
+    <Ok value="OK" />
+    <Error value="Error during DB generation" />
+    <Generate value="Generate" />
+    <CaseFile value="Case file" />
+    <Title value="OpenMarkov - DBGenerator" />
+    <Database value="Database" />
+    <LoadNetFromFile value="Load Net from file" />
+    <IncorrectCaseDatabaseFileFormat value="Unsupported data file format.&#xA;Supported formats are: .dbc, .arff  y.xls" />
+  </DBGenerator>
+</properties>
+

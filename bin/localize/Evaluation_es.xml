@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+  <Evaluation>
+    <Net value="Red:" />
+    <EvidenceVariablesNotInDB value="Al menos una de las variables elegidas como evidencia no está en la base de datos" />
+    <TakeOpenModelNet value="Usar red abierta en OpenMarkov" />
+    <Open value="Abrir" />
+    <Cancel value="Cancelar" />
+    <ClassVariables value="Variables de clase" />
+    <HiddenVariables value="Variables ocultas" />
+    <EvidenceVariables value="Variables de evidencia" />
+    <Error value="Error durante la evaluación" />
+    <NoClassVariable value="No ha seleccionado ninguna variable de clase " />
+    <LoadNetFromFile value="Cargar red desde fichero" />
+    <Evaluate value="Evaluar" />
+    <Variables value="Variables" />
+    <CaseFile value="Fichero de casos" />
+    <UnableToLoadNet value="No se puede abrir la red." />
+    <IncorrectCaseDatabaseFileFormat value="Formato de fichero de casos no soportado.&#xA;Los formatos soportados son: .dbc, .arff  y.xls" />
+    <IncorrectFileFormat value="Formato de fichero de red no soportado.&#xA;Los formatos soportados son: .elv y .xml" />
+    <Ok value="Aceptar" />
+    <Title value="OpenMarkov - Evaluación" />
+    <ClassVariablesNotInDB value="Al menos una de las variables elegidas como variable de clase no está en la base de datos" />
+    <ChooseNet value="Elegir Red" />
+    <Database value="Base de datos" />
+  </Evaluation>
+</properties>
+

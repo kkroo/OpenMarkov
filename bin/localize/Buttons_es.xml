@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+  <StandardDomain>
+    <Text>
+      <Mnemonic value="d" />
+      <Label value="Dominios estándar" />
+    </Text>
+  </StandardDomain>
+  <Apply>
+    <Text>
+      <Label value="Aplicar" />
+      <Mnemonic value="a" />
+    </Text>
+  </Apply>
+  <Up>
+    <Text>
+      <Label value="Subir" />
+      <Mnemonic value="s" />
+    </Text>
+  </Up>
+  <Ok>
+    <Text>
+      <Mnemonic value="a" />
+      <Label value="Aceptar" />
+    </Text>
+  </Ok>
+  <Cancel>
+    <Text>
+      <Mnemonic value="c" />
+      <Label value="Cancelar" />
+    </Text>
+  </Cancel>
+  <InfinitePositive>
+    <Text>
+      <Label value="Insertar infinito positivo" />
+    </Text>
+  </InfinitePositive>
+  <Add>
+    <Text>
+      <Label value="Añadir" />
+      <Mnemonic value="ñ" />
+    </Text>
+  </Add>
+  <BUNDLEFILE>
+    <Text value="Español" />
+  </BUNDLEFILE>
+  <Copy>
+    <Text>
+      <Mnemonic value="c" />
+      <Label value="Copiar" />
+    </Text>
+  </Copy>
+  <Clear>
+    <Text>
+      <Mnemonic value="l" />
+      <Label value="Limpiar" />
+    </Text>
+    <Text value="Limpiar" />
+  </Clear>
+  <Delete>
+    <Text>
+      <Label value="Borrar" />
+      <Mnemonic value="b" />
+    </Text>
+  </Delete>
+  <InfiniteNegative>
+    <Text>
+      <Label value="Insertar infinito negativo" />
+    </Text>
+  </InfiniteNegative>
+  <Down>
+    <Text>
+      <Mnemonic value="j" />
+      <Label value="Bajar" />
+    </Text>
+  </Down>
+</properties>
+

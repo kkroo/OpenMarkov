@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+  <Learning>
+    <Ok value="OK" />
+    <Discretize>
+      <SameWidth value="Equal width intervals" />
+      <SameFreq value="Equal frequency intervals" />
+      <NoDiscretize value="Do not discretize" />
+      <ModelNet value="Use model network" />
+    </Discretize>
+    <CaseFile value="Database" />
+    <MissingValues>
+      <KeepMissing value="Keep records with missing values" />
+      <Eliminate value="Erase records with missing values" />
+    </MissingValues>
+    <Open value="Open" />
+    <Algorithm value="Algorithm" />
+    <ModelNetUseOnlyPositions value="Use the information of the nodes" />
+    <AllowLinkRemoval value="Allow link removal" />
+    <Alpha>
+      <Error value="A numeric value between 0 and 1 must be introduced for the alpha parameter." />
+      <Tooltip value="Alpha parameter used during the structural learning.&#xA;Its value must be inside the interval [0, 1].&#xA;A value of 1 corresponds to the Laplace correction.&#xA;A value of 0 implies using no correction.&#xA;" />
+    </Alpha>
+    <UseModelNetVariables value="Use only the variables in the model network" />
+    <PC>
+      <SignificanceLevel value="Significance Level">
+        <Tooltip value="Significance Level" />
+      </SignificanceLevel>
+      <Title value="PC algorithm: Options" />
+      <IndependenceTest>
+        <Short value="Indep. test" />
+      </IndependenceTest>
+      <IncorrectParameter value="A numerical value between 0 and 1 must be entered for the alpha parameter and the accuracy degree." />
+      <CrossEntropy value="Cross entropy" />
+      <IndependenceTest value="Independence test" />
+    </PC>
+    <Interactive>
+      <BlockedEdits value="Blocked edits" />
+      <Score value="Score" />
+      <Undo value="Undo" />
+      <EditDescription value="Edit description" />
+      <BlockEdit value="Block edit" />
+      <ApplyEdit value="Apply edit" />
+      <UnblockEdit value="Unblock edit" />
+      <NextPhase value="Complete phase">
+        <ToolTip value="Runs the algorithm until the end of the current phase"/>
+      </NextPhase>
+      <OnlyPositiveEdits value="Only positive edits" />
+      <OnlyAllowedEdits value="Only allowed edits" />
+      <Redo value="Redo" />
+      <PValue value="p-value" />
+      <Run value="Finish">
+        <ToolTip value="Launches the algorithm from the current state"/>
+      </Run>
+      <ShowBlocked value="Show blocked" />
+      <Title value="Interactive learning" />
+      <Motivation value="Motivation" />
+    </Interactive>
+    <LearningType value="Learning type" />
+    <Intervals value="Number of intervals:" />
+    <IncorrectFileFormat value="Unsupported data file format.&#xA;Supported formats are: .elv y .xml" />
+    <LoadModelNetFromFile value="Load model network from file" />
+    <LearningFinished value="&#xA; * Learning finished.&#xA;&#x9; Ellapsed time: " />
+    <Title value="OpenMarkov - Learning" />
+    <LearnNet value="Learn" />
+    <UseAllVariables value="Use all variables" />
+    <ChooseModelNet value="Choose Model Net" />
+    <ErrorPreprocessing value="Error during the preprocessing" />
+    <NoOpenNet value="There is no open net" />
+    <SelectAllVariables value="Select / unselect all variables" />
+    <Interactive value="Interactive learning" />
+    <IncorrectCaseDatabaseFileFormat value="Unsupported data file format.&#xA;Supported formats are: .dbc, .arff  y.xls" />
+    <MustChooseVariables value="The variables to use during learning must be chosen." />
+    <SameIntervalNumber value="Same number of intervals" />
+    <TreatAbsentValues value="Treat missing values:" />
+    <DefaultOption value="Specify for each variable " />
+    <InitialValues value="Reset values" />
+    <Discretization value="Discretization" />
+    <TakeOpenModelNet value="Use the already open network" />
+    <Automatic value="Automatic learning" />
+    <IntervalCount value="Number of intervals" />
+    <Preprocessing value="Preprocessing" />
+    <MustLoadACaseDatabase value="A database must be loaded." />
+    <UnableToLoadModelNet value="Unable to load model network." />
+    <Cancel value="Cancel" />
+    <General value="General   " />
+    <AbsentValues value="Missing values" />
+    <HillClimbing>
+      <Metric value="Metric" />
+      <Title value="Hillclimbing algorithm: Options" />
+    </HillClimbing>
+    <SaveDatabase value="Save database" />
+    <Alpha value="Alpha parameter (Laplace-like correction)" />
+    <AllowLinkInversion value="Allow link inversion" />
+    <DontUseModelNet value="Do not use any model network" />
+    <AllowLinkAddition value="Allow link addition" />
+    <ModelNetUse value="Model network use" />
+    <UseSelectedVariables value="Use selected variables" />
+    <ModelNet value="Model network" />
+    <Error value="Error during learning">
+        <LatentVariables value="The selected algorithm cannot learn with latent variables, please select another algorithm or another model network. This is the list of latent variables" />
+        <OutOfMemory value="OpenMarkov run out of memory while trying to learn the network. Please try again after discretizing the numeric variables."/>
+    </Error>
+    <NetSuffix value="_learned" />
+    <Discretize value="Discretize:" />
+    <NoModelNet value="There is no model network." />
+    <Options value="Options" />
+    <StartFromModelNet value="Start learning from model network"/>
+    <OpenDatabase value="Open dataset" />
+    <Label value="Learning" />
+    <Mnemonic value="l" />
+  </Learning>
+</properties>
+

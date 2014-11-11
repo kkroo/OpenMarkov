@@ -1,0 +1,14 @@
+// $ANTLR : arff.g -> ArffLexerTokenTypes.txt$
+ArffLexer    // output token vocab name
+QUOTATION=4
+COMMA=5
+LEFTB=6
+RIGHTB=7
+WHITE=8
+REMARK=9
+SEPARATOR=10
+IDENT=11
+STRING=12
+RELATION=13
+ATTRIBUTE=14
+DATA=15

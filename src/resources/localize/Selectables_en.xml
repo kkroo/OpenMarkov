@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+  <algorithmRelationType>
+    <ICI-MINCausal>
+      <Text value="ICI-Causal MIN" />
+    </ICI-MINCausal>
+    <Product>
+      <Text value="Product" />
+    </Product>
+    <Table>
+      <Text value="Table" />
+    </Table>
+    <Sum>
+      <Text value="Sum" />
+    </Sum>
+    <ICI-OR>
+      <Text value="ICI-OR" />
+    </ICI-OR>
+    <CycleLengthShift>
+      <Text value="Cycle Length Shift" />
+    </CycleLengthShift>
+    <XOR>
+      <Text value="XOR" />
+    </XOR>
+    <ICI-AND>
+      <Text value="ICI-AND" />
+    </ICI-AND>
+    <Uniform>
+      <Text value="Uniform" />
+    </Uniform>
+    <ICI-Tuning>
+      <Text value="ICI-Tuning" />
+    </ICI-Tuning>
+    <SameAsPrevious>
+      <Text value="Same as previous" />
+    </SameAsPrevious>
+    <Tree_ADD>
+      <Text value="Tree - ADD" />
+    </Tree_ADD>
+    <ICI-MINGeneral>
+      <Text value="ICI-General MIN" />
+    </ICI-MINGeneral>
+    <ICI-MAXCausal>
+      <Text value="ICI-Causal MAX" />
+    </ICI-MAXCausal>
+    <ICI-MAXGeneral>
+      <Text value="ICI-General MAX" />
+    </ICI-MAXGeneral>
+  </algorithmRelationType>
+  <defaultStates>
+    <medium>
+      <Text value="medium" />
+    </medium>
+    <positive>
+      <Text value="positive" />
+    </positive>
+    <moderate>
+      <Text value="moderate" />
+    </moderate>
+    <high>
+      <Text value="high" />
+    </high>
+    <mild>
+      <Text value="mild" />
+    </mild>
+    <negative>
+      <Text value="negative" />
+    </negative>
+    <others>
+      <Text value="others" />
+    </others>
+    <present>
+      <Text value="present" />
+    </present>
+    <nonamed>
+      <Text value="nonamed" />
+    </nonamed>
+    <absent>
+      <Text value="absent" />
+    </absent>
+    <no>
+      <Text value="no" />
+    </no>
+    <severe>
+      <Text value="severe" />
+    </severe>
+    <yes>
+      <Text value="yes" />
+    </yes>
+    <low>
+      <Text value="low" />
+    </low>
+    <absentPresent>
+  	<Text value="absent - present" />
+  </absentPresent>
+  <noYes>
+  	<Text value="no - yes" />
+  </noYes>
+  <negativePositive>
+  	<Text value="negative - positive" />
+  </negativePositive>
+  <absentMildModerateSevere>
+  	<Text value="absent - mild - moderate - severe" />
+  </absentMildModerateSevere>
+  <lowMediumhigh>
+  	<Text value="low - medium - high" />
+  </lowMediumhigh>
+  </defaultStates>
+    <purpose>
+    <effectiveness>
+      <Text value="Effectiveness" />
+    </effectiveness>
+    <cost>
+      <Text value="Cost" />
+    </cost>
+    <riskfactor>
+      <Text value="Risk factor" />
+    </riskfactor>
+    <sign>
+      <Text value="Sign" />
+    </sign>
+    <auxiliary>
+      <Text value="Auxiliary" />
+    </auxiliary>
+    <treatment>
+      <Text value="Treatment" />
+    </treatment>
+    <symptom>
+      <Text value="Symptom" />
+    </symptom>
+    <diseaseanomaly>
+      <Text value="Disease/Anomaly" />
+    </diseaseanomaly>
+    <test>
+      <Text value="Test" />
+    </test>
+    <other>
+      <Text value="Other" />
+    </other>
+  </purpose>
+  <BUNDLEFILE>
+    <Text value="Default (english)" />
+  </BUNDLEFILE>
+</properties>
+

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+  <StandardDomain>
+    <Text>
+      <Mnemonic value="s" />
+      <Label value="Standard domains" />
+    </Text>
+  </StandardDomain>
+  <Apply>
+    <Text>
+      <Label value="Apply" />
+      <Mnemonic value="a" />
+    </Text>
+  </Apply>
+  <Up>
+    <Text>
+      <Label value="Up" />
+      <Mnemonic value="u" />
+    </Text>
+  </Up>
+  <Ok>
+    <Text>
+      <Mnemonic value="o" />
+      <Label value="Ok" />
+    </Text>
+  </Ok>
+  <Cancel>
+    <Text>
+      <Mnemonic value="c" />
+      <Label value="Cancel" />
+    </Text>
+  </Cancel>
+  <InfinitePositive>
+    <Text>
+      <Label value="Insert positive infinity" />
+    </Text>
+  </InfinitePositive>
+  <Add>
+    <Text>
+      <Label value="Add" />
+      <Mnemonic value="d" />
+    </Text>
+  </Add>
+  <BUNDLEFILE>
+    <Text value="Default (english)" />
+  </BUNDLEFILE>
+  <Copy>
+    <Text>
+      <Mnemonic value="c" />
+      <Label value="Copy" />
+    </Text>
+  </Copy>
+  <Clear>
+    <Text>
+      <Mnemonic value="l" />
+      <Label value="Clear" />
+    </Text>
+  </Clear>
+  <Delete>
+    <Text>
+      <Label value="Delete" />
+      <Mnemonic value="e" />
+    </Text>
+  </Delete>
+  <InfiniteNegative>
+    <Text>
+      <Label value="Insert negative infinity" />
+    </Text>
+  </InfiniteNegative>
+  <Down>
+    <Text>
+      <Mnemonic value="w" />
+      <Label value="Down" />
+    </Text>
+  </Down>
+</properties>
+

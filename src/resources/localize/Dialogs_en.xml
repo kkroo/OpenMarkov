@@ -1,0 +1,887 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<AddState>
+		<Title value="Add state" />
+		<Message value="Provide the new state's name" />
+	</AddState>
+	<CostEffectivenessResults>
+		<Title>
+			<Label value="Cost-Effectiveness Analisys Results" />
+		</Title>
+		<Plane>
+			<Tab value="CE Plane" />
+			<Label value="Cost-Effectiveness Plane" />
+			<Vertical value="Cost" />
+			<Horizontal value="Effectiveness" />
+		</Plane>
+		<Analysis>
+			<Tab value="Analysis" />
+		</Analysis>
+		<FrontierInterventions>
+			<Tab value="Frontier interventions" />
+		</FrontierInterventions>
+		<AcceptabilityCurve>
+			<Tab value="CEAC" />
+			<Label value="Cost-Effectiveness Acceptability Curve" />
+			<Vertical value="Probability of cost effectiveness" />
+			<Horizontal value="Willingness to pay" />
+		</AcceptabilityCurve>
+		<EVPI>
+			<Tab value="EVPI" />
+			<Label value="Expected Value of Information" />
+			<Vertical value="EVPI" />
+			<Horizontal value="Willingness to pay" />
+			<MaxRatio value="Max ratio" />
+			<Population value="Population per annum" />
+			<Lifetime value="Technology lifetime" />
+			<Discount value="Discount rate" />
+		</EVPI>
+	</CostEffectivenessResults>
+	<TemporalEvolutionResultDialog>
+		<Title>
+			<Label value="Temporal Evolution of:" />
+		</Title>
+	</TemporalEvolutionResultDialog>
+	<TemporalEvolutionTable>
+		<Title>
+			<Label value="Table" />
+		</Title>
+	</TemporalEvolutionTable>
+	<TemporalEvolutionChart>
+		<Title>
+			<Label value="Chart" />
+		</Title>
+	</TemporalEvolutionChart>
+	<SaveNetwork>
+		<Title>
+			<Label value="Save" />
+		</Title>
+	</SaveNetwork>
+	<Dialog>
+		<Close>
+			<Label value="Close" />
+		</Close>
+		<SaveReport>
+			<Label value="Save report" />
+		</SaveReport>
+	</Dialog>
+
+	<DiscreteTablePanel>
+		<Table>
+			<Columns>
+				<Value>
+					<Text value="Value" />
+				</Value>
+				<Id>
+					<Prefix value="s" />
+					<Text value="Id" />
+				</Id>
+				<Name>
+					<Text value="State" />
+				</Name>
+			</Columns>
+		</Table>
+		<jLabelStates>
+			<Text value=":" />
+		</jLabelStates>
+		<commentHTMLScrollPaneNodeComment>
+			<Text value="Comment for node {0}" />
+		</commentHTMLScrollPaneNodeComment>
+		<jTextAreaLabelNodeComment>
+			<Text value="Comment&#xD;&#xA;(Click twice to &#xD;&#xA;add or modify) :" />
+		</jTextAreaLabelNodeComment>
+		<jLabelPanel>
+			<Text value="States:" />
+		</jLabelPanel>
+	</DiscreteTablePanel>
+	<NodeProbsValuesTablePanel>
+		<jLabelNodeRelationComment>
+			<Text value="Comment:" />
+		</jLabelNodeRelationComment>
+		<jRadioButtonAll>
+			<Text value="All parameters" />
+		</jRadioButtonAll>
+		<Msg>
+			<ChangeToProbabilistic>
+				<Text
+					value="Do you really want to change from a deterministic model to a probabilistic model?&#xD;&#xA;If yes, all  will allow  between 0 (zero) and 1(one)." />
+				<Title value="Model change confirmation" />
+			</ChangeToProbabilistic>
+			<ChangeToDeterministic>
+				<Text
+					value="Do you really want to change from a probabilistic model to a deterministic model?&#xD;&#xA;If yes, all  will be appropiately set to 0(zero) and 1(one) ." />
+				<Title value="Model change confirmation" />
+			</ChangeToDeterministic>
+			<ChangeToOptimal>
+				<Title value="Model change confirmation" />
+				<Text
+					value="Do you really want to change to an Optimal decision model?&#xD;&#xA;If yes, all previous  will be lost" />
+			</ChangeToOptimal>
+		</Msg>
+		<jRadioButtonCompound>
+			<Text value="Compound " />
+		</jRadioButtonCompound>
+		<jRadioButtonValues>
+			<Text value="Show as values" />
+		</jRadioButtonValues>
+		<jRadioButtonNeto>
+			<Text value="Net " />
+		</jRadioButtonNeto>
+		<jRadioButtonProbabilisticType>
+			<Text value="Probabilistic policy" />
+		</jRadioButtonProbabilisticType>
+		<jLabelRelationType>
+			<Text value="Relation Type:" />
+		</jLabelRelationType>
+		<jRadioButtonDeterministicType>
+			<Text value="Deterministic policy" />
+		</jRadioButtonDeterministicType>
+		<jRadioButtonProbabilities>
+			<Text value="Show as probabilities" />
+		</jRadioButtonProbabilities>
+		<jRadioButtonIndependant>
+			<Text value="Independant parameters" />
+		</jRadioButtonIndependant>
+		<jRadioButtonCanonical>
+			<Text value="Canonical parameters" />
+		</jRadioButtonCanonical>
+		<commentHTMLScrollPaneNodeProbsComment>
+			<Text value="Comment for node {0}" />
+		</commentHTMLScrollPaneNodeProbsComment>
+		<jRadioButtonTPC>
+			<Text value="Whole table" />
+		</jRadioButtonTPC>
+		<jRadioButtonOptimal>
+			<Text value="Optimal policy" />
+		</jRadioButtonOptimal>
+	</NodeProbsValuesTablePanel>
+	<DiscreteValuesTablePanel>
+		<ValuesTable>
+			<Columns>
+				<Name>
+					<Text value="State" />
+				</Name>
+				<Id>
+					<Prefix value="s" />
+					<Text value="Id" />
+				</Id>
+				<Value>
+					<Text value="Value" />
+				</Value>
+			</Columns>
+		</ValuesTable>
+		<jTextAreaLabelNodeValuesComment>
+			<Text value="Comment&#xD;&#xA;(Click twice to &#xD;&#xA;add or modify) :" />
+		</jTextAreaLabelNodeValuesComment>
+		<jLabelStatesValues>
+			<Text value="Standard Domains:" />
+		</jLabelStatesValues>
+		<jLabelValuesPanel>
+			<Text value="States: " />
+		</jLabelValuesPanel>
+		<commentHTMLScrollPaneNodeValuesComment>
+			<Text value="Comment for node {0}" />
+		</commentHTMLScrollPaneNodeValuesComment>
+	</DiscreteValuesTablePanel>
+	<NodeOtherPropertiesPanel>
+		<jLabelOtherPropertiesTable>
+			<Text value="Properties list:" />
+		</jLabelOtherPropertiesTable>
+		<OtherPropertiesTablePanel>
+			<PropertyIdColumn>
+				<Label value="Id" />
+				<Prefix value="prop_" />
+			</PropertyIdColumn>
+			<PropertyTypeColumn>
+				<Label value="Object type" />
+			</PropertyTypeColumn>
+			<PropertyNameColumn>
+				<Label value="Property Name" />
+			</PropertyNameColumn>
+			<PropertyValueColumn>
+				<Label value="Value" />
+			</PropertyValueColumn>
+		</OtherPropertiesTablePanel>
+	</NodeOtherPropertiesPanel>
+	<HTMLTextEditor>
+		<jButtonCancelHTML>
+			<Text value="Cancel" />
+		</jButtonCancelHTML>
+		<jButtonAcceptHTML>
+			<Text value="Accept" />
+		</jButtonAcceptHTML>
+		<Title>
+			<Text value="HTML Comment Text Editor" />
+		</Title>
+	</HTMLTextEditor>
+	<ZoomValues>
+		<Title>
+			<Label value="Zoom :" />
+		</Title>
+	</ZoomValues>
+	<NetworkAdvancedPanel>
+		<DecisionCriteria>
+			<Text value="Decision criteria" />
+		</DecisionCriteria>
+		<Agents>
+			<Text value="Agents" />
+		</Agents>
+	</NetworkAdvancedPanel>
+	<FileExtension>
+		<CSV>
+			<Description value="CSV file" />
+		</CSV>
+		<ProbModelXML>
+			<Description value="ProbModelXML file" />
+		</ProbModelXML>
+		<Excel>
+			<Description value="Excel files" />
+		</Excel>
+		<WekaDB>
+			<Description value="Weka DB file" />
+		</WekaDB>
+		<ElviraDB>
+			<Description value="Elvira DB file" />
+		</ElviraDB>
+		<Elvira>
+			<Description value="Elvira file" />
+		</Elvira>
+		<OpenMarkov>
+			<Description value="OpenMarkov file" />
+		</OpenMarkov>
+	</FileExtension>
+	<LanguageDialog>
+		<Title>
+			<Text value="Change OpenMarkov windows language" />
+		</Title>
+		<jButtonAccept>
+			<Text value="OK" />
+		</jButtonAccept>
+		<jLabelLanguageChoice>
+			<Text value="Choice language:" />
+		</jLabelLanguageChoice>
+		<jButtonCancel>
+			<Text value="Cancel" />
+		</jButtonCancel>
+		<jButtonApply>
+			<Text value="Apply" />
+		</jButtonApply>
+		<jTextAreaInstructions>
+			<Text
+				value="Select one of the languages from the drop-down list and press Accept button to change the display language of the OpenMarkov application windows." />
+		</jTextAreaInstructions>
+	</LanguageDialog>
+	<NetworkDefinitionPanel>
+		<NetworkTypes>
+			<Items>
+				<InfluenceDiagram value="Influence diagram" />
+				<POMDP value="POMDP" />
+				<TuningNetwork value="Tuning network" />
+				<MarkovNetwork value="Markov network" />
+				<DAN value="Decision analysis network" />
+				<DBN value="Dynamic Bayesian network" />
+				<DynamicLIMID value="Dynamic LIMID" />
+				<LIMID value="LIMID" />
+				<OOBN value="OOBN" />
+				<BayesianNetwork value="Bayesian network" />
+				<DEC_POMDP value="Dec-POMDP" />
+				<MDP value="Markov Decision Process" />
+				<MPAD value="MPAD" />
+			</Items>
+			<Mnemonic value="t" />
+			<Text value="Network type:" />
+		</NetworkTypes>
+		<CommentHTMLScrollPaneNetworkDefinition>
+			<Text value="Comment for network {0}" />
+		</CommentHTMLScrollPaneNetworkDefinition>
+		<NetworkDefinitionComment>
+			<Mnemonic value="c" />
+			<Text value="Comment &#xD;&#xA;(Click twice to &#xD;&#xA;add or modify) :" />
+		</NetworkDefinitionComment>
+		<NetworkName>
+			<Text value="Network Name: " />
+		</NetworkName>
+	</NetworkDefinitionPanel>
+	<NodePropertiesDialog>
+		<DiscreteValuesTab>
+			<Title>
+				<Label value="Domain" />
+			</Title>
+		</DiscreteValuesTab>
+		<OtherPropsTab>
+			<Title>
+				<Label value="Other properties" />
+			</Title>
+		</OtherPropsTab>
+		<DiscretizeValuesTab>
+			<Title>
+				<Label value="Domain" />
+			</Title>
+		</DiscretizeValuesTab>
+		<ProbTablesTab>
+			<Title>
+				<Label value="Probability tables">
+					<NodeChance value="Relation" />
+					<NodeDecision value="Policy table" />
+					<NodeUtility value="Utility table" />
+				</Label>
+			</Title>
+		</ProbTablesTab>
+		<ParentsTab>
+			<Title>
+				<Label value="Parents" />
+			</Title>
+		</ParentsTab>
+		<Title>
+			<Label value="Node properties" />
+		</Title>
+		<DefinitionTab>
+			<Title>
+				<Label value="Definition" />
+			</Title>
+		</DefinitionTab>
+	</NodePropertiesDialog>
+	<OptionsInferenceDialog>
+		<Text>
+			<Label value="Select the propagation type" />
+		</Text>
+		<Title>
+			<Label value="Setting inference options" />
+		</Title>
+		<optionAuto>
+			<Label value="Automatic" />
+		</optionAuto>
+		<optionManual>
+			<Label value="Manual" />
+		</optionManual>
+		<jButtonOK>
+			<Label value="OK" />
+		</jButtonOK>
+		<jButtonCancel>
+			<Label value="Cancel" />
+		</jButtonCancel>
+	</OptionsInferenceDialog>
+	<DiscretizeTableModel>
+		<Columns>
+			<ValuesSeparator>
+				<Text value="," />
+			</ValuesSeparator>
+			<LowLimitValue>
+				<Text value="Lower limit" />
+			</LowLimitValue>
+			<UpperLimitValue>
+				<Text value="Upper limit" />
+			</UpperLimitValue>
+			<IntervalId>
+				<Text value="Id" />
+			</IntervalId>
+			<IntervalName>
+				<Text value="Interval name" />
+			</IntervalName>
+			<UpperLimitSymbol>
+				<Text value=" " />
+			</UpperLimitSymbol>
+			<LowLimitSymbol>
+				<Text value=" " />
+			</LowLimitSymbol>
+		</Columns>
+	</DiscretizeTableModel>
+	<UncertainValuesDialog>
+		<DistributionsTable>
+			<Title>
+				<Label value="Distributions" />
+			</Title>
+			<Columns>
+				<Distribution>
+					<Label value="Distribution" />
+				</Distribution>
+				<State>
+					<Label value="State" />
+				</State>
+				<Parameters>
+					<Label value="Parameters" />
+				</Parameters>
+				<Name>
+					<Label value="Name" />
+				</Name>
+			</Columns>
+		</DistributionsTable>
+		<Title>
+			<Label value="Variable:" />
+		</Title>
+		<ConfigurationTable>
+			<Title>
+				<Label value="Configuration" />
+			</Title>
+			<Columns>
+				<State>
+					<Label value="State" />
+				</State>
+				<Variable>
+					<Label value="Variable" />
+				</Variable>
+			</Columns>
+		</ConfigurationTable>
+		<jButtonRemove>
+			<Text value="Remove" />
+		</jButtonRemove>
+	</UncertainValuesDialog>
+	<FileChooser>
+		<updateButtonText value="Update" />
+		<lookInLabelText value="Look in:" />
+		<upFolderToolTipText value="Up level" />
+		<cancelButtonToolTipText value="Cancel" />
+		<saveButtonTextSave value="Save" />
+		<filesOfTypeLabelText value="File type:" />
+		<openButtonTextOpen value="Open" />
+		<viewMenuLabelText value="View" />
+		<helpButtonToolTipText value="Help" />
+		<helpButtonText value="Help" />
+		<newFolderToolTipText value="Create new folder" />
+		<detailsViewButtonToolTipText value="Details" />
+		<openButtonToolTipText value="Open" />
+		<fileNameLabelText value="File name:" />
+		<updateButtonToolTipText value="Update" />
+		<saveButtonToolTipText value="Save" />
+		<listViewButtonToolTipTextlist value="List" />
+		<newFolderActionLabelText value="New folder" />
+		<cancelButtonText value="Cancel" />
+		<listViewActionLabelText value="List" />
+		<detailsViewActionLabelText value="Details" />
+		<homeFolderToolTipText value="Home" />
+		<refreshActionLabelText value="Refresh" />
+	</FileChooser>
+	<RevelationArcPanel>
+		<jLabelValuesPanel>
+			<Text value="Values of {0} that reveal the value of {1}" />
+		</jLabelValuesPanel>
+	</RevelationArcPanel>
+	<NodeDomainValuesTablePanel>
+		<commentHTMLScrollPaneNodeValuesComment>
+			<Text value="Comment for node o {0}" />
+		</commentHTMLScrollPaneNodeValuesComment>
+		<jLabelPrecision>
+			<Text value="Precision" />
+		</jLabelPrecision>
+		<jRadioButtonMonotonyUp>
+			<Text value="Increasing" />
+		</jRadioButtonMonotonyUp>
+		<jComboBoxNodeVariableType>
+			<Items>
+				<Continuous value="Numeric" />
+				<Discrete value="Finite states" />
+				<Discretized value="Discretized" />
+			</Items>
+		</jComboBoxNodeVariableType>
+		<jLabelUnit>
+			<Text value="Unit" />
+		</jLabelUnit>
+		<jLabelValuesPanel>
+			<Text value="States: " />
+		</jLabelValuesPanel>
+		<jTextAreaLabelNodeValuesComment>
+			<Text value="Comment&#xD;&#xA;(Click twice to &#xD;&#xA;add or modify) :" />
+		</jTextAreaLabelNodeValuesComment>
+		<jLabelStatesValues>
+			<Text value="Values:" />
+		</jLabelStatesValues>
+		<jLabelNodeVariableType>
+			<Mnemonic value="o" />
+			<Text value="Variable type" />
+		</jLabelNodeVariableType>
+		<jRadioButtonMonotonyDown>
+			<Text value="Decreasing" />
+		</jRadioButtonMonotonyDown>
+	</NodeDomainValuesTablePanel>
+	<NodeValuesPanel>
+		<ValuesTable>
+			<Columns>
+				<Value>
+					<Label value="Value" />
+				</Value>
+				<Id>
+					<Label value="Id" />
+				</Id>
+				<Name>
+					<Label value="Name" />
+				</Name>
+			</Columns>
+			<Text>
+				<Label value="States table :" />
+			</Text>
+		</ValuesTable>
+		<StatesValues>
+			<Text>
+				<Label value="Default  :" />
+			</Text>
+		</StatesValues>
+	</NodeValuesPanel>
+	<NodeDefinitionPanel>
+		<jRadioButtonDiscretizedNodeVariableType>
+			<Text value="Discretized" />
+			<Mnemonic value="z" />
+		</jRadioButtonDiscretizedNodeVariableType>
+		<jLabelNodeName>
+			<Text value="Name:" />
+			<Mnemonic value="a" />
+		</jLabelNodeName>
+		<jRadioButtonContinuousNodeVariableType>
+			<Mnemonic value="t" />
+			<Text value="Continuous" />
+		</jRadioButtonContinuousNodeVariableType>
+		<jLabelNodeRelevance>
+			<Text value="Relevance:" />
+			<Mnemonic value="v" />
+		</jLabelNodeRelevance>
+		<jLabelNodeVariableType>
+			<Text value="Variable type:" />
+			<Mnemonic value="b" />
+		</jLabelNodeVariableType>
+		<jLabelNodeType>
+			<Text value="Node type:" />
+			<Mnemonic value="n" />
+		</jLabelNodeType>
+		<jRadioButtonDecisionNodeType>
+			<Mnemonic value="e" />
+			<Text value="Decision" />
+		</jRadioButtonDecisionNodeType>
+		<jRadioButtonDiscreteNodeVariableType>
+			<Text value="Discrete" />
+			<Mnemonic value="d" />
+		</jRadioButtonDiscreteNodeVariableType>
+		<jLabelTimeSlice>
+			<Text value="Time Slice:" />
+		</jLabelTimeSlice>
+		<jRadioButtonChanceNodeType>
+			<Mnemonic value="h" />
+			<Text value="Chance" />
+		</jRadioButtonChanceNodeType>
+		<jLabelAlwaysObserved>
+			<Text value="Always observed:" />
+			<Mnemonic value="o" />
+		</jLabelAlwaysObserved>
+		<jRadioButtonUtilityNodeType>
+			<Text value="Utility" />
+			<Mnemonic value="u" />
+		</jRadioButtonUtilityNodeType>
+		<jLabelDecisionDriteria>
+			<Text value="Decision criterion:" />
+		</jLabelDecisionDriteria>
+		<commentHTMLScrollPaneNodeDefinitionComment>
+			<Text value="Comment for node {0}" />
+		</commentHTMLScrollPaneNodeDefinitionComment>
+		<jTextAreaLabelNodeDefinitionComment>
+			<Mnemonic value="o" />
+			<Text
+				value="Comment &#xD;&#xA;(Click twice &#xD;&#xA;to add &#xD;&#xA;or modify) :" />
+		</jTextAreaLabelNodeDefinitionComment>
+		<jLabelNodePurpose>
+			<Text value="Purpose:" />
+			<Mnemonic value="u" />
+		</jLabelNodePurpose>
+		<jLabelNetworkAgents>
+			<Text value="Agent: " />
+		</jLabelNetworkAgents>
+		<Atemporal>
+			<Text value="Atemporal" />
+		</Atemporal>
+	</NodeDefinitionPanel>
+	<ZoomOther>
+		<Text>
+			<Label value="Zoom:" />
+			<Mnemonic value="o" />
+		</Text>
+	</ZoomOther>
+	<AboutBox>
+		<Advertisement>
+			<Text
+				value="Please visit OpenMarkov's Web page (www.openmarkov.org) for the latest updates" />
+		</Advertisement>
+		<LineSeparatorImage>
+			<URL value="lineSeparator.jpg" />
+		</LineSeparatorImage>
+		<Copyright>
+			<AllRightsReserved>
+				<Text value="All rights reserved" />
+			</AllRightsReserved>
+			<Text value=" (c) UNED - 2008-2012" />
+		</Copyright>
+		<jLabelLogo>
+			<BlankSpace>
+				<Text value=" " />
+			</BlankSpace>
+		</jLabelLogo>
+		<Authors>
+			<Text value="J.Diaz; M.Calleja &amp; others" />
+		</Authors>
+		<OpenMarkovLogoImage>
+			<URL value="OpenMarkovSplash.jpg" />
+		</OpenMarkovLogoImage>
+		<OK>
+			<Text value="OK" />
+		</OK>
+		<Product>
+			<Text value="An open source tool for Probabilistic Graphical Models" />
+		</Product>
+		<Title>
+			<Text value="About ... OpenMarkov v.0.0.1" />
+		</Title>
+		<Trademark>
+			<Text value="OpenMarkov is a registered product" />
+		</Trademark>
+		<Version>
+			<Text value="Version 0.0.1" />
+		</Version>
+	</AboutBox>
+	<OKCancelApplyHorizontalDialog>
+		<jButtonUndo>
+			<Text value="Undo" />
+			<Mnemonic value="U" />
+		</jButtonUndo>
+		<jButtonRedo>
+			<Text value="Redo" />
+			<Mnemonic value="R" />
+		</jButtonRedo>
+		<jButtonApply>
+			<Mnemonic value="p" />
+			<Text value="Apply" />
+		</jButtonApply>
+	</OKCancelApplyHorizontalDialog>
+	<DiscretizeTable>
+		<ToolTipText value="Discretized intervals" />
+	</DiscretizeTable>
+	<NetworkVariablesPanel>
+		<jLabelDefaultStates>
+			<Text value="Default states:" />
+		</jLabelDefaultStates>
+		<ConstraintVariableType>
+			<items>
+				<discreteandcontinuous value="Discrete and continuous" />
+			</items>
+			<Items>
+				<onlydiscrete value="Only discrete" />
+				<onlycontinuous value="Only continuous" />
+			</Items>
+		</ConstraintVariableType>
+		<jLabelVariablesType>
+			<Text value="Variable type:" />
+		</jLabelVariablesType>
+	</NetworkVariablesPanel>
+	<NetworkOtherPropertiesPanel>
+		<OtherPropertiesTablePanel>
+			<PropertyIdColumn>
+				<Label value="Id" />
+				<Prefix value="Prop_" />
+			</PropertyIdColumn>
+			<PropertyTypeColumn>
+				<Label value="ObjetctType" />
+			</PropertyTypeColumn>
+			<PropertyNameColumn>
+				<Label value="Property" />
+			</PropertyNameColumn>
+			<PropertyValueColumn>
+				<Label value="Value" />
+			</PropertyValueColumn>
+		</OtherPropertiesTablePanel>
+		<jLabelOtherPropertiesTable>
+			<Text value="Properties Table:" />
+		</jLabelOtherPropertiesTable>
+		<jLabelOtherPropertiesTable value="Other properties:" />
+	</NetworkOtherPropertiesPanel>
+	<NodePotentialReorderVariables>
+		<Title>
+			<Label value="Reorder variables" />
+		</Title>
+	</NodePotentialReorderVariables>
+	<NodePotentialTable>
+		<Msg>
+			<ProbabilisticValueNotAllowed>
+				<Title value="Probabilistic value not allowed" />
+				<Text
+					value="For a probabilistic model, please, use a value between zero (0) and single (1) " />
+			</ProbabilisticValueNotAllowed>
+			<DeterministicSumMustBeEqualToOne>
+				<Text
+					value="For a deterministic model, please,  in the column must summarize &quot;1&quot;. &#xD;&#xA;Please, change first one of the &quot;0&quot;  to &quot;1&quot; and this &quot;0&quot;  will be set properly." />
+				<Title value="Deterministic value not allowed" />
+			</DeterministicSumMustBeEqualToOne>
+			<DeterministicValueNotAllowed>
+				<Title value="Deterministic value not allowed" />
+				<Text
+					value="For a deterministic model, please, use zero (0) or single (1) " />
+			</DeterministicValueNotAllowed>
+			<AllowAgainToModified>
+				<Text
+					value="All  in this column were already modified. Do you really want to continue? If yes,  will be re-written." />
+				<Title value="Re-write confirmation" />
+			</AllowAgainToModified>
+			<SummaOfProbabilitiesHigherThanOne>
+				<Text
+					value="Value not allowed as the summa of probabilities would be higher than the unity. " />
+				<Title value="Error Message" />
+			</SummaOfProbabilitiesHigherThanOne>
+		</Msg>
+	</NodePotentialTable>
+	<NodePotentialDialog>
+		<Title>
+			<Label value="Node Potential" />
+		</Title>
+	</NodePotentialDialog>
+	<ExpectedUtilityDialog>
+		<Title>
+			<Label value="Expected utility" />
+		</Title>
+	</ExpectedUtilityDialog>
+	<OptimalPolicyDialog>
+		<Title>
+			<Label value="Optimal policy" />
+		</Title>
+	</OptimalPolicyDialog>
+	<VariableTypeOptions>
+		<Title>
+			<Label value="Variable Types:" />
+		</Title>
+	</VariableTypeOptions>
+	<OKCancelHorizontalDialog>
+		<jButtonCancel>
+			<Text value="Cancel" />
+			<Mnemonic value="c" />
+		</jButtonCancel>
+		<jButtonOK>
+			<Mnemonic value="o" />
+			<Text value="OK" />
+		</jButtonOK>
+	</OKCancelHorizontalDialog>
+	<NodeParentsPanel>
+		<prefixedDataTablePanelParentsTable>
+			<Title value="New parents for the node" />
+			<ToolTip>
+				<Text value="New parents for the node" />
+			</ToolTip>
+			<Columns>
+				<Name>
+					<Text value="Name" />
+				</Name>
+			</Columns>
+		</prefixedDataTablePanelParentsTable>
+		<jLabelNodeParentsTable>
+			<Text value="Node parents:" />
+			<Mnemonic value="p" />
+		</jLabelNodeParentsTable>
+	</NodeParentsPanel>
+	<LinkRestrictionDialog>
+		<Title>
+			<Label value="Link Restriction: Link between {0} and {1}" />
+		</Title>
+	</LinkRestrictionDialog>
+	<ImposePolicydialog>
+		<Title>
+			<Label value="Impose policy" />
+		</Title>
+	</ImposePolicydialog>
+	<NodeDiscretizeTablePanel>
+		<jTextAreaLabelNodeComment>
+			<Text value="Comment&#xD;&#xA;(Click twice to &#xD;&#xA;add or modify) :" />
+		</jTextAreaLabelNodeComment>
+		<commentHTMLScrollPaneNodeComment>
+			<Text value="Comment for node {0}" />
+		</commentHTMLScrollPaneNodeComment>
+		<jLabelPrecision>
+			<Text value="Precision" />
+		</jLabelPrecision>
+		<jRadioButtonMonotonyUp>
+			<Text value="Increasing" />
+		</jRadioButtonMonotonyUp>
+		<jLabelStates>
+			<Text value=":" />
+		</jLabelStates>
+		<jRadioButtonMonotonyDown>
+			<Text value="Decreasing" />
+		</jRadioButtonMonotonyDown>
+		<jLabelPanel>
+			<Text value="States:" />
+		</jLabelPanel>
+	</NodeDiscretizeTablePanel>
+	<NodeAddFindingDialog>
+		<jButtonCancel>
+			<Label value="Cancel" />
+		</jButtonCancel>
+		<Title>
+			<Label value="Add finding" />
+		</Title>
+		<jButtonOK>
+			<Label value="Add finding" />
+		</jButtonOK>
+	</NodeAddFindingDialog>
+	<CommentHTMLScrollPane>
+		<jTextPaneCommentHTML>
+			<Text value="&lt;&lt;Double click to add/modify comment&gt;&gt;" />
+		</jTextPaneCommentHTML>
+	</CommentHTMLScrollPane>
+	<DecisionCriteria>
+		<Title>
+			<Label value="Decision Criteria" />
+		</Title>
+	</DecisionCriteria>
+	<NodeRelation>
+		<Title>
+			<Tooltip value="Node relation" />
+			<Label value="Relation" />
+		</Title>
+	</NodeRelation>
+	<NetworkPropertiesDialog>
+		<OtherPropertiesTab>
+			<Label value="Others prop." />
+		</OtherPropertiesTab>
+		<VariablesTab>
+			<Label value="Variables" />
+		</VariablesTab>
+		<Advanced>
+			<Label value="Advanced" />
+		</Advanced>
+		<DefinitionTab>
+			<Label value="Definition" />
+		</DefinitionTab>
+		<Title>
+			<Label value="Network properties" />
+		</Title>
+	</NetworkPropertiesDialog>
+	<SelectZoom>
+		<Title>
+			<Label value="Select zoom" />
+		</Title>
+	</SelectZoom>
+	<NetworkAgentsDialog>
+		<Title>
+			<Label value="Agents" />
+		</Title>
+	</NetworkAgentsDialog>
+	<OtherProperties>
+		<Title>
+			<Label value="Other properties" />
+		</Title>
+	</OtherProperties>
+	<BUNDLEFILE>
+		<Text value="Default (english)" />
+	</BUNDLEFILE>
+	<NodeTypeOptions>
+		<Title>
+			<Label value="Node type" />
+		</Title>
+	</NodeTypeOptions>
+	<PotentialEditDialog>
+		<ReorderVariables>
+			<Text value="Reorder variables" />
+		</ReorderVariables>
+	</PotentialEditDialog>
+	<Network>
+		<Agent2 value="Agent 2" />
+		<Agent1 value="Agent 1" />
+	</Network>
+	<RevelationArcDialog>
+		<Title>
+			<Label value="Conditions for the revelation of {0}" />
+		</Title>
+	</RevelationArcDialog>
+</properties>
+

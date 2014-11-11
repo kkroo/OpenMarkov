@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+  <Languages>
+    <Spanish>
+      <ShortName>
+        <Text>
+          <Label value="es" />
+        </Text>
+      </ShortName>
+      <LongName>
+        <Text>
+          <Label value="Español" />
+        </Text>
+      </LongName>
+      <flag value="" />
+    </Spanish>
+    <English>
+      <LongName>
+        <Text>
+          <Label value="Inglés" />
+        </Text>
+      </LongName>
+      <flag value="" />
+      <ShortName>
+        <Text>
+          <Label value="en" />
+        </Text>
+      </ShortName>
+    </English>
+  </Languages>
+  <BUNDLEFILE>
+    <Text value="Español" />
+  </BUNDLEFILE>
+</properties>
+

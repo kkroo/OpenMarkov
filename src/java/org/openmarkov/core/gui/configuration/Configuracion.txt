@@ -1,0 +1,70 @@
+Configuración (propuesta futura):
+
+Se guarda en un fichero en XML: Configuración.xml
+El directorio es el mismo en el que está la aplicación. Se averigua con la 
+función: System.getProperty("user.dir");
+
+Formato: Organizado por plugins. Puede devolver un InfoSet con los plugins y 
+para cada plugin puede devolver un InfoSet con la información.
+
+Normas:
+1) Todos los nombres de etiquetas empiezan por mayúsculas
+
+Plugin:
+   Atributo1, Valor1
+   Atributo2, Valor2
+
+Configuración.xml: (Tentativa 1)
+
+<?xml version="1.0" encoding="iso-8859-1"?>
+<Configuration>
+<Plugin>
+    <PluginName>"OpenMarkovKernel"</PluginName>
+   	<Attribute>
+   		<Key>Last open directory</Key>
+   		<Value>C:\\Carmen\\nets</Value>
+    </Attribute>
+    <Attribute>
+    	<Key>Last open files</Key>
+    	<Value>C:\\Carmen\\nets\\asia.elv</Value>
+    	<Value>C:\\Carmen\\nets\\Diabetes.elv</Value>
+    </Attribute>
+</Plugin>
+<Plugin>
+... (Contenido del plugin)
+</Plugin>
+... (Otros plugins)
+</Configuration>
+
+En memoria se construye:
+
+InfoSet configuracion:  // NombreClase NombreObjeto
+    Contiene la lista de plugins
+    <String = "OpenMarkovKernel", Object = InfoSet carmenKernel>
+    <String = "PepitoPlugin", Object = InfoSet pepitoPlugin>
+    ...
+
+A su vez, InfoSet carmenKernel:
+    <String = "Last directory open", Object = "C:\\Carmen\\nets"> (Un String)
+	<String = "PepitoPlugin", Object = ArrayList<String>> (Un objeto ArrayList)
+	...
+	
+Los InfoSet representan el árbol XML. Un atributo normal es una entrada con una
+cadena como clave y otra como objeto; un atributo multivaluado tiene una cadena
+como clave y un ArrayList<String> como objeto
+
+Tiene que tener un DTD que describa cómo es el fichero XML de configuración
+
+Información en el plugin OpenMarkovKernel:
+
+- Último directorio abierto
+- Ficheros abiertos cuando se cerró la aplicación
+- Últimos (5) ficheros accedidos
+- Verbosity
+- Tamaño de CarmenFrame: x,y
+- Ventana de log (si/no)
+- Ventana del arbol de redes (si/no)
+- Tamaño de la ventana del árbol de redes (izquierda)
+- Tamaño de la ventana de redes (superior derecha)
+- Tamaño de la ventana de log, características, etc (inferior derecha)
+
