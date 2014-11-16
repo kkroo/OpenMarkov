@@ -15,13 +15,17 @@ import java.util.List;
 import org.openmarkov.core.action.PNEdit;
 import org.openmarkov.core.exception.ConstraintViolationException;
 import org.openmarkov.core.exception.NormalizeNullVectorException;
+import org.openmarkov.core.exception.ProbNodeNotFoundException;
 import org.openmarkov.core.io.database.CaseDatabase;
+import org.openmarkov.core.model.graph.Link;
+import org.openmarkov.core.model.graph.Node;
 import org.openmarkov.core.model.network.ProbNet;
 import org.openmarkov.core.model.network.ProbNode;
 import org.openmarkov.core.model.network.Variable;
 import org.openmarkov.core.model.network.potential.PotentialRole;
 import org.openmarkov.core.model.network.potential.TablePotential;
 import org.openmarkov.core.model.network.potential.operation.DiscretePotentialOperations;
+import org.openmarkov.learning.algorithm.pc.independencetester.IndependenceTester;
 import org.openmarkov.learning.core.util.LearningEditMotivation;
 import org.openmarkov.learning.core.util.LearningEditProposal;
 import org.openmarkov.learning.core.util.ModelNetUse;
@@ -184,6 +188,28 @@ public abstract class LearningAlgorithm {
         }
         
         return probNet;
+    }
+    
+    public void calculateIndependence(IndependenceTester independenceTester)  {
+    	Node srcNode, destNode;
+        int[][] cases = caseDatabase.getCases ();
+    	for (Link link : probNet.getGraph().getLinks()){
+    		srcNode = link.getNode1();
+    		destNode = link.getNode2();
+    		List<Node> destParents = new ArrayList<Node>(destNode.getParents());
+    		destParents.remove(destParents.indexOf(srcNode));
+    		double test;
+			try {
+				test = independenceTester.test (probNet, cases, srcNode, destNode, destParents);
+				link.setIndependence(test);
+			} catch (ProbNodeNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    
+    		
+    	}
+    	
     }
 
        

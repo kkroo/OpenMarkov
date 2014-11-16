@@ -32,6 +32,8 @@ import org.openmarkov.core.model.network.ProbNode;
 import org.openmarkov.core.model.network.State;
 import org.openmarkov.core.model.network.Variable;
 import org.openmarkov.core.model.network.VariableType;
+import org.openmarkov.learning.algorithm.pc.independencetester.CrossEntropyIndependenceTester;
+import org.openmarkov.learning.algorithm.pc.independencetester.IndependenceTester;
 import org.openmarkov.learning.core.algorithm.LearningAlgorithm;
 import org.openmarkov.learning.core.algorithm.LearningAlgorithmManager;
 import org.openmarkov.learning.core.algorithm.LearningAlgorithmType;
@@ -54,7 +56,10 @@ public class LearningManager {
     private static LearningAlgorithmManager learningAlgorithmManager = new LearningAlgorithmManager ();
     
     /**  Learning algorithm */
-    private LearningAlgorithm learningAlgorithm = null;    
+    private LearningAlgorithm learningAlgorithm = null;
+    
+    /** Independence tester */
+    private IndependenceTester independenceTester = null;
     
     /** ProbNet to learn. */
     private ProbNet learnedNet = null;
@@ -118,6 +123,7 @@ public class LearningManager {
     public void init (LearningAlgorithm learningAlgorithm)
     {
         this.learningAlgorithm = learningAlgorithm;
+        this.independenceTester = new CrossEntropyIndependenceTester ();
         learningAlgorithm.init (modelNetUse);
     }
 
@@ -217,6 +223,7 @@ public class LearningManager {
     {
         this.learnedNet.doEdit (edit);
         learningAlgorithm.parametricLearning ();
+		learningAlgorithm.calculateIndependence(independenceTester);
     }
     
     /**

@@ -42,6 +42,9 @@ public class Link {
 
 	/** If true, the link is directed. Otherwise, it is an undirected link. */
 	private boolean directed;
+	
+	/** Cross entropy independence measure of link. */
+	private double crossEntropy;
 
 	/****
 	 * Potential that contains the value of compatibility for the combinations
@@ -106,6 +109,23 @@ public class Link {
 	}
 
 	/**
+	 * @return The cross entropy independence measure of the link.
+	 * @consultation
+	 */
+	public double getIndependence() {
+		return crossEntropy;
+	}
+	
+	
+	/**
+	 * @return The cross entropy independence measure of the link.
+	 * @consultation
+	 */
+	public void setIndependence(double crossEntropy) {
+		this.crossEntropy = crossEntropy;
+	}
+	
+	/**
 	 * @param node
 	 *            <code>Node</code>.
 	 * @return <code>true</code> if the link contains <code>node</code>.
@@ -123,6 +143,8 @@ public class Link {
 	public boolean isDirected() {
 		return directed;
 	}
+	
+	
 
 	/******
 	 * @return<code>true</code> if the link has a linkRestriction
