@@ -34,6 +34,11 @@ public class VisualLink extends VisualArrow {
                                                             new Color(128, 0, 0));
 
     /**
+     * Highest stroke width. Use "Independence" to get % of this max width
+     */
+    private static final float max_stroke_width = 25;
+    
+    /**
      * Object that has the information (included visual information) of the
      * destination node.
      */
@@ -154,7 +159,7 @@ public class VisualLink extends VisualArrow {
             setLinkColor(Color.black);
         }
 
-        setStroke(new BasicStroke((float) (link.getIndependence()/2)));
+        setStroke(new BasicStroke((float) ((link.getIndependence()/100)*max_stroke_width)));
         
         boolean hasAbsoluteLinkRestriction = link.hasTotalRestriction();
         setDoubleStriped(hasAbsoluteLinkRestriction);

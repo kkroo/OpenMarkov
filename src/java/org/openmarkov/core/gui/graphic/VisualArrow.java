@@ -34,6 +34,11 @@ public class VisualArrow extends VisualElement {
     private static final double WIDTH_TOP_ARROW      = 8;
 
     /**
+     * selected link color
+     */
+    private static final Color SELECTED_LINK_COLOR = Color.gray;
+    
+    /**
      * Height of the top of arrow.
      */
     private static final double HEIGHT_TOP_ARROW     = 12;
@@ -509,6 +514,9 @@ public class VisualArrow extends VisualElement {
     @Override
     public void paint(Graphics2D g) {
 
+    	if (isSelected()) {
+    		setLinkColor(SELECTED_LINK_COLOR);
+    	}
         g.setPaint(linkColor);
         //Stroke stroke = getStroke();
         if (isDoubleStriped) {
