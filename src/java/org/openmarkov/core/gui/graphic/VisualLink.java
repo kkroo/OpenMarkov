@@ -9,6 +9,7 @@
 
 package org.openmarkov.core.gui.graphic;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Shape;
@@ -153,6 +154,8 @@ public class VisualLink extends VisualArrow {
             setLinkColor(Color.black);
         }
 
+        setStroke(new BasicStroke((float) (link.getIndependence()+1)*2));
+        
         boolean hasAbsoluteLinkRestriction = link.hasTotalRestriction();
         setDoubleStriped(hasAbsoluteLinkRestriction);
         setSingleStriped(link.hasRestrictions() && !hasAbsoluteLinkRestriction);
@@ -160,6 +163,7 @@ public class VisualLink extends VisualArrow {
         setEndPoint(destination.getCutPoint(line, g));
 
         super.paint(g);
+        
     }
 
 }

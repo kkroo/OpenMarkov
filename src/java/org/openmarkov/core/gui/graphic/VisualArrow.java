@@ -86,6 +86,7 @@ public class VisualArrow extends VisualElement {
 
     private Color               linkColor            = FOREGROUND_COLOR;
 
+    private Stroke               stroke;
     /**
      * Creates a new visual link from the two points that define the start and
      * the end of the arrow.
@@ -509,7 +510,7 @@ public class VisualArrow extends VisualElement {
     public void paint(Graphics2D g) {
 
         g.setPaint(linkColor);
-        Stroke stroke = getStroke();
+        //Stroke stroke = getStroke();
         if (isDoubleStriped) {
             paintDoubleStripe(g, startPoint, endPoint, stroke);
         }
@@ -528,6 +529,8 @@ public class VisualArrow extends VisualElement {
     protected Stroke getStroke() {
         return (isSelected()) ? WIDE_STROKE : NORMAL_STROKE;
     }
+    
+    
 
     /**
      * @return the isDirected
@@ -567,6 +570,13 @@ public class VisualArrow extends VisualElement {
         this.linkColor = linkColor;
     }
 
+    /**
+     * @param strokeWidth
+     *               the width to make the stroke
+     */
+    public void setStroke(Stroke strokeWidth) {
+    	this.stroke = strokeWidth;
+    }
     /**
      * @return the isSingleStriped
      */
