@@ -201,6 +201,51 @@ public class HillClimbingAlgorithm extends ScoreAndSearchAlgorithm{
         	proposals.add(proposal);
         }
     }
+
+    
+    /**
+     * Method to obtain node specific optimal edit.
+     */
+    
+    private LearningEditProposal getNodeOptimalEdit(ProbNet learnedNet, Variable source, Variable target) {
+    	double bestScore = Double.NEGATIVE_INFINITY;
+    	LearningEditProposal bestEditProposal = null;
+    	BaseLinkEdit bestEdit = null;
+    	if (source.equals(target)) {
+    		return bestEditProposal;
+    	}
+    	ProbNode sourceNode = learnedNet.getProbNode (source);
+        ProbNode targetNode = learnedNet.getProbNode (target);
+    	//AddLinkEdit
+    	if (!sourceNode.isParent(targetNode) && !targetNode.isParent(sourceNode)) {
+    		AddLinkEdit addLinkEdit = new AddLinkEdit (learnedNet,
+                    source, target, true);
+    		if (metric.getScore (addLinkEdit) > bestScore) {
+    			bestScore = metric.getScore (addLinkEdit);
+    			bestEdit = addLinkEdit;
+    		}
+    	} else {
+    		//removeLinkEdit
+    		RemoveLinkEdit removeLinkEdit = new RemoveLinkEdit ( learnedNet, source, target, true);
+    		if (metric.getScore (removeLinkEdit) > bestScore) {
+    			bestScore = metric.getScore (removeLinkEdit);
+    			bestEdit = removeLinkEdit;
+    		}
+    		
+    		//invertLinkEdit
+			 InvertLinkEdit invertLinkEdit = new InvertLinkEdit (learnedNet, source, target, true);
+	         if (metric.getScore (invertLinkEdit) > bestScore) {
+	        	 bestScore = metric.getScore (invertLinkEdit);
+	        	 bestEdit = invertLinkEdit;
+	         }
+    	}
+    	
+    	if (bestEdit != null) {
+    		bestEditProposal = new HillClimbingEditProposal (bestEdit, bestScore);
+    	}
+    	return bestEditProposal;
+    }
+    
     /**
      * Method to obtain the edit with the highest associated score.
      * @param learnedNet net to learn.
