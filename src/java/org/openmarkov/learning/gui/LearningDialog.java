@@ -1273,7 +1273,7 @@ public class LearningDialog extends javax.swing.JDialog {
                 }
                 ProbNet probNet = learningManager.getLearnedNet ();
                 setProperName (probNet);
-                NetworkPanel networkPanel = MainPanel.getUniqueInstance ().getMainPanelListenerAssistant ().createNewFrame (probNet);
+                NetworkPanel networkPanel = MainPanel.getUniqueInstance ().getMainPanelListenerAssistant ().createNewFrame (probNet, discretizedDB);
                 probNet.getPNESupport ().addUndoableEditListener (networkPanel);
                 this.setVisible (false);
             }

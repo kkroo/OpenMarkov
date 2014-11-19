@@ -58,8 +58,6 @@ public class LearningManager {
     /**  Learning algorithm */
     private LearningAlgorithm learningAlgorithm = null;
     
-    /** Independence tester */
-    private IndependenceTester independenceTester = null;
     
     /** ProbNet to learn. */
     private ProbNet learnedNet = null;
@@ -123,7 +121,6 @@ public class LearningManager {
     public void init (LearningAlgorithm learningAlgorithm)
     {
         this.learningAlgorithm = learningAlgorithm;
-        this.independenceTester = new CrossEntropyIndependenceTester ();
         learningAlgorithm.init (modelNetUse);
     }
 
@@ -223,7 +220,6 @@ public class LearningManager {
     {
         this.learnedNet.doEdit (edit);
         learningAlgorithm.parametricLearning ();
-		learningAlgorithm.calculateIndependence(independenceTester);
     }
     
     /**

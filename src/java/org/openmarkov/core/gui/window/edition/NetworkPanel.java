@@ -8,6 +8,7 @@ package org.openmarkov.core.gui.window.edition;
 
 import java.awt.BorderLayout;
 import java.awt.Window;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.event.UndoableEditEvent;
@@ -17,6 +18,8 @@ import javax.swing.undo.CannotUndoException;
 import org.openmarkov.core.action.PNUndoableEditListener;
 import org.openmarkov.core.exception.CanNotDoEditException;
 import org.openmarkov.core.exception.ConstraintViolationException;
+import org.openmarkov.core.exception.NormalizeNullVectorException;
+import org.openmarkov.core.exception.ProbNodeNotFoundException;
 import org.openmarkov.core.gui.graphic.SelectionListener;
 import org.openmarkov.core.gui.graphic.VisualLink;
 import org.openmarkov.core.gui.graphic.VisualNetwork;
@@ -28,9 +31,14 @@ import org.openmarkov.core.gui.window.MainPanel;
 import org.openmarkov.core.gui.window.MainPanelMenuAssistant;
 import org.openmarkov.core.gui.window.mdi.FrameContentPanel;
 import org.openmarkov.core.inference.InferenceAlgorithm;
+import org.openmarkov.core.io.database.CaseDatabase;
+import org.openmarkov.core.model.graph.Link;
+import org.openmarkov.core.model.graph.Node;
 import org.openmarkov.core.model.network.ProbNet;
+import org.openmarkov.core.model.network.ProbNode;
 import org.openmarkov.core.oopn.Instance.ParameterArity;
 import org.openmarkov.core.oopn.OOPNet;
+import org.openmarkov.learning.algorithm.pc.independencetester.CrossEntropyIndependenceTester;
 
 // ESCA-JAVA0136: allows more than 30 methods in the class
 /**
@@ -88,6 +96,7 @@ public class NetworkPanel extends FrameContentPanel
      * is initially set to Edition Mode
      */
     private int               workingMode            = EDITION_WORKING_MODE;
+	private CaseDatabase caseDB;
 
     /**
      * Constructor that creates the instance.
@@ -102,6 +111,20 @@ public class NetworkPanel extends FrameContentPanel
         initialize ();
     }
 
+    /**
+     * Constructor that creates the instance.
+     * @param probNet network that will be edited.
+     * @param mainPanel application main panel.
+     */
+    public NetworkPanel (ProbNet probNet, CaseDatabase cases, MainPanel mainPanel)
+    {
+        this.probNet = probNet;
+        this.caseDB = cases;
+        this.mainPanel = mainPanel;
+        probNet.getPNESupport ().addUndoableEditListener (this);
+        initialize ();
+    }
+    
     /**
      * Constructor that creates the instance.
      * @param newNetwork network that will be edited.
@@ -665,6 +688,7 @@ public class NetworkPanel extends FrameContentPanel
 
     public void undoableEditHappened (UndoableEditEvent arg0)
     {
+    	calculateIndependence();
         setModified (true);
     }
 
@@ -680,6 +704,40 @@ public class NetworkPanel extends FrameContentPanel
     {
         setModified (true);
         repaint ();
+    }
+    
+    public void calculateIndependence()  {
+    	Node srcNode, destNode;
+    	CrossEntropyIndependenceTester independenceTester = new CrossEntropyIndependenceTester();
+    	for (Link link : probNet.getGraph().getLinks()){
+    		srcNode = link.getNode1();
+    		destNode = link.getNode2();
+    		
+    		ArrayList<ProbNode> nodesYZ = new ArrayList<ProbNode>();
+    		for (Node parent : destNode.getParents()){
+    			nodesYZ.add((ProbNode)parent.getObject());
+    		}
+    		
+    		ArrayList<ProbNode> nodesZ = new ArrayList<ProbNode>(nodesYZ);
+    		nodesZ.remove(nodesZ.indexOf(srcNode.getObject()));
+
+    		double test = 0;
+    		try {
+    			try {
+    				test = independenceTester.linkStrengthPercent (probNet, caseDB.getCases(), destNode, srcNode, nodesYZ, nodesZ);
+    				link.setIndependence(test);
+    			} catch (NormalizeNullVectorException e) {
+    				// TODO Auto-generated catch block
+    				e.printStackTrace();
+    			}
+    		} catch (ProbNodeNotFoundException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+
+
+    	}
+    	
     }
 
     /**

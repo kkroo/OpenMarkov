@@ -684,10 +684,14 @@ public class MainPanelListenerAssistant extends WindowAdapter implements ActionL
      *            network to be painted into the frame
      * @return the network panel that is created.
      */
-    public NetworkPanel createNewFrame(ProbNet probNet) {
+    public NetworkPanel createNewFrame(ProbNet probNet, CaseDatabase cases) {
         NetworkPanel networkPanel = null;
         try {
-            networkPanel = new NetworkPanel(probNet, mainPanel);
+        	if (cases != null)
+        		networkPanel = new NetworkPanel(probNet, cases, mainPanel);
+        	else
+        		networkPanel = new NetworkPanel(probNet, mainPanel);
+        	
             mainPanel.getMdi().createNewFrame(networkPanel);
             networkPanel.setContextualMenuFactory(mainPanel.getContextualMenuFactory());
             // networkPanel.addEditionListener( mainPanel
@@ -705,6 +709,11 @@ public class MainPanelListenerAssistant extends WindowAdapter implements ActionL
         }
         return networkPanel;
     }
+    
+	public NetworkPanel createNewFrame(ProbNet probNet) {
+		// TODO Auto-generated method stub
+		return createNewFrame(probNet, null);
+	}
 
     /**
      * Open a network.

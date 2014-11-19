@@ -141,7 +141,7 @@ public class CrossEntropyIndependenceTester
      * @throws ProbNodeNotFoundException
      * @throws NormalizeNullVectorException
      */
-    private double crossEntropy (ProbNet learnedNet,
+    public double crossEntropy (ProbNet learnedNet,
                                  int[][] cases,
                                  Node nodeX,
                                  Node nodeY,
@@ -153,6 +153,22 @@ public class CrossEntropyIndependenceTester
         ProbNode probNodeX = learnedNet.getProbNode (nodeX);
         return (conditionedEntropy (learnedNet, cases, probNodeX, nodesZ) 
                 - conditionedEntropy (learnedNet, cases, probNodeX, nodesYZ));
+    }
+    
+
+    public double linkStrengthPercent (ProbNet learnedNet,
+                                 int[][] cases,
+                                 Node nodeX,
+                                 Node nodeY,
+                                 ArrayList<ProbNode> nodesYZ,
+                                 ArrayList<ProbNode> nodesZ)
+        throws ProbNodeNotFoundException,
+        NormalizeNullVectorException
+    {
+        ProbNode probNodeX = learnedNet.getProbNode (nodeX);
+        double H_x_z = conditionedEntropy (learnedNet, cases, probNodeX, nodesZ);
+        double H_x_yz = conditionedEntropy (learnedNet, cases, probNodeX, nodesYZ);
+        return (H_x_z - H_x_yz)/H_x_z * 100;
     }
 
     /**

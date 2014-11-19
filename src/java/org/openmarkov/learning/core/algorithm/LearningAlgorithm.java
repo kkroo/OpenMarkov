@@ -25,6 +25,7 @@ import org.openmarkov.core.model.network.Variable;
 import org.openmarkov.core.model.network.potential.PotentialRole;
 import org.openmarkov.core.model.network.potential.TablePotential;
 import org.openmarkov.core.model.network.potential.operation.DiscretePotentialOperations;
+import org.openmarkov.learning.algorithm.pc.independencetester.CrossEntropyIndependenceTester;
 import org.openmarkov.learning.algorithm.pc.independencetester.IndependenceTester;
 import org.openmarkov.learning.core.util.LearningEditMotivation;
 import org.openmarkov.learning.core.util.LearningEditProposal;
@@ -40,6 +41,9 @@ public abstract class LearningAlgorithm {
     
     /** Net to learn */
     protected ProbNet probNet;
+    
+    /** Independence tester */
+    private CrossEntropyIndependenceTester independenceTester = null;
     
     /** Case database */
     protected CaseDatabase caseDatabase;
@@ -59,6 +63,7 @@ public abstract class LearningAlgorithm {
     {
         this.probNet = probNet;
         this.caseDatabase = caseDatabase;
+        this.independenceTester = new CrossEntropyIndependenceTester ();
         this.alpha = alpha;
     }
     
@@ -190,27 +195,6 @@ public abstract class LearningAlgorithm {
         return probNet;
     }
     
-    public void calculateIndependence(IndependenceTester independenceTester)  {
-    	Node srcNode, destNode;
-        int[][] cases = caseDatabase.getCases ();
-    	for (Link link : probNet.getGraph().getLinks()){
-    		srcNode = link.getNode1();
-    		destNode = link.getNode2();
-    		List<Node> destParents = new ArrayList<Node>(destNode.getParents());
-    		destParents.remove(destParents.indexOf(srcNode));
-    		double test;
-			try {
-				test = independenceTester.test (probNet, cases, srcNode, destNode, destParents);
-				link.setIndependence(test);
-			} catch (ProbNodeNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-    
-    		
-    	}
-    	
-    }
 
        
     /**
