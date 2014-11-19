@@ -603,6 +603,7 @@ public class EditorPanel extends JPanel
         {
             probNet.getPNESupport ().undo ();
             // undoManager.undo();
+            
         }
         else
         {

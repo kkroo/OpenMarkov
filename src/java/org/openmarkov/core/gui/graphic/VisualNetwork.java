@@ -364,6 +364,16 @@ public class VisualNetwork implements PNUndoableEditListener {
 	}
 
 	/**
+	 * repaints all nodes and links
+	 * pbs experiment
+	 */
+	public void repaint() {
+		paintNodes(g2);
+		paintLinks(g2);
+		//paint(g2);
+	}
+	
+	/**
 	 * Paints the nodes. The nodes are painted in reverse order of its
 	 * position in the array. It means that the selected nodes are
 	 * always shown at first plane; and the nodes with higher relevance

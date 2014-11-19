@@ -154,7 +154,7 @@ public class VisualLink extends VisualArrow {
             setLinkColor(Color.black);
         }
 
-        setStroke(new BasicStroke((float) (link.getIndependence()+1)*2));
+        setStroke(new BasicStroke((float) (link.getIndependence()/2)));
         
         boolean hasAbsoluteLinkRestriction = link.hasTotalRestriction();
         setDoubleStriped(hasAbsoluteLinkRestriction);
