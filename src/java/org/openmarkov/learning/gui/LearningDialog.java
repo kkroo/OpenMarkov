@@ -53,6 +53,7 @@ import org.openmarkov.core.gui.loader.element.OpenMarkovLogoIcon;
 import org.openmarkov.core.gui.localize.StringDatabase;
 import org.openmarkov.core.gui.plugin.ToolPlugin;
 import org.openmarkov.core.gui.window.MainPanel;
+import org.openmarkov.core.gui.window.edition.LearningPanel;
 import org.openmarkov.core.gui.window.edition.NetworkPanel;
 import org.openmarkov.core.io.database.CaseDatabase;
 import org.openmarkov.core.io.database.CaseDatabaseReader;
@@ -1273,8 +1274,9 @@ public class LearningDialog extends javax.swing.JDialog {
                 }
                 ProbNet probNet = learningManager.getLearnedNet ();
                 setProperName (probNet);
-                NetworkPanel networkPanel = MainPanel.getUniqueInstance ().getMainPanelListenerAssistant ().createNewFrame (probNet, discretizedDB);
-                probNet.getPNESupport ().addUndoableEditListener (networkPanel);
+
+                LearningPanel learningPanel = MainPanel.getUniqueInstance ().getMainPanelListenerAssistant ().createNewLearningFrame(probNet, learningAlgorithm);
+                probNet.getPNESupport ().addUndoableEditListener (learningPanel);
                 this.setVisible (false);
             }
             catch (LatentVariablesException e1)

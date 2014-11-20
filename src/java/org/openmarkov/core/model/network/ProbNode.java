@@ -10,6 +10,7 @@
 package org.openmarkov.core.model.network;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +25,7 @@ import org.openmarkov.core.model.network.potential.TablePotential;
 import org.openmarkov.core.model.network.potential.UniformPotential;
 import org.openmarkov.core.model.network.potential.operation.DiscretePotentialOperations;
 import org.openmarkov.core.model.network.potential.operation.Util;
+import org.openmarkov.learning.core.util.LearningEditProposal;
 
 
 /** A probabilistic node has a set of conditional probabilities, one variable, 
@@ -85,6 +87,8 @@ public class ProbNode implements Cloneable, PotentialsContainer {
 	 *  disk that does not have a direct connection with the attributes stored 
 	 *  in the <code>ProbNode</code> object. */
 	public Map<String, String> additionalProperties;
+
+	private Collection<LearningEditProposal> proposedEdits;
 
     // Constructor
     /** @param probNet. <code>ProbNet</code>
@@ -705,5 +709,14 @@ public class ProbNode implements Cloneable, PotentialsContainer {
         this.variable = newVariable;
         // TODO update potentials
     }
+	public void setProposedEdits(Collection<LearningEditProposal> proposals) {
+		this.proposedEdits = proposals;
+		
+	}
+	
+	public Collection<LearningEditProposal> getProposedEdits() {
+		return this.proposedEdits;
+		
+	}
     
 }

@@ -10,6 +10,7 @@
 package org.openmarkov.learning.core.algorithm;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.openmarkov.core.action.PNEdit;
@@ -111,6 +112,7 @@ public abstract class LearningAlgorithm {
         // Do nothing
     }
     
+			   
     /**
      * This method returns the best edition (and its associated score)
      * that can be done to the network that is being learnt. 
@@ -357,5 +359,18 @@ public abstract class LearningAlgorithm {
             absoluteFreqs[numValues * ((int) iCPT) + (int) cases[i][iNode]]++;
         }
         return absoluteFreqPotential;
-    }    
+    }
+
+    public void updateProposedEdits(ProbNet learnedNet, boolean onlyAllowedEdits, boolean onlyPositiveEdits)
+    {
+    	Collection<LearningEditProposal> proposals;
+    	for (Variable variable : learnedNet.getVariables()){
+    		proposals = getProposedEditsForVariable(learnedNet, variable, onlyAllowedEdits, onlyPositiveEdits);
+    		learnedNet.getProbNode(variable).setProposedEdits(proposals);
+    	}
+    }
+    
+	public abstract Collection<LearningEditProposal> getProposedEditsForVariable(
+			ProbNet learnedNet, Variable head, boolean onlyAllowedEdits,
+			boolean onlyPositiveEdits);
 }

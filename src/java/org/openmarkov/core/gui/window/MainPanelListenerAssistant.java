@@ -54,6 +54,7 @@ import org.openmarkov.core.gui.plugin.ToolPluginManager;
 import org.openmarkov.core.gui.util.PropertyNames;
 import org.openmarkov.core.gui.util.Utilities;
 import org.openmarkov.core.gui.window.dt.DecisionTreeWindow;
+import org.openmarkov.core.gui.window.edition.LearningPanel;
 import org.openmarkov.core.gui.window.edition.NetworkPanel;
 import org.openmarkov.core.gui.window.mdi.FrameContentPanel;
 import org.openmarkov.core.gui.window.mdi.MDIListener;
@@ -70,6 +71,7 @@ import org.openmarkov.core.model.network.ProbNode;
 import org.openmarkov.core.model.network.Variable;
 import org.openmarkov.core.oopn.Instance.ParameterArity;
 import org.openmarkov.core.oopn.OOPNet;
+import org.openmarkov.learning.core.algorithm.LearningAlgorithm;
 
 /**
  * This class receives the main events of the application and helps the class
@@ -684,6 +686,38 @@ public class MainPanelListenerAssistant extends WindowAdapter implements ActionL
      *            network to be painted into the frame
      * @return the network panel that is created.
      */
+
+    public LearningPanel createNewLearningFrame(ProbNet probNet, LearningAlgorithm learningAlgorithm) {
+    	LearningPanel learningPanel = null;
+        try {
+            learningPanel = new LearningPanel(probNet, mainPanel, learningAlgorithm);
+            mainPanel.getMdi().createNewFrame(learningPanel);
+            learningPanel.setContextualMenuFactory(mainPanel.getContextualMenuFactory());
+            // networkPanel.addEditionListener( mainPanel
+            // .getMainPanelMenuAssistant() );
+            learningPanel.addSelectionListener(mainPanel.getMainPanelMenuAssistant());
+            mainPanel.getMainPanelMenuAssistant().updateOptionsNewNetworkOpen();
+            mainPanel.getMainPanelMenuAssistant().updateOptionsNetworkDependent(learningPanel);
+            // mainPanel.getMainPanelMenuAssistant().updateNetworkAgents(networkPanel);
+            mainPanel.getInferenceToolBar().setCurrentEvidenceCaseName(getCurrentNetworkPanel().getCurrentCase());
+        } catch (UnsupportedOperationException e) {
+            JOptionPane.showMessageDialog(Utilities.getOwner(mainPanel),
+                    e.getMessage(),
+                    stringDatabase.getString("ErrorWindow.Title.Label"),
+                    JOptionPane.ERROR_MESSAGE);
+        }
+        return learningPanel;
+    }
+    
+    /**
+     * Creates a new frame in the workspace, suppling the network to be painted
+     * into the frame.
+     * 
+     * @param network
+     *            network to be painted into the frame
+     * @return the network panel that is created.
+     */
+
     public NetworkPanel createNewFrame(ProbNet probNet, CaseDatabase cases) {
         NetworkPanel networkPanel = null;
         try {

@@ -11,7 +11,10 @@
 package org.openmarkov.learning.algorithm.hillclimbing;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.PriorityQueue;
 
 import org.openmarkov.core.action.AddLinkEdit;
 import org.openmarkov.core.action.BaseLinkEdit;
@@ -146,7 +149,58 @@ public class HillClimbingAlgorithm extends ScoreAndSearchAlgorithm{
     {
         return lastBestEdits.contains (edit);
     }       
+
+    public Collection<LearningEditProposal> getProposedEditsForVariable(ProbNet learnedNet, 
+													   Variable head,
+    												   boolean onlyAllowedEdits, 
+    												   boolean onlyPositiveEdits)
+    {
+    	PriorityQueue<LearningEditProposal> proposals = new PriorityQueue<LearningEditProposal>(5, Collections.reverseOrder());
+    	ProbNode headNode = learnedNet.getProbNode (head);
+    	for (Variable tail : learnedNet.getVariables())
+    	{
+    		if(head.equals(tail))
+    			continue;
+            
+            ProbNode tailNode = learnedNet.getProbNode (tail);
+            
+            LearningEditProposal proposal;
+            BaseLinkEdit edit;
+            double score;
+            
+            if (!headNode.isParent(tailNode)){
+            	edit = new AddLinkEdit (learnedNet, tail, head, true);
+            	evaluateEdit(proposals, edit, onlyAllowedEdits, onlyPositiveEdits);
+            	
+            }
+            else {
+            	edit = new RemoveLinkEdit ( learnedNet, tail, head, true);
+            	evaluateEdit(proposals, edit, onlyAllowedEdits, onlyPositiveEdits);
+            	
+            	edit = new InvertLinkEdit ( learnedNet, tail, head, true);
+            	evaluateEdit(proposals, edit, onlyAllowedEdits, onlyPositiveEdits);
+            }
+    		
+    	}
+    	
+		return proposals;
+    	
+    }
     
+	private void evaluateEdit(PriorityQueue<LearningEditProposal> proposals, 
+    						  BaseLinkEdit edit,
+    						  boolean onlyAllowedEdits, 
+							  boolean onlyPositiveEdits)
+    {
+        double score = metric.getScore (edit);
+        if((!onlyAllowedEdits || isAllowed(edit)) &&
+                (!onlyPositiveEdits || score > 0)  &&
+                !isBlocked(edit))
+        {
+        	LearningEditProposal proposal = new HillClimbingEditProposal (edit, score);
+        	proposals.add(proposal);
+        }
+    }
     /**
      * Method to obtain the edit with the highest associated score.
      * @param learnedNet net to learn.
@@ -238,5 +292,6 @@ public class HillClimbingAlgorithm extends ScoreAndSearchAlgorithm{
         }
         return bestEditProposal;
     }
+
     
 }

@@ -10,6 +10,7 @@
 package org.openmarkov.learning.algorithm.pc;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,6 +38,7 @@ import org.openmarkov.core.model.graph.Link;
 import org.openmarkov.core.model.graph.Node;
 import org.openmarkov.core.model.network.ProbNet;
 import org.openmarkov.core.model.network.ProbNode;
+import org.openmarkov.core.model.network.Variable;
 import org.openmarkov.learning.algorithm.pc.independencetester.IndependenceTester;
 import org.openmarkov.learning.algorithm.pc.util.PCEditMotivation;
 import org.openmarkov.learning.algorithm.pc.util.PCCache;
@@ -791,5 +793,13 @@ public class PCAlgorithm extends IndependenceRelationsAlgorithm implements PNUnd
         lastOrientationEdits.clear();
         lastCompoundOrientationEdits.clear ();
     }
+
+	@Override
+	public Collection<LearningEditProposal> getProposedEditsForVariable(
+			ProbNet learnedNet, Variable head, boolean onlyAllowedEdits,
+			boolean onlyPositiveEdits) {
+		// TODO 
+		return null;
+	}
     
 }
