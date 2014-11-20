@@ -391,13 +391,29 @@ public class VisualNetwork implements PNUndoableEditListener {
 	 *            the graphics context in which to paint.
 	 */
 	protected void paintNodes(Graphics2D g) {
-		visualNodes = reorderVisualNodes();
-		for (int i = (visualNodes.size() - 1); i >= 0; i--) {
-			if(visualNodes.get(i).isVisible ())
-			{
-			    visualNodes.get(i).paint(g);
+		//what if selectedLinks also not null
+//		if (selectedNodes != null) {
+//			//make the selected node green
+//			//make all the other nodes grey?
+//			for (VisualNode n : visualNodes) {
+//				if (n.isSelected()) {
+//					
+//				} else {
+//					
+//				}
+//				//make them green
+//			}
+//			visualNodes = reorderVisualNodes();
+//			
+//		}else{
+			visualNodes = reorderVisualNodes();
+			for (int i = (visualNodes.size() - 1); i >= 0; i--) {
+				if(visualNodes.get(i).isVisible ())
+				{
+				    visualNodes.get(i).paint(g);
+				}
 			}
-		}
+		//}
 	}
 
 	/**
@@ -407,9 +423,17 @@ public class VisualNetwork implements PNUndoableEditListener {
 	 *            the graphics context in which to paint.
 	 */
 	protected void paintLinks(Graphics2D g) {
-
-		for (VisualLink visualLink : visualLinks) {
-			visualLink.paint(g);
+		if (selectedNodes.size() != 0) {
+			for (VisualLink visualLink : visualLinks) {
+				if (selectedNodes.contains(visualLink.getSourceNode())
+						|| selectedNodes.contains(visualLink.getDestinationNode())) {
+					visualLink.paint(g);
+				}
+			}
+		} else {
+			for (VisualLink visualLink : visualLinks) {
+				visualLink.paint(g);
+			}
 		}
 
 	}	

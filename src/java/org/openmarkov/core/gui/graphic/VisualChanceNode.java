@@ -79,6 +79,14 @@ public class VisualChanceNode extends VisualNode {
 	private static final Color ALWAYS_OBSERVED_COLOR = OpenMarkovPreferences
 			.getColor(OpenMarkovPreferences.ALWAYS_OBSERVED_VARIABLE,
 					OpenMarkovPreferences.OPENMARKOV_COLORS, new Color(128,0,0));
+	
+	/**
+	 * Color of selected nodes
+	 */
+	
+	private static final Color SELECTED_NODE_COLOR = OpenMarkovPreferences
+			.getColor(OpenMarkovPreferences.SELECTED_NODE_COLOR,
+					OpenMarkovPreferences.OPENMARKOV_COLORS, new Color(158,198,66));
 
 	/**
 	 * Color of the letters
@@ -345,7 +353,17 @@ public class VisualChanceNode extends VisualNode {
 		Shape shape = getShape(g);
 		double[] dimensions = getNodeDimensions(g);
 
-		g.setPaint(getBackgroundColor());
+		if (preResolutionFinding) {
+			g.setPaint(BACKGROUND_PRE_RESOLUTION_FINDING_COLOR);
+		} else if (postResolutionFinding && 
+				(visualNetwork.getWorkingMode() == 
+					NetworkPanel.INFERENCE_WORKING_MODE)) {
+			g.setPaint(BACKGROUND_POST_RESOLUTION_FINDING_COLOR);
+		} else if (isSelected()) {
+			g.setPaint(SELECTED_NODE_COLOR);
+		} else {
+			g.setPaint(BACKGROUND_COLOR);
+		}
 		g.fill(shape);
 		g.setPaint(FOREGROUND_COLOR);
 

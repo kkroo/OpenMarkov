@@ -68,6 +68,7 @@ public interface OpenMarkovPreferencesKeys {
 	public String TABLE_CELLS_BACKGROUND_COLOR = "table cells background";
 	public String ALWAYS_OBSERVED_VARIABLE= "always observed variable border color";
 	public String REVELATION_ARC_VARIABLE= "revelation arc color";
+	public String SELECTED_NODE_COLOR = "selected node color";
 	
 	// languages
 	public String PREFERENCE_LANGUAGE = "user prefered language";
