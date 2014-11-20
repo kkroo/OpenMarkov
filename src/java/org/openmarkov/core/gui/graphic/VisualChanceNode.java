@@ -15,10 +15,16 @@ import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.geom.Point2D;
 import java.awt.geom.RoundRectangle2D;
+import java.util.Collection;
+import java.util.PriorityQueue;
 
 import org.openmarkov.core.gui.configuration.OpenMarkovPreferences;
 import org.openmarkov.core.gui.window.edition.NetworkPanel;
+import org.openmarkov.core.model.network.ProbNet;
 import org.openmarkov.core.model.network.ProbNode;
+import org.openmarkov.learning.core.util.LearningEditMotivation;
+import org.openmarkov.learning.core.util.LearningEditProposal;
+import org.openmarkov.learning.core.util.ScoreEditMotivation;
 
 /**
  * This class is the visual representation of a chance node.
@@ -296,6 +302,31 @@ public class VisualChanceNode extends VisualNode {
 		return point;
 	}
 
+	private Color getBackgroundColor() {
+		if (preResolutionFinding) {
+			return BACKGROUND_PRE_RESOLUTION_FINDING_COLOR;
+		} else if (postResolutionFinding && 
+				(visualNetwork.getWorkingMode() == 
+					NetworkPanel.INFERENCE_WORKING_MODE)) {
+			return BACKGROUND_POST_RESOLUTION_FINDING_COLOR;
+		} else if ( !visualNetwork.getSelectedNodes().isEmpty() ) {
+			return BACKGROUND_COLOR;
+		} else {
+			double maxMotivation =  Double.NEGATIVE_INFINITY;
+			double minMotivation = Double.POSITIVE_INFINITY;
+			for (ProbNode node : visualNetwork.getNetwork().getProbNodes()){
+				PriorityQueue<LearningEditProposal> edits = (PriorityQueue<LearningEditProposal>) node.getProposedEdits();
+				double bestEditMotivation = ((ScoreEditMotivation) edits.peek().getMotivation()).getScore();
+				maxMotivation = (maxMotivation > bestEditMotivation) ? maxMotivation : bestEditMotivation;
+				minMotivation = (minMotivation < bestEditMotivation) ? minMotivation : bestEditMotivation;		
+			}
+			double bestEditMotivation = ((ScoreEditMotivation) ((PriorityQueue<LearningEditProposal>)probNode.getProposedEdits()).peek().getMotivation()).getScore();
+			double relativeMotivation = ( bestEditMotivation - minMotivation ) / (maxMotivation - minMotivation);
+			int alpha = (int) (255 * relativeMotivation);
+			Color color = new Color(BACKGROUND_COLOR.getRed(), BACKGROUND_COLOR.getGreen(), BACKGROUND_COLOR.getBlue(), alpha);
+			return color;
+		}
+	}
 	/**
 	 * Paints the visual node into the graphics object as a rounded rectangle.
 	 * 
@@ -311,15 +342,7 @@ public class VisualChanceNode extends VisualNode {
 		Shape shape = getShape(g);
 		double[] dimensions = getNodeDimensions(g);
 
-		if (preResolutionFinding) {
-			g.setPaint(BACKGROUND_PRE_RESOLUTION_FINDING_COLOR);
-		} else if (postResolutionFinding && 
-				(visualNetwork.getWorkingMode() == 
-					NetworkPanel.INFERENCE_WORKING_MODE)) {
-			g.setPaint(BACKGROUND_POST_RESOLUTION_FINDING_COLOR);
-		} else {
-			g.setPaint(BACKGROUND_COLOR);
-		}
+		g.setPaint(getBackgroundColor());
 		g.fill(shape);
 		g.setPaint(FOREGROUND_COLOR);
 
