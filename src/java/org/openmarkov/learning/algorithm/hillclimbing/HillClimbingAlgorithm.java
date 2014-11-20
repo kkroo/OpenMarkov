@@ -186,21 +186,6 @@ public class HillClimbingAlgorithm extends ScoreAndSearchAlgorithm{
 		return proposals;
     	
     }
-    
-	private void evaluateEdit(PriorityQueue<LearningEditProposal> proposals, 
-    						  BaseLinkEdit edit,
-    						  boolean onlyAllowedEdits, 
-							  boolean onlyPositiveEdits)
-    {
-        double score = metric.getScore (edit);
-        if((!onlyAllowedEdits || isAllowed(edit)) &&
-                (!onlyPositiveEdits || score > 0)  &&
-                !isBlocked(edit))
-        {
-        	LearningEditProposal proposal = new HillClimbingEditProposal (edit, score);
-        	proposals.add(proposal);
-        }
-    }
 
     
     /**
@@ -246,6 +231,20 @@ public class HillClimbingAlgorithm extends ScoreAndSearchAlgorithm{
     	return bestEditProposal;
     }
     
+	private void evaluateEdit(PriorityQueue<LearningEditProposal> proposals, 
+    						  BaseLinkEdit edit,
+    						  boolean onlyAllowedEdits, 
+							  boolean onlyPositiveEdits)
+    {
+        double score = metric.getScore (edit);
+        if((!onlyAllowedEdits || isAllowed(edit)) &&
+                (!onlyPositiveEdits || score > 0)  &&
+                !isBlocked(edit))
+        {
+        	LearningEditProposal proposal = new HillClimbingEditProposal (edit, score);
+        	proposals.add(proposal);
+        }
+    }
     /**
      * Method to obtain the edit with the highest associated score.
      * @param learnedNet net to learn.
