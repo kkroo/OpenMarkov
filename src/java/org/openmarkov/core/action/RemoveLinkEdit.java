@@ -40,11 +40,11 @@ public class RemoveLinkEdit extends BaseLinkEdit {
 	 * /**
 	 * parent node
 	 */
-	protected ProbNode node1;
+	public ProbNode node1;
 	/**
 	 * child node
 	 */
-	protected ProbNode node2;
+	public ProbNode node2;
 
 	/**
 	 * The new <code>Potential</code> of the second node

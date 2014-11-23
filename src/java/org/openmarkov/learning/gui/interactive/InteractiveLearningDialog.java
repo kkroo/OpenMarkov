@@ -85,6 +85,7 @@ public class InteractiveLearningDialog extends javax.swing.JDialog implements Ed
         chkOnlyAllowedEdits = new javax.swing.JCheckBox();
         chkOnlyPositiveEdits = new javax.swing.JCheckBox();
         jScrollPane1 = new javax.swing.JScrollPane();
+        jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         btnRedo = new javax.swing.JButton();
         btnBlockEdit = new javax.swing.JButton();
@@ -218,7 +219,7 @@ public class InteractiveLearningDialog extends javax.swing.JDialog implements Ed
                         .addComponent(btnShowBlocked, javax.swing.GroupLayout.Alignment.TRAILING))
                     .addComponent(chkOnlyPositiveEdits)
                     .addComponent(chkOnlyAllowedEdits))
-                .addContainerGap())
+                .addContainerGap())           
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -429,6 +430,7 @@ public class InteractiveLearningDialog extends javax.swing.JDialog implements Ed
     private javax.swing.JCheckBox chkOnlyAllowedEdits;
     private javax.swing.JCheckBox chkOnlyPositiveEdits;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblScore;
     // End of variables declaration//GEN-END:variables

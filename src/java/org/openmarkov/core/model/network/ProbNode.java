@@ -42,7 +42,7 @@ public class ProbNode implements Cloneable, PotentialsContainer {
 	// Attributes/
 	/** @frozen
 	 * <code>node</code> that supplies the structural aspect. */
-	protected Node node;
+	public Node node;
 
 	/** @frozen */
 	protected NodeType nodeType;

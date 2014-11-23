@@ -32,6 +32,11 @@ import org.openmarkov.core.model.network.potential.TablePotential;
  * @see openmarkov.graphs.Graph
  */
 public class Link {
+	
+	private static final int NON_LOOKAHEAD = 0;
+	private static final int LOOKAHEAD_ADD = 1;
+	private static final int LOOKAHEAD_DELETE = 2;
+	private static final int LOOKAHEAD_INVERT = 3;
 
 	// Attributes
 	/** The first node. If the link is directed, this node is the parent. */
@@ -61,6 +66,11 @@ public class Link {
 	 * List of revealing values of type interval
 	 */
 	private List<PartitionedInterval> revealingIntervals;
+	
+	/*****
+	 * state of lookahead.
+	 */
+	private int lookAheadState;
 
 	// Constructors
 	/**
@@ -86,6 +96,7 @@ public class Link {
 		node2.uf_addLink(this);
 		revealingStates = new ArrayList<State>();
 		revealingIntervals = new ArrayList<PartitionedInterval>();
+		lookAheadState = 0;
 
 	}
 
@@ -385,5 +396,21 @@ public class Link {
 	public void removeRevealingInterval(PartitionedInterval interval) {
 		this.revealingIntervals.remove(interval);
 	}
+	
+	/*****
+	 * Set lookahead state
+	 */
+	public void setLookAhead(int state) {
+		this.lookAheadState = state;
+	}
+	
+	/**
+	 * Get lookahead state
+	 */
+	public int getLookAhead() {
+		return this.lookAheadState;
+	}
+	
+	
 
 }

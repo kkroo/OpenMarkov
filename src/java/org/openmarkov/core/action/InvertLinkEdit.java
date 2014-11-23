@@ -28,11 +28,11 @@ public class InvertLinkEdit extends BaseLinkEdit {
     /**
      * parent node
      */
-    protected ProbNode node1;
+    public ProbNode node1;
     /**
      * child node
      */
-    protected ProbNode node2;
+    public ProbNode node2;
     
     /**
      * Parent node's old potentials

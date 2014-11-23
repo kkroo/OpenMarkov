@@ -10,10 +10,12 @@
 package org.openmarkov.core.gui.graphic;
 
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.PriorityQueue;
@@ -22,9 +24,11 @@ import java.util.Set;
 import javax.swing.event.UndoableEditEvent;
 
 import org.openmarkov.core.action.AddLinkEdit;
+import org.openmarkov.core.action.InvertLinkEdit;
 import org.openmarkov.core.action.PNESupport;
 import org.openmarkov.core.action.PNEdit;
 import org.openmarkov.core.action.PNUndoableEditListener;
+import org.openmarkov.core.action.RemoveLinkEdit;
 import org.openmarkov.core.exception.CanNotDoEditException;
 import org.openmarkov.core.exception.ConstraintViolationException;
 import org.openmarkov.core.exception.DoEditException;
@@ -40,6 +44,8 @@ import org.openmarkov.core.oopn.Instance.ParameterArity;
 import org.openmarkov.core.oopn.action.MarkAsInputEdit;
 import org.openmarkov.learning.core.util.LearningEditProposal;
 import org.openmarkov.learning.core.util.ScoreEditMotivation;
+import org.openmarkov.learning.core.util.LearningEditMotivation;
+import org.openmarkov.learning.core.util.LearningEditProposal;
 
 
 
@@ -67,6 +73,8 @@ public class VisualNetwork implements PNUndoableEditListener {
 	// TODO este valor debe asignarse usando las preferencias de usuario de
 	// visualización de redes
 	protected boolean byTitle = false;
+	
+	protected List<VisualLink> proposedLinks = new ArrayList<VisualLink>();
 	
 	/**
 	 * List of visual nodes.
@@ -236,26 +244,28 @@ public class VisualNetwork implements PNUndoableEditListener {
 		visualLinks.removeAll(vLinksToDelete);
 		visualNodesCount = visualNodes.size();
 		for (Link link : links) {
-			i = 0;
-			vNode1 = null;
-			vNode2 = null;
-			while ((i < visualNodesCount) && ((vNode1 == null) || (vNode2 == null))) {
-				if (vNode1 == null) {
-					if (link.getNode1().equals(
-						visualNodes.get(i).getProbNode().getNode())) {
-						vNode1 = visualNodes.get(i);
+			if (link.getLookAhead() == 0) {
+				i = 0;
+				vNode1 = null;
+				vNode2 = null;
+				while ((i < visualNodesCount) && ((vNode1 == null) || (vNode2 == null))) {
+					if (vNode1 == null) {
+						if (link.getNode1().equals(
+							visualNodes.get(i).getProbNode().getNode())) {
+							vNode1 = visualNodes.get(i);
+						}
 					}
-				}
-				if (vNode2 == null) {
-					if (link.getNode2().equals(
-						visualNodes.get(i).getProbNode().getNode())) {
-						vNode2 = visualNodes.get(i);
+					if (vNode2 == null) {
+						if (link.getNode2().equals(
+							visualNodes.get(i).getProbNode().getNode())) {
+							vNode2 = visualNodes.get(i);
+						}
 					}
+					i++;
 				}
-				i++;
-			}
-			if ((vNode1 != null) && (vNode2 != null)) {
-				visualLinks.add(new VisualLink(link, vNode1, vNode2));
+				if ((vNode1 != null) && (vNode2 != null)) {
+					visualLinks.add(new VisualLink(link, vNode1, vNode2));
+				}
 			}
 		}
 		
@@ -424,13 +434,68 @@ public class VisualNetwork implements PNUndoableEditListener {
 	 */
 	protected void paintLinks(Graphics2D g) {
 		if (selectedNodes.size() != 0) {
-			for (VisualLink visualLink : visualLinks) {
-				if (selectedNodes.contains(visualLink.getSourceNode())
-						|| selectedNodes.contains(visualLink.getDestinationNode())) {
-					visualLink.paint(g);
+			for (VisualNode n : selectedNodes){
+				// iterate through all the rest of the node and find what's the best move between them
+				Collection<LearningEditProposal> proposals = n.probNode.getProposedEdits();
+				for (LearningEditProposal proposal : proposals) {
+					PNEdit proposedEdit = proposal.getEdit();
+					LearningEditMotivation proposedEditMotivation = proposal.getMotivation();
+					if (proposedEdit instanceof AddLinkEdit) {
+						AddLinkEdit newEdit = (AddLinkEdit) proposedEdit;
+						VisualNode source = null;
+						VisualNode destination = null;
+						for (VisualNode node : visualNodes) {
+							if (newEdit.node1.equals(node.probNode)) {
+								source = node;
+							}
+							if (newEdit.node2.equals(node.probNode	)) {
+								destination = node;
+							}
+						}
+						Link l = new Link(newEdit.node1.node, newEdit.node2.node, true);
+						l.setLookAhead(1);
+						VisualLink tempLink = new VisualLink(l, source, destination);
+						tempLink.paint(g);
+						probNet.removeLink(newEdit.node1, newEdit.node2, true);
+					} else if (proposedEdit instanceof RemoveLinkEdit) {
+						RemoveLinkEdit newEdit = (RemoveLinkEdit) proposedEdit;
+						VisualNode source = null;
+						VisualNode destination = null;
+						for (VisualNode node : visualNodes) {
+							if (newEdit.node1.equals(node.probNode)) {
+								source = node;
+							}
+							if (newEdit.node2.equals(node.probNode	)) {
+								destination = node;
+							}
+						}
+						Link l = new Link(newEdit.node1.node, newEdit.node2.node, true);
+						l.setLookAhead(2);
+						VisualLink tempLink = new VisualLink(l, source, destination);
+						tempLink.paint(g);
+						probNet.removeLink(newEdit.node1, newEdit.node2, true);
+					} else {
+						InvertLinkEdit newEdit = (InvertLinkEdit) proposedEdit;
+						VisualNode source = null;
+						VisualNode destination = null;
+						for (VisualNode node : visualNodes) {
+							if (newEdit.node1.equals(node.probNode)) {
+								source = node;
+							}
+							if (newEdit.node2.equals(node.probNode	)) {
+								destination = node;
+							}
+						}
+						Link l = new Link(newEdit.node1.node, newEdit.node2.node, true);
+						l.setLookAhead(3);
+						VisualLink tempLink = new VisualLink(l, source, destination);
+						tempLink.paint(g);
+						probNet.removeLink(newEdit.node1, newEdit.node2, true);
+					}
 				}
 			}
-		} else {
+		}
+		 else {
 			for (VisualLink visualLink : visualLinks) {
 				visualLink.paint(g);
 			}

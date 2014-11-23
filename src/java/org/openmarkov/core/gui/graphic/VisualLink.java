@@ -25,6 +25,12 @@ import org.openmarkov.core.model.graph.Link;
  * @version 1.0
  */
 public class VisualLink extends VisualArrow {
+	
+	private static final int NON_LOOKAHEAD = 0;
+	private static final int LOOKAHEAD_ADD = 1;
+	private static final int LOOKAHEAD_DELETE = 2;
+	private static final int LOOKAHEAD_INVERT = 3;
+
 
     /**
      * Color of the border when the node is alwaysObserved.
@@ -158,12 +164,22 @@ public class VisualLink extends VisualArrow {
         
         
         if (link.hasRevealingConditions()) {
-            setLinkColor(REVELATION_ARC_COLOR);
-        } else {
-            setLinkColor(Color.black);
+            setLinkColor(REVELATION_ARC_COLOR);	
+        } else if (link.getLookAhead() != 0) {
+        	if (link.getLookAhead() == LOOKAHEAD_ADD) {
+        		setLinkColor(Color.green);
+        	} else if (link.getLookAhead() == LOOKAHEAD_DELETE) {
+        		setLinkColor(Color.red);
+        	} else if(link.getLookAhead() == LOOKAHEAD_INVERT) {
+        		setLinkColor(Color.blue);
+        	}
         }
 
         //setStroke(new BasicStroke((float) ((link.getIndependence()/100)*max_stroke_width)));
+
+        else {
+            setLinkColor(Color.black);
+        }	
         
         boolean hasAbsoluteLinkRestriction = link.hasTotalRestriction();
         setDoubleStriped(hasAbsoluteLinkRestriction);

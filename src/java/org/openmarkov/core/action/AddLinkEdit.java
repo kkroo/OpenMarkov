@@ -32,7 +32,7 @@ public class AddLinkEdit extends BaseLinkEdit {
     /**
      * Resulting link of addition or removal.
      */
-    protected Link link;
+    public Link link;
     /**
      * The last <code>Potential</code> of the second node before the edition
      */
@@ -44,11 +44,11 @@ public class AddLinkEdit extends BaseLinkEdit {
     /**
      * parent node
      */
-    protected ProbNode node1;
+    public ProbNode node1;
     /**
      * child node
      */
-    protected ProbNode node2;
+    public ProbNode node2;
 
     // Constructor
     /** @param probNet <code>ProbNet</code>
