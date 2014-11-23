@@ -47,8 +47,14 @@ public class VisualArrow extends VisualElement {
      * This constant contains the value of the units that the line must
      * increment its width qto be selected with the mouse.
      */
-    private static final double WIDTH_LINE_TO_SELECT = 2;
-
+    private static double WIDTH_LINE_TO_SELECT;
+    //private static final double WIDTH_LINE_TO_SELECT = 2;
+    
+    /**
+     * Highest stroke width. Use "Independence" to get % of this max width
+     */
+    private static final float max_stroke_width = 25;
+    
     /***
      * Heigth of the stripe
      */
@@ -135,6 +141,10 @@ public class VisualArrow extends VisualElement {
 
     }
 
+    public void setWidthToSelect(double x) {
+    	WIDTH_LINE_TO_SELECT = (x/100)*max_stroke_width;
+    }
+    
     /**
      * Returns the shape of the arrow so that it can be selected with the mouse.
      * 

@@ -128,6 +128,7 @@ public class VisualLink extends VisualArrow {
                 source.getTemporalPosition().getY()));
         setEndPoint(new Point2D.Double(destination.getTemporalPosition().getX(),
                 destination.getTemporalPosition().getY()));
+        setWidthToSelect(link.getIndependence());
         return super.getShape(g);
     }
 
