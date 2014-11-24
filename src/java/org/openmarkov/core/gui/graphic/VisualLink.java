@@ -150,17 +150,20 @@ public class VisualLink extends VisualArrow {
                     source.getTemporalPosition().getY()),
                     new Point2D.Double(destination.getTemporalPosition().getX(),
                             destination.getTemporalPosition().getY()));
+            //setStroke(new BasicStroke((float) ((link.getIndependence()/100)*max_stroke_width)));
         } catch (IllegalArgumentException e) {
 
             return;
         }
+        
+        
         if (link.hasRevealingConditions()) {
             setLinkColor(REVELATION_ARC_COLOR);
         } else {
             setLinkColor(Color.black);
         }
 
-        setStroke(new BasicStroke((float) ((link.getIndependence()/100)*max_stroke_width)));
+        //setStroke(new BasicStroke((float) ((link.getIndependence()/100)*max_stroke_width)));
         
         boolean hasAbsoluteLinkRestriction = link.hasTotalRestriction();
         setDoubleStriped(hasAbsoluteLinkRestriction);
@@ -168,6 +171,8 @@ public class VisualLink extends VisualArrow {
         setStartPoint(source.getCutPoint(line, g));
         setEndPoint(destination.getCutPoint(line, g));
 
+        setIndependence((float) link.getIndependence());
+		//String foo = this.source.probNode.getName(); debug statement 
         super.paint(g);
         
     }
