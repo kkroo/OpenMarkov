@@ -102,12 +102,16 @@ public class ProbNet implements Cloneable {
     private State[]                    defaultStates        = { new State("absent"),
             new State("present")                           };
 
+    /** Number of steps looked ahead */
+    private int lookAheadSteps;
+    
     // Constructors
     public ProbNet(NetworkType networkType) {
         this.graph = new Graph();
-        this.pNESupport = new PNESupport(false);
+        this.setpNESupport(new PNESupport(false));
         this.constraints = new ArrayList<PNConstraint>();
         this.probNodeDepot = new ProbNodeDepot();
+        this.lookAheadSteps = 0;
         try {
             this.setNetworkType(networkType);
         } catch (ConstraintViolationException e) {
@@ -138,8 +142,8 @@ public class ProbNet implements Cloneable {
     public void doEdit(PNEdit edit)
             throws ConstraintViolationException, CanNotDoEditException,
             NonProjectablePotentialException, WrongCriterionException, DoEditException {
-        pNESupport.announceEdit(edit);
-        pNESupport.doEdit(edit);
+        getpNESupport().announceEdit(edit);
+        getpNESupport().doEdit(edit);
     }
 
     /**
@@ -166,7 +170,7 @@ public class ProbNet implements Cloneable {
                         + " to this probNet.");
             }
             constraints.add(constraint);
-            pNESupport.addUndoableEditListener(constraint);
+            getpNESupport().addUndoableEditListener(constraint);
         }
     }
 
@@ -199,7 +203,7 @@ public class ProbNet implements Cloneable {
     public void removeConstraint(PNConstraint constraint) {
         if (constraints.contains(constraint)) {
             constraints.remove(constraint);
-            pNESupport.removeUndoableEditListener(constraint);
+            getpNESupport().removeUndoableEditListener(constraint);
         }
     }
 
@@ -441,7 +445,7 @@ public class ProbNet implements Cloneable {
             }
         }
         // copy listeners
-        copyNet.getPNESupport().setListeners(pNESupport.getListeners());
+        copyNet.getPNESupport().setListeners(getpNESupport().getListeners());
         // Copy additionalProperties
         Set<String> keys = additionalProperties.keySet();
         HashMap<String, String> copyProperties = new HashMap<String, String>();
@@ -1343,7 +1347,7 @@ public class ProbNet implements Cloneable {
     }
 
     public PNESupport getPNESupport() {
-        return pNESupport;
+        return getpNESupport();
     }
 
     /** @return String */
@@ -1502,4 +1506,27 @@ public class ProbNet implements Cloneable {
     public void setAgents(List<StringWithProperties> agents) {
         this.agents = agents;
     }
+    
+    /**
+     * set Look ahead steps
+     */
+    public void setLookAheadSteps(int num) {
+    	lookAheadSteps = num;
+    }
+    
+    /**
+     * get look ahead steps
+     * @return
+     */
+    public int getLookAheadSteps() {
+    	return lookAheadSteps;
+    }
+
+	public PNESupport getpNESupport() {
+		return pNESupport;
+	}
+
+	public void setpNESupport(PNESupport pNESupport) {
+		this.pNESupport = pNESupport;
+	}
 }

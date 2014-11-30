@@ -21,15 +21,22 @@ import java.util.List;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
 
 import org.apache.commons.io.FilenameUtils;
+import org.openmarkov.core.exception.CanNotDoEditException;
 import org.openmarkov.core.exception.CanNotWriteNetworkToFileException;
+import org.openmarkov.core.exception.ConstraintViolationException;
+import org.openmarkov.core.exception.DoEditException;
 import org.openmarkov.core.exception.IncompatibleEvidenceException;
 import org.openmarkov.core.exception.InvalidStateException;
+import org.openmarkov.core.exception.NonProjectablePotentialException;
 import org.openmarkov.core.exception.NotRecognisedNetworkFileExtensionException;
 import org.openmarkov.core.exception.ProbNodeNotFoundException;
+import org.openmarkov.core.exception.WrongCriterionException;
 import org.openmarkov.core.gui.configuration.LastOpenFiles;
 import org.openmarkov.core.gui.configuration.OpenMarkovPreferences;
 import org.openmarkov.core.gui.costeffectiveness.CostEffectivenessAnalysis;
@@ -72,6 +79,7 @@ import org.openmarkov.core.model.network.Variable;
 import org.openmarkov.core.oopn.Instance.ParameterArity;
 import org.openmarkov.core.oopn.OOPNet;
 import org.openmarkov.learning.core.algorithm.LearningAlgorithm;
+import org.openmarkov.learning.core.util.LearningEditProposal;
 
 /**
  * This class receives the main events of the application and helps the class
@@ -94,7 +102,7 @@ import org.openmarkov.learning.core.algorithm.LearningAlgorithm;
  *          evidence cases.
  */
 public class MainPanelListenerAssistant extends WindowAdapter implements ActionListener,
-        MDIListener, PropertyNames {
+        MDIListener, PropertyNames, DocumentListener {
     /**
      * Main panel which this object helps.
      */
@@ -319,6 +327,85 @@ public class MainPanelListenerAssistant extends WindowAdapter implements ActionL
             toggleDecisionTree(this.getCurrentNetworkPanel().getProbNet());
         } else if (actionCommand.equals(ActionCommands.NEXT_SLICE_NODE)) {
             this.getCurrentNetworkPanel().createNextSliceNode();
+        } else if (actionCommand.equals(ActionCommands.LOOK_AHEAD)) {
+        	//create lookAhead Graph
+        	LearningPanel lp = (LearningPanel) this.getCurrentNetworkPanel();
+        	LearningAlgorithm la = lp.getLearningAlgorithm();
+        	LearningEditProposal curr = la.getBestEdit(true, true);
+        	ProbNet pn = lp.probNet; 
+        	int k = pn.getLookAheadSteps();
+        	pn.setLookAheadSteps(k);
+        	for (int i = k; i >= 0; i--) {
+        		if (curr != null) {
+        			//apply edits
+        			//Pop up window if no next steps?
+        			try {
+        				//Dont add directly to probNet, create visual links
+						pn.doEdit(curr.getEdit());
+					} catch (ConstraintViolationException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (CanNotDoEditException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (NonProjectablePotentialException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (WrongCriterionException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (DoEditException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+        		}
+        		curr = la.getNextEdit(true, true);
+        	}
+        	
+        } else if (actionCommand.equals(ActionCommands.LOOK_AHEAD_RESET)) {
+        	//look ahead reset
+        	//create an arrayList of history?
+        	ProbNet pn = this.getCurrentNetworkPanel().probNet;
+        	int stepsToReset = pn.getLookAheadSteps();
+        	while (stepsToReset >= 0) {
+        		pn.getpNESupport().undo();
+        		stepsToReset --;
+        	}
+        	pn.setLookAheadSteps(0);
+        } else if (actionCommand.equals(ActionCommands.LOOK_AHEAD_APPLY_EDIT)) {
+        	//look ahead apply edit
+        	LearningPanel lp = (LearningPanel) this.getCurrentNetworkPanel();
+        	LearningAlgorithm la = lp.getLearningAlgorithm();
+        	LearningEditProposal curr = la.getBestEdit(true, true);
+        	ProbNet pn = lp.probNet; 
+        	int k = pn.getLookAheadSteps();
+        	pn.setLookAheadSteps(k);
+        	for (int i = k; i >= 0; i--) {
+        		if (curr != null) {
+        			//apply edits
+        			//Pop up window if no next steps?
+        			try {
+        				//Dont add directly to probNet
+						pn.doEdit(curr.getEdit());
+					} catch (ConstraintViolationException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (CanNotDoEditException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (NonProjectablePotentialException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (WrongCriterionException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (DoEditException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+        		}
+        		curr = la.getNextEdit(true, true);
+        	}
         } else {
             ToolPluginManager.getInstance().processCommand(actionCommand, mainPanel.getMainFrame());
         }
@@ -1347,5 +1434,24 @@ public class MainPanelListenerAssistant extends WindowAdapter implements ActionL
             }
         }
     }
+
+	@Override
+	public void insertUpdate(DocumentEvent e) {
+		// TODO Auto-generated method stub
+		System.out.println("blah");		
+		
+	}
+
+	@Override
+	public void removeUpdate(DocumentEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void changedUpdate(DocumentEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

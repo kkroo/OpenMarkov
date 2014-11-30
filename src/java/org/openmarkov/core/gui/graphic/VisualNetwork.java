@@ -425,6 +425,20 @@ public class VisualNetwork implements PNUndoableEditListener {
 			}
 		//}
 	}
+	
+	
+	/**
+	 * Paints look ahead links
+	 */
+	
+	protected void paintLookAheadLinks(Graphics2D g, int steps) {
+		//paint links, and then save it into an arrayList
+		
+		//find all proposals, link, paint them, and  
+		
+	
+		
+	}
 
 	/**
 	 * Paints the links.

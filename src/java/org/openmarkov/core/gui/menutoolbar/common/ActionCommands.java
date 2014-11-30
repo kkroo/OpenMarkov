@@ -486,7 +486,26 @@ public class ActionCommands {
 	/**
      * Action invoked when the user selects temporal evolution menu item
      */
-    public static final String NEXT_SLICE_NODE = "Edit.NextSliceNode";    	
+    public static final String NEXT_SLICE_NODE = "Edit.NextSliceNode";    
+    
+    /**
+     * Action invoked when the user want to see lookahead graph
+     */
+    public static final String LOOK_AHEAD ="LookAhead";
+    
+    /**
+     * Action invoked when the user want to reset lookahead graph
+     */
+    
+    public static final String LOOK_AHEAD_RESET = "LookAheadReset";
+    
+    /**
+     * Action invoked when the user want to apply edits in the lookahead graph
+     */
+    
+    public static final String LOOK_AHEAD_APPLY_EDIT = "LookAheadApplyEdit";
+    		
+    		
 
 	/**
 	 * Checks if the action command corresponds to a zoom action command.

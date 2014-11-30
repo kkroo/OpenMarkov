@@ -46,13 +46,18 @@ public class LearningPanel extends NetworkPanel {
         }
     }
     
+
     private void recomputeProposedEdits()
     {
     	boolean onlyPositiveEdits = true;
     	learningAlgorithm.updateProposedEdits(getProbNet(), true, onlyPositiveEdits);
     	getEditorPanel().getVisualNetwork().resetMotivationExtrema();
     	calculateIndependence();
-
     }
+    	
+    public LearningAlgorithm getLearningAlgorithm() {
+    	return this.learningAlgorithm;
+    }
+
 
 }

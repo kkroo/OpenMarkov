@@ -26,6 +26,7 @@ import org.openmarkov.core.gui.menutoolbar.menu.MainMenu;
 import org.openmarkov.core.gui.menutoolbar.plugin.ToolbarManager;
 import org.openmarkov.core.gui.menutoolbar.toolbar.EditionToolBar;
 import org.openmarkov.core.gui.menutoolbar.toolbar.InferenceToolBar;
+import org.openmarkov.core.gui.menutoolbar.toolbar.LookAheadToolBar;
 import org.openmarkov.core.gui.menutoolbar.toolbar.StandardToolBar;
 import org.openmarkov.core.gui.window.edition.NetworkPanel;
 import org.openmarkov.core.gui.window.mdi.MDI;
@@ -81,6 +82,11 @@ public class MainPanel extends JPanel {
 	 * Inference toolbar.
 	 */
 	private InferenceToolBar inferenceToolBar = null;
+	
+	/**
+	 * Look Ahead toolbar 
+	 */
+	private LookAheadToolBar lookAheadToolBar = null;
 	
 	/**
 	 * Object that supplies the contextual menus.
@@ -274,6 +280,7 @@ public class MainPanel extends JPanel {
 			toolBarPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 			toolBarPanel.add(getStandardToolBar());
 			toolBarPanel.add(getEditionToolBar());
+			toolBarPanel.add(getLookAheadToolBar());
 		}
 
 		return toolBarPanel;	
@@ -359,6 +366,18 @@ public class MainPanel extends JPanel {
 
 		return editionToolBar;
 
+	}
+	
+	/**
+	 * This method initialized lookaheadToolBar
+	 */
+	public LookAheadToolBar getLookAheadToolBar() {
+		
+		if (lookAheadToolBar == null) {
+			lookAheadToolBar = new LookAheadToolBar(mainPanelListenerAssistant); 
+		}
+		
+		return lookAheadToolBar;
 	}
 	
 	/**
