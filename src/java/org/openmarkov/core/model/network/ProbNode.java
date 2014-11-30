@@ -14,6 +14,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.PriorityQueue;
 
 import org.openmarkov.core.exception.NonProjectablePotentialException;
 import org.openmarkov.core.exception.WrongCriterionException;
@@ -26,6 +27,7 @@ import org.openmarkov.core.model.network.potential.UniformPotential;
 import org.openmarkov.core.model.network.potential.operation.DiscretePotentialOperations;
 import org.openmarkov.core.model.network.potential.operation.Util;
 import org.openmarkov.learning.core.util.LearningEditProposal;
+import org.openmarkov.learning.core.util.ScoreEditMotivation;
 
 
 /** A probabilistic node has a set of conditional probabilities, one variable, 
@@ -88,7 +90,7 @@ public class ProbNode implements Cloneable, PotentialsContainer {
 	 *  in the <code>ProbNode</code> object. */
 	public Map<String, String> additionalProperties;
 
-	private Collection<LearningEditProposal> proposedEdits;
+	private Collection<LearningEditProposal> proposedEdits = new PriorityQueue<LearningEditProposal>();
 
     // Constructor
     /** @param probNet. <code>ProbNet</code>
@@ -716,7 +718,14 @@ public class ProbNode implements Cloneable, PotentialsContainer {
 	
 	public Collection<LearningEditProposal> getProposedEdits() {
 		return this.proposedEdits;
-		
+	}
+	
+	public double getBestEditMotivation() {
+		PriorityQueue<LearningEditProposal> editQueue = (PriorityQueue<LearningEditProposal>) getProposedEdits();
+		if (editQueue == null || editQueue.isEmpty()) {
+			return 0;
+		}
+		return ((ScoreEditMotivation) editQueue.peek().getMotivation()).getScore();
 	}
     
 }

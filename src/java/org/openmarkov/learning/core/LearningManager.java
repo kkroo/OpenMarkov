@@ -219,7 +219,6 @@ public class LearningManager {
         DoEditException, NormalizeNullVectorException
     {
         this.learnedNet.doEdit (edit);
-        learningAlgorithm.parametricLearning ();
     }
     
     /**

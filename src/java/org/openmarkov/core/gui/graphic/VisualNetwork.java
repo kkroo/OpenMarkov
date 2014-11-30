@@ -16,6 +16,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.PriorityQueue;
 import java.util.Set;
 
 import javax.swing.event.UndoableEditEvent;
@@ -37,6 +38,8 @@ import org.openmarkov.core.model.network.ProbNet;
 import org.openmarkov.core.model.network.ProbNode;
 import org.openmarkov.core.oopn.Instance.ParameterArity;
 import org.openmarkov.core.oopn.action.MarkAsInputEdit;
+import org.openmarkov.learning.core.util.LearningEditProposal;
+import org.openmarkov.learning.core.util.ScoreEditMotivation;
 
 
 
@@ -112,6 +115,10 @@ public class VisualNetwork implements PNUndoableEditListener {
 		new HashSet<SelectionListener>();
 
 	protected Graphics2D g2;
+
+	private double maxMotivation = Double.POSITIVE_INFINITY;
+
+	private double minMotivation = Double.NEGATIVE_INFINITY;
 
 	//private LinkWrapper linkWrapper;
 	/**
@@ -1418,5 +1425,43 @@ public class VisualNetwork implements PNUndoableEditListener {
     {
         setSelectedAllObjects (false);
         setSelectedElement (selectedElement, true);
+    }
+    
+    public double getMinMotivation()
+    {
+    	if (minMotivation == Double.NEGATIVE_INFINITY){
+    		computeMotivationExtrema();
+    	}
+    	return minMotivation;
+    }
+    
+    public double getMaxMotivation()
+    {
+    	if (maxMotivation == Double.POSITIVE_INFINITY){
+    		computeMotivationExtrema();
+    	}
+    	return maxMotivation;
+    }
+    
+    public void computeMotivationExtrema(){
+		maxMotivation =  Double.NEGATIVE_INFINITY;
+		minMotivation = Double.POSITIVE_INFINITY;
+		double bestEditMotivationScore;
+		for (ProbNode node : getNetwork().getProbNodes()){
+			PriorityQueue<LearningEditProposal> edits = (PriorityQueue<LearningEditProposal>) node.getProposedEdits();
+			if (edits == null || edits.isEmpty())
+				bestEditMotivationScore = 0;
+			else {
+				ScoreEditMotivation bestEditMotivation = (ScoreEditMotivation) edits.peek().getMotivation();
+				bestEditMotivationScore = bestEditMotivation.getScore();
+			}
+			maxMotivation = (maxMotivation > bestEditMotivationScore) ? maxMotivation : bestEditMotivationScore;
+			minMotivation = (minMotivation < bestEditMotivationScore) ? minMotivation : bestEditMotivationScore;		
+		}
+    }
+    
+    public void resetMotivationExtrema() {
+    	maxMotivation = Double.POSITIVE_INFINITY;
+    	minMotivation = Double.NEGATIVE_INFINITY;
     }
 }
