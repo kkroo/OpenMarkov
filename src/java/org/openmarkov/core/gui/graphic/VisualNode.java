@@ -40,7 +40,13 @@ public abstract class VisualNode extends VisualElement {
 	 * Font type Helvetica, bold, size 15.
 	 */
 	protected static final Font FONT_HELVETICA =
-		new Font("Helvetica", Font.BOLD, 15);
+			new Font("Helvetica", Font.BOLD, 15);
+
+	/**
+	 * Font type Helvetica, normal, size 12.
+	 */
+	protected static final Font FONT_HELVETICA_SMALL =
+			new Font("Helvetica", Font.PLAIN, 12);
 
 	/**
 	 * Default width of a node when it is contracted. It is the width that it

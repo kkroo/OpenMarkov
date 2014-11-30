@@ -11,12 +11,15 @@ package org.openmarkov.core.gui.graphic;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.geom.Point2D;
 import java.awt.geom.RoundRectangle2D;
 import java.util.Collection;
 import java.util.PriorityQueue;
+
+import javax.swing.JPanel;
 
 import org.openmarkov.core.gui.configuration.OpenMarkovPreferences;
 import org.openmarkov.core.gui.window.edition.NetworkPanel;
@@ -141,6 +144,12 @@ public class VisualChanceNode extends VisualNode {
 			} else {
 				width = textWidth + 2 * HORIZONTAL_SPACE_TO_TEXT;
 			}
+		}
+		double bestMotivation = probNode.getBestEditMotivation();
+		if ( bestMotivation != 0){
+			String motivationText = "Proposed edits: " + probNode.getProposedEdits().size() + " (+" + String.format("%.2f", bestMotivation) + ")";		
+			height += getHeight(motivationText, g);
+			width = Math.max(getWidth(motivationText, g), width);
 		}
 
 		// for visualization purposes the position is temporal
@@ -312,16 +321,10 @@ public class VisualChanceNode extends VisualNode {
 		} else if ( !visualNetwork.getSelectedNodes().isEmpty() ) {
 			return BACKGROUND_COLOR;
 		} else {
-			double maxMotivation =  Double.NEGATIVE_INFINITY;
-			double minMotivation = Double.POSITIVE_INFINITY;
-			for (ProbNode node : visualNetwork.getNetwork().getProbNodes()){
-				PriorityQueue<LearningEditProposal> edits = (PriorityQueue<LearningEditProposal>) node.getProposedEdits();
-				double bestEditMotivation = ((ScoreEditMotivation) edits.peek().getMotivation()).getScore();
-				maxMotivation = (maxMotivation > bestEditMotivation) ? maxMotivation : bestEditMotivation;
-				minMotivation = (minMotivation < bestEditMotivation) ? minMotivation : bestEditMotivation;		
-			}
-			double bestEditMotivation = ((ScoreEditMotivation) ((PriorityQueue<LearningEditProposal>)probNode.getProposedEdits()).peek().getMotivation()).getScore();
-			double relativeMotivation = ( bestEditMotivation - minMotivation ) / (maxMotivation - minMotivation);
+			double maxMotivation =  visualNetwork.getMaxMotivation();
+			double minMotivation = visualNetwork.getMinMotivation();
+			double bestEditMotivation = probNode.getBestEditMotivation();
+			double relativeMotivation = ( bestEditMotivation - minMotivation + 0.01 ) / (maxMotivation - minMotivation + 0.01);
 			int alpha = (int) (255 * relativeMotivation);
 			Color color = new Color(BACKGROUND_COLOR.getRed(), BACKGROUND_COLOR.getGreen(), BACKGROUND_COLOR.getBlue(), alpha);
 			return color;
@@ -368,6 +371,17 @@ public class VisualChanceNode extends VisualNode {
 				+ (textHeight);
 
 		g.drawString(text, (float) textPosX, (float) textPosY);
+		
+		double bestMotivation = probNode.getBestEditMotivation();
+		if (bestMotivation != 0) {
+			String motivationText = "Proposed edits: " + probNode.getProposedEdits().size() + " (+" + String.format("%.2f", bestMotivation) + ")";			motivationText = adjustText(motivationText, dimensions[2], 3, FONT_HELVETICA_SMALL, g);
+			FontMetrics fontMeter = new JPanel().getFontMetrics(FONT_HELVETICA_SMALL);
+			textWidth = fontMeter.getStringBounds(motivationText, g).getWidth();
+			textPosX = getTemporalPosition().getX() - (textWidth / 2);
+			textPosY += textHeight;
+			g.drawString(motivationText, (float) textPosX, (float) textPosY);
+		}
+		
 
 		if (isExpanded()) {
 			innerBox.paint(g);

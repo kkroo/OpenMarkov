@@ -35,6 +35,7 @@ import org.openmarkov.core.exception.NoFindingException;
 import org.openmarkov.core.exception.NodeNotFoundException;
 import org.openmarkov.core.exception.NonProjectablePotentialException;
 import org.openmarkov.core.exception.NotEvaluableNetworkException;
+import org.openmarkov.core.exception.ProbNodeNotFoundException;
 import org.openmarkov.core.exception.UnexpectedInferenceException;
 import org.openmarkov.core.gui.action.PasteEdit;
 import org.openmarkov.core.gui.action.RemoveSelectedEdit;
@@ -163,11 +164,11 @@ public class EditorPanel extends JPanel
     /**
      * Inference manager
      */
-    private InferenceManager                 inferenceManager                 = null;
+    InferenceManager                 inferenceManager                 = null;
     /**
      * Inference algorithm used to evaluate this network
      */
-    private InferenceAlgorithm               inferenceAlgorithm               = null;
+    protected InferenceAlgorithm               inferenceAlgorithm               = null;
     /**
      * This variable indicates if the propagation mode is automatic or manual.
      */
