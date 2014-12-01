@@ -687,10 +687,13 @@ public class MainPanelListenerAssistant extends WindowAdapter implements ActionL
      * @return the network panel that is created.
      */
 
-    public LearningPanel createNewLearningFrame(ProbNet probNet, LearningAlgorithm learningAlgorithm) {
+    public LearningPanel createNewLearningFrame(ProbNet probNet, CaseDatabase cases, LearningAlgorithm learningAlgorithm) {
     	LearningPanel learningPanel = null;
         try {
-            learningPanel = new LearningPanel(probNet, mainPanel, learningAlgorithm);
+        	if (cases != null)
+                learningPanel = new LearningPanel(probNet, cases, mainPanel, learningAlgorithm);
+        	else
+                learningPanel = new LearningPanel(probNet, mainPanel, learningAlgorithm);
             mainPanel.getMdi().createNewFrame(learningPanel);
             learningPanel.setContextualMenuFactory(mainPanel.getContextualMenuFactory());
             // networkPanel.addEditionListener( mainPanel

@@ -1275,7 +1275,7 @@ public class LearningDialog extends javax.swing.JDialog {
                 ProbNet probNet = learningManager.getLearnedNet ();
                 setProperName (probNet);
 
-                LearningPanel learningPanel = MainPanel.getUniqueInstance ().getMainPanelListenerAssistant ().createNewLearningFrame(probNet, learningAlgorithm);
+                LearningPanel learningPanel = MainPanel.getUniqueInstance ().getMainPanelListenerAssistant ().createNewLearningFrame(probNet, database, learningAlgorithm);
                 probNet.getPNESupport ().addUndoableEditListener (learningPanel);
                 this.setVisible (false);
             }
