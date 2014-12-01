@@ -37,12 +37,12 @@ public class VisualArrow extends VisualElement {
 	/**
 	 * selected link color
 	 */
-	private static final Color SELECTED_LINK_COLOR = Color.gray;
+	private static final Color SELECTED_LINK_COLOR = Color.yellow;
 
 	/**
 	 * Height of the top of arrow.
 	 */
-	private static final double HEIGHT_TOP_ARROW = 12;
+	private static double HEIGHT_TOP_ARROW = 12;
 
 	/**
 	 * This constant contains the value of the units that the line must
@@ -151,6 +151,10 @@ public class VisualArrow extends VisualElement {
 
 	public void setWidthToSelect(double x) {
 		WIDTH_LINE_TO_SELECT = (x / 100) * max_stroke_width;
+	}
+	
+	public double getWidthToSelect() {
+		return WIDTH_LINE_TO_SELECT;
 	}
 
 	/**

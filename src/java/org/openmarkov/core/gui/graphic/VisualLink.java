@@ -123,12 +123,12 @@ public class VisualLink extends VisualArrow {
      */
     @Override
     public Shape getShape(Graphics2D g) {
-
+    	setWidthToSelect(link.getIndependence());
         setStartPoint(new Point2D.Double(source.getTemporalPosition().getX(),
                 source.getTemporalPosition().getY()));
         setEndPoint(new Point2D.Double(destination.getTemporalPosition().getX(),
                 destination.getTemporalPosition().getY()));
-        setWidthToSelect(link.getIndependence());
+        
         return super.getShape(g);
     }
 
