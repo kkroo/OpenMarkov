@@ -370,7 +370,7 @@ public class MainPanelListenerAssistant extends WindowAdapter implements ActionL
         	//create an arrayList of history?
         	ProbNet pn = this.getCurrentNetworkPanel().probNet;
         	int stepsToReset = pn.getLookAheadSteps();
-        	while (stepsToReset >= 0) {
+        	while (stepsToReset > 0) {
         		pn.setLookAheadButton(true);
         		pn.getpNESupport().undo();
         		pn.setLookAheadButton(false);

@@ -30,6 +30,7 @@ public class VisualLink extends VisualArrow {
 	private static final int LOOKAHEAD_ADD = 1;
 	private static final int LOOKAHEAD_DELETE = 2;
 	private static final int LOOKAHEAD_INVERT = 3;
+	private static final int LOOKAHEAD_BUTTON = 4;
 
 
     /**
@@ -172,6 +173,8 @@ public class VisualLink extends VisualArrow {
         		setLinkColor(Color.red);
         	} else if(link.getLookAhead() == LOOKAHEAD_INVERT) {
         		setLinkColor(Color.blue);
+        	} else if (link.getLookAhead() == LOOKAHEAD_BUTTON) {
+        		setLinkColor(Color.gray);
         	}
         }
 

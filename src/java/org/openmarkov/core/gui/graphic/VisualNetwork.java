@@ -519,13 +519,15 @@ public class VisualNetwork implements PNUndoableEditListener {
 				}
 			}
 		}
-		else if (probNet.getLookAheadButton() == true) {
-			
-		}
 		 else {
+			
 			for (VisualLink visualLink : visualLinks) {
+//				if (probNet.getLookAheadButton() == true) {
+//					visualLink.getLink().setLookAhead(4);
+//				}
 				visualLink.paint(g);
 			}
+//			probNet.setLookAheadButton(false);
 		}
 
 	}
