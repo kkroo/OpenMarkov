@@ -508,6 +508,15 @@ public class VisualNetwork implements PNUndoableEditListener {
 					}
 				}
 			}
+			//for all visualLink in visualLinks, if them are not related to selected nodes, then set stroke color to be grey
+			for (VisualLink visualLink : visualLinks) {
+				VisualNode source = visualLink.getSourceNode();
+				VisualNode destination = visualLink.getDestinationNode();
+				//selectednodes does not contian source or destination
+				if (!selectedNodes.contains(source) && !selectedNodes.contains(destination)) {
+					visualLink.paintGrayLink(g);
+				}
+			}
 		}
 		 else {
 			for (VisualLink visualLink : visualLinks) {
@@ -515,8 +524,7 @@ public class VisualNetwork implements PNUndoableEditListener {
 			}
 		}
 
-	}	
-	
+	}
 
 	/**
 	 * Overwrited 'paint' method to avoid to call it explicitly.

@@ -192,5 +192,31 @@ public class VisualLink extends VisualArrow {
         super.paint(g);
         
     }
+    
+    /**
+     * Paint existing links to light gray for edit view
+     */
+    public void paintGrayLink(Graphics2D g){
+    	Segment line;
+
+        try {
+            line = new Segment(new Point2D.Double(source.getTemporalPosition().getX(),
+                    source.getTemporalPosition().getY()),
+                    new Point2D.Double(destination.getTemporalPosition().getX(),
+                            destination.getTemporalPosition().getY()));
+        } catch (IllegalArgumentException e) {
+
+            return;
+        }
+        setLinkColor(Color.GRAY);
+        
+        boolean hasAbsoluteLinkRestriction = link.hasTotalRestriction();
+        setDoubleStriped(hasAbsoluteLinkRestriction);
+        setSingleStriped(link.hasRestrictions() && !hasAbsoluteLinkRestriction);
+        setStartPoint(source.getCutPoint(line, g));
+        setEndPoint(destination.getCutPoint(line, g));
+
+        super.paint(g);
+    }
 
 }
