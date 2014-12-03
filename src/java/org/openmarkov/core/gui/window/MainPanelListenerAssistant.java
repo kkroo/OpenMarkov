@@ -335,13 +335,16 @@ public class MainPanelListenerAssistant extends WindowAdapter implements ActionL
         	ProbNet pn = lp.probNet; 
         	int k = pn.getLookAheadSteps();
         	pn.setLookAheadSteps(k);
-        	for (int i = k; i >= 0; i--) {
+        	for (int i = k; i > 0; i--) {
         		if (curr != null) {
         			//apply edits
         			//Pop up window if no next steps?
         			try {
         				//Dont add directly to probNet, create visual links
+        				//set lookahead bool to be true
+        				pn.setLookAheadButton(true);
 						pn.doEdit(curr.getEdit());
+						pn.setLookAheadButton(false);
 					} catch (ConstraintViolationException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -368,7 +371,9 @@ public class MainPanelListenerAssistant extends WindowAdapter implements ActionL
         	ProbNet pn = this.getCurrentNetworkPanel().probNet;
         	int stepsToReset = pn.getLookAheadSteps();
         	while (stepsToReset >= 0) {
+        		pn.setLookAheadButton(true);
         		pn.getpNESupport().undo();
+        		pn.setLookAheadButton(false);
         		stepsToReset --;
         	}
         	pn.setLookAheadSteps(0);

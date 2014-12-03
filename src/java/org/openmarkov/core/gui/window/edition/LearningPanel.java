@@ -22,6 +22,7 @@ public class LearningPanel extends NetworkPanel {
 		super(probNet, mainPanel);
 		this.learningAlgorithm = learningAlgorithm;
 		recomputeProposedEdits();
+
 	}
 	
     public LearningPanel(ProbNet probNet, CaseDatabase cases,
@@ -40,6 +41,7 @@ public class LearningPanel extends NetworkPanel {
     {
         super.setModified(value);
         if (value == true) {
+
         	if (probNet.getLookAheadButton() == false) {
         	recomputeProposedEdits();
         	}

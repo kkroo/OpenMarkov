@@ -105,6 +105,8 @@ public class ProbNet implements Cloneable {
     /** Number of steps looked ahead */
     private int lookAheadSteps;
     
+    private boolean isLookAheadButtonClicked;
+    
     // Constructors
     public ProbNet(NetworkType networkType) {
         this.graph = new Graph();
@@ -112,6 +114,7 @@ public class ProbNet implements Cloneable {
         this.constraints = new ArrayList<PNConstraint>();
         this.probNodeDepot = new ProbNodeDepot();
         this.lookAheadSteps = 0;
+        this.isLookAheadButtonClicked = false;
         try {
             this.setNetworkType(networkType);
         } catch (ConstraintViolationException e) {
@@ -1528,5 +1531,13 @@ public class ProbNet implements Cloneable {
 
 	public void setpNESupport(PNESupport pNESupport) {
 		this.pNESupport = pNESupport;
+	}
+	
+	public void setLookAheadButton(boolean b) {
+		isLookAheadButtonClicked = b;
+	}
+	
+	public boolean getLookAheadButton(){
+		return isLookAheadButtonClicked;
 	}
 }

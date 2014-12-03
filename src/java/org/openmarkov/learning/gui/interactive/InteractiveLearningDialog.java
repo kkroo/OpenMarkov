@@ -366,7 +366,9 @@ public class InteractiveLearningDialog extends javax.swing.JDialog implements Ed
 	public void undoableEditHappened(UndoableEditEvent event) {
         if(!(event.getEdit() instanceof MoveNodeEdit))
         {
-			updateEditionsTable(onlyAllowed, onlyPositive, learningManager.getBlockedEdits());
+        	if(learningManager.getLearnedNet().getLookAheadButton() == false) {
+        		updateEditionsTable(onlyAllowed, onlyPositive, learningManager.getBlockedEdits());
+        	}
         }
         if (!learningManager.getLearnedNet().getPNESupport().getUndoManager().canRedo())
         	btnRedo.setEnabled(false);
@@ -374,7 +376,9 @@ public class InteractiveLearningDialog extends javax.swing.JDialog implements Ed
 	}
 
 	public void undoEditHappened(UndoableEditEvent event) {
+		if (learningManager.getLearnedNet().getLookAheadButton() == false) {
 			updateEditionsTable(onlyAllowed, onlyPositive, learningManager.getBlockedEdits());
+		}
 			btnRedo.setEnabled(true);
 			if (!learningManager.getLearnedNet().getPNESupport().getUndoManager().canUndo())
 				btnUndo.setEnabled(false);

@@ -426,19 +426,7 @@ public class VisualNetwork implements PNUndoableEditListener {
 		//}
 	}
 	
-	
-	/**
-	 * Paints look ahead links
-	 */
-	
-	protected void paintLookAheadLinks(Graphics2D g, int steps) {
-		//paint links, and then save it into an arrayList
-		
-		//find all proposals, link, paint them, and  
-		
-	
-		
-	}
+
 
 	/**
 	 * Paints the links.
@@ -517,6 +505,9 @@ public class VisualNetwork implements PNUndoableEditListener {
 					visualLink.paintGrayLink(g);
 				}
 			}
+		}
+		else if (probNet.getLookAheadButton() == true) {
+			
 		}
 		 else {
 			for (VisualLink visualLink : visualLinks) {
