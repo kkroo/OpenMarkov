@@ -23,9 +23,12 @@ import org.openmarkov.core.exception.InvalidStateException;
 import org.openmarkov.core.exception.NodeNotFoundException;
 import org.openmarkov.core.exception.NonProjectablePotentialException;
 import org.openmarkov.core.exception.NormalizeNullVectorException;
+import org.openmarkov.core.exception.NotEvaluableNetworkException;
 import org.openmarkov.core.exception.ProbNodeNotFoundException;
 import org.openmarkov.core.exception.WrongCriterionException;
+import org.openmarkov.core.inference.InferenceAlgorithm;
 import org.openmarkov.core.io.database.CaseDatabase;
+import org.openmarkov.core.model.network.EvidenceCase;
 import org.openmarkov.core.model.network.NodeType;
 import org.openmarkov.core.model.network.ProbNet;
 import org.openmarkov.core.model.network.ProbNode;
@@ -43,6 +46,7 @@ import org.openmarkov.learning.core.exception.LatentVariablesException;
 import org.openmarkov.learning.core.util.LearningEditMotivation;
 import org.openmarkov.learning.core.util.LearningEditProposal;
 import org.openmarkov.learning.core.util.ModelNetUse;
+import org.openmarkov.learning.evaluation.Classification;
 
 /** This class launches the learning algorithm and receives the results of
  * the learning.
@@ -182,6 +186,19 @@ public class LearningManager {
     {
         
         return this.learningAlgorithm.getNextEdit (onlyAllowedEdits, onlyPositiveEdits);        
+    }
+    
+    public double getNetworkScore(InferenceAlgorithm inferenceAlgorithm, ArrayList<EvidenceCase> evidence, Variable testVariable, double threshold){
+    	double k = 0;
+		try {
+			Classification test = new Classification(inferenceAlgorithm);
+	        test.init(learningAlgorithm.parametricLearning(), evidence);
+			k =	 test.classify(testVariable, threshold);
+		} catch (NormalizeNullVectorException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		return k*100;
     }
     
     /**

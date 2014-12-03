@@ -54,7 +54,7 @@ public class VisualArrow extends VisualElement {
 	/**
 	 * Highest stroke width. Use "Independence" to get % of this max width
 	 */
-	private static final float max_stroke_width = 25;
+	private static final float max_stroke_width = 10;
 
 	/**
 	 * independence of underlying link
