@@ -327,7 +327,11 @@ public class VisualChanceNode extends VisualNode {
 					NetworkPanel.INFERENCE_WORKING_MODE)) {
 			return BACKGROUND_POST_RESOLUTION_FINDING_COLOR;
 		} else if ( !visualNetwork.getSelectedNodes().isEmpty() ) {
-			return BACKGROUND_COLOR;
+			if (!isSelected()) {
+				return BACKGROUND_COLOR;
+			} else {
+				return SELECTED_NODE_COLOR;
+			}
 		} else {
 			double maxMotivation =  visualNetwork.getMaxMotivation();
 			double minMotivation = visualNetwork.getMinMotivation();
@@ -352,18 +356,8 @@ public class VisualChanceNode extends VisualNode {
 		double textWidth = getWidth(text, g);
 		Shape shape = getShape(g);
 		double[] dimensions = getNodeDimensions(g);
-
-		if (preResolutionFinding) {
-			g.setPaint(BACKGROUND_PRE_RESOLUTION_FINDING_COLOR);
-		} else if (postResolutionFinding && 
-				(visualNetwork.getWorkingMode() == 
-					NetworkPanel.INFERENCE_WORKING_MODE)) {
-			g.setPaint(BACKGROUND_POST_RESOLUTION_FINDING_COLOR);
-		} else if (isSelected()) {
-			g.setPaint(SELECTED_NODE_COLOR);
-		} else {
-			g.setPaint(BACKGROUND_COLOR);
-		}
+		
+		g.setPaint(getBackgroundColor());
 		g.fill(shape);
 		g.setPaint(FOREGROUND_COLOR);
 

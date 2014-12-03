@@ -14,6 +14,10 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -21,6 +25,7 @@ import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Set;
 
+import javax.imageio.ImageIO;
 import javax.swing.event.UndoableEditEvent;
 
 import org.openmarkov.core.action.AddLinkEdit;
@@ -127,6 +132,7 @@ public class VisualNetwork implements PNUndoableEditListener {
 	private double maxMotivation = Double.POSITIVE_INFINITY;
 
 	private double minMotivation = Double.NEGATIVE_INFINITY;
+	private BufferedImage legendImage;
 
 	//private LinkWrapper linkWrapper;
 	/**
@@ -149,6 +155,13 @@ public class VisualNetwork implements PNUndoableEditListener {
 		//network.addNetworkChangeListener(this);
 		//changed by mpalacios
 		constructVisualInfo();
+		try {
+        	URL url = getClass().getClassLoader().getResource("images/legend.png");
+        	File img = new File(url.getPath());
+        	legendImage = ImageIO.read(img);
+        } catch (IOException e) {
+            e.printStackTrace();
+      }
 	}
 
 	/**
@@ -534,6 +547,9 @@ public class VisualNetwork implements PNUndoableEditListener {
         if(selection != null)
         {
             selection.paint (g);
+        }
+        if (selectedNodes.size() > 0) {
+        	g.drawImage(legendImage, 800, 300, null);
         }
      }
 

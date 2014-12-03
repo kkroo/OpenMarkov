@@ -16,12 +16,17 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.Point2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
 import javax.help.UnsupportedOperationException;
+import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -222,6 +227,8 @@ public class EditorPanel extends JPanel
     RevelationArcEditDialog                  revelationArcDialog              = null;
     private boolean                          approximateInferenceWarningGiven = false;
     private boolean                          canBeExpanded                    = false;
+    
+    private BufferedImage legendImage;
 
     /**
      * Constructor that creates the instance.
@@ -249,6 +256,13 @@ public class EditorPanel extends JPanel
         inferenceManager = new InferenceManager ();
         editionModeManager = new EditionModeManager (this, probNet);
         editionMode = editionModeManager.getDefaultEditionMode ();
+        try {
+        	URL url = getClass().getClassLoader().getResource("images/legend.png");
+        	File img = new File(url.getPath());
+        	legendImage = ImageIO.read(img);
+        } catch (IOException e) {
+            e.printStackTrace();
+      }
     }
 
     /**
@@ -448,6 +462,12 @@ public class EditorPanel extends JPanel
                     }
                     showPotentialDialog (networkPanel.getWorkingMode () != NetworkPanel.EDITION_WORKING_MODE);
                 }
+            } else {
+            	if (networkPanel.getWorkingMode () == NetworkPanel.EDITION_WORKING_MODE) {
+            		if ((node = visualNetwork.whatNodeInPosition (cursorPosition, g)) != null) {
+            			g.drawImage(legendImage, 100, 100, null);
+            		}
+            	}
             }
         }
         else if (SwingUtilities.isRightMouseButton (e))
@@ -504,6 +524,12 @@ public class EditorPanel extends JPanel
         Point2D.Double position = new Point2D.Double (zoom.screenToPanel (e.getX ()),
                                                       zoom.screenToPanel (e.getY ()));
         editionMode.mouseReleased (e, position, g);
+        VisualNode node = null;
+        if (networkPanel.getWorkingMode () == NetworkPanel.EDITION_WORKING_MODE) {
+    		if ((node = visualNetwork.whatNodeInPosition (cursorPosition, g)) != null) {
+    			g.drawImage(legendImage, 100, 100, null);
+    		}
+    	}
     }
 
     /**

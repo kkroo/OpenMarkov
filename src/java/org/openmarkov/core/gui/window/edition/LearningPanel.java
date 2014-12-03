@@ -43,7 +43,7 @@ public class LearningPanel extends NetworkPanel {
         if (value == true) {
 
         	if (probNet.getLookAheadButton() == false) {
-        	recomputeProposedEdits();
+        		recomputeProposedEdits();
         	}
         }
     }
