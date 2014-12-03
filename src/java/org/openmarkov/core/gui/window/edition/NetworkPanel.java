@@ -701,7 +701,6 @@ public class NetworkPanel extends FrameContentPanel
 
     public void undoEditHappened (UndoableEditEvent event)
     {
-    	calculateIndependence();
     	setModified (true);
         repaint ();
     }

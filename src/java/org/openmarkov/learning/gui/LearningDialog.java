@@ -1261,16 +1261,11 @@ public class LearningDialog extends javax.swing.JDialog {
                 }
                 else
                 {
-                    // INTERACTIVE LEARNING
-                    InteractiveLearningDialog interactiveLearningGUI = new InteractiveLearningDialog (
-                                                                                                this.parent,
-                                                                                                false,
-                                                                                                learningManager);
                     if( (modelNetUse == null) || (!modelNetUse.isUseNodePositions()) )
                     {
                         placeNodesInCircle (learningManager.getLearnedNet ());
                     }
-                    interactiveLearningGUI.setVisible (true);
+
                 }
                 ProbNet probNet = learningManager.getLearnedNet ();
                 setProperName (probNet);
@@ -1278,6 +1273,16 @@ public class LearningDialog extends javax.swing.JDialog {
                 LearningPanel learningPanel = MainPanel.getUniqueInstance ().getMainPanelListenerAssistant ().createNewLearningFrame(probNet, database, learningAlgorithm);
                 probNet.getPNESupport ().addUndoableEditListener (learningPanel);
                 this.setVisible (false);
+                
+                if (!automaticLearningRadioButton.isSelected()) {
+                    // INTERACTIVE LEARNING
+                    InteractiveLearningDialog interactiveLearningGUI = new InteractiveLearningDialog (
+                                                                                                this.parent,
+                                                                                                false,
+                                                                                                learningManager,
+                                                                                                learningPanel);
+                    interactiveLearningGUI.setVisible (true);
+                }
             }
             catch (LatentVariablesException e1)
             {

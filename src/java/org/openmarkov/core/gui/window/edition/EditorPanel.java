@@ -164,7 +164,7 @@ public class EditorPanel extends JPanel
     /**
      * Inference manager
      */
-    InferenceManager                 inferenceManager                 = null;
+    private InferenceManager                 inferenceManager                 = null;
     /**
      * Inference algorithm used to evaluate this network
      */
@@ -246,7 +246,7 @@ public class EditorPanel extends JPanel
         minUtilityRange = new HashMap<Variable, Double> ();
         maxUtilityRange = new HashMap<Variable, Double> ();
         initialize ();
-        inferenceManager = new InferenceManager ();
+        this.inferenceManager = new InferenceManager ();
         editionModeManager = new EditionModeManager (this, probNet);
         editionMode = editionModeManager.getDefaultEditionMode ();
     }
@@ -2002,7 +2002,7 @@ public class EditorPanel extends JPanel
             long start = System.currentTimeMillis ();
             try
             {
-                inferenceAlgorithm = inferenceManager.getDefaultInferenceAlgorithm (probNet);
+                inferenceAlgorithm = getInferenceManager().getDefaultInferenceAlgorithm (probNet);
                 if (inferenceAlgorithm == null)
                 {
                     throw new UnsupportedOperationException ();
@@ -2022,7 +2022,7 @@ public class EditorPanel extends JPanel
                                                    JOptionPane.WARNING_MESSAGE);
                     approximateInferenceWarningGiven = true;
                 }
-                inferenceAlgorithm = inferenceManager.getDefaultApproximateAlgorithm (probNet);
+                inferenceAlgorithm = getInferenceManager().getDefaultApproximateAlgorithm (probNet);
                 inferenceAlgorithm.setPostResolutionEvidence (evidenceCase);
                 individualProbabilities = inferenceAlgorithm.getProbsAndUtilities ();
             }
@@ -2716,4 +2716,9 @@ public class EditorPanel extends JPanel
         adjustPanelDimension ();
         repaint ();
     }
+
+	public InferenceManager getInferenceManager() {
+		return inferenceManager;
+	}
+
 }
