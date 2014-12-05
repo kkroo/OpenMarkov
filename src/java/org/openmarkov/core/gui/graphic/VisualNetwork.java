@@ -439,7 +439,76 @@ public class VisualNetwork implements PNUndoableEditListener {
 		//}
 	}
 	
-
+	private void paintLinksWhenNodeSelected(Graphics2D g) {
+		for (VisualNode n : selectedNodes){
+			// iterate through all the rest of the node and find what's the best move between them
+			Collection<LearningEditProposal> proposals = n.probNode.getProposedEdits();
+			for (LearningEditProposal proposal : proposals) {
+				PNEdit proposedEdit = proposal.getEdit();
+				LearningEditMotivation proposedEditMotivation = proposal.getMotivation();
+				if (proposedEdit instanceof AddLinkEdit) {
+					AddLinkEdit newEdit = (AddLinkEdit) proposedEdit;
+					VisualNode source = null;
+					VisualNode destination = null;
+					for (VisualNode node : visualNodes) {
+						if (newEdit.node1.equals(node.probNode)) {
+							source = node;
+						}
+						if (newEdit.node2.equals(node.probNode	)) {
+							destination = node;
+						}
+					}
+					Link l = new Link(newEdit.node1.node, newEdit.node2.node, true);
+					l.setLookAhead(1);
+					VisualLink tempLink = new VisualLink(l, source, destination);
+					tempLink.paint(g);
+					probNet.removeLink(newEdit.node1, newEdit.node2, true);
+				} else if (proposedEdit instanceof RemoveLinkEdit) {
+					RemoveLinkEdit newEdit = (RemoveLinkEdit) proposedEdit;
+					VisualNode source = null;
+					VisualNode destination = null;
+					for (VisualNode node : visualNodes) {
+						if (newEdit.node1.equals(node.probNode)) {
+							source = node;
+						}
+						if (newEdit.node2.equals(node.probNode	)) {
+							destination = node;
+						}
+					}
+					Link l = new Link(newEdit.node1.node, newEdit.node2.node, true);
+					l.setLookAhead(2);
+					VisualLink tempLink = new VisualLink(l, source, destination);
+					tempLink.paint(g);
+					probNet.removeLink(newEdit.node1, newEdit.node2, true);
+				} else {
+					InvertLinkEdit newEdit = (InvertLinkEdit) proposedEdit;
+					VisualNode source = null;
+					VisualNode destination = null;
+					for (VisualNode node : visualNodes) {
+						if (newEdit.node1.equals(node.probNode)) {
+							source = node;
+						}
+						if (newEdit.node2.equals(node.probNode	)) {
+							destination = node;
+						}
+					}
+					Link l = new Link(newEdit.node1.node, newEdit.node2.node, true);
+					l.setLookAhead(3);
+					VisualLink tempLink = new VisualLink(l, source, destination);
+					tempLink.paint(g);
+					probNet.removeLink(newEdit.node1, newEdit.node2, true);
+				}
+			}
+		}
+		for (VisualLink visualLink : visualLinks) {
+			VisualNode source = visualLink.getSourceNode();
+			VisualNode destination = visualLink.getDestinationNode();
+			//selectednodes does not contian source or destination
+			if (!selectedNodes.contains(source) && !selectedNodes.contains(destination)) {
+				visualLink.paintGrayLink(g);
+			}
+		}
+	}
 
 	/**
 	 * Paints the links.
@@ -449,75 +518,7 @@ public class VisualNetwork implements PNUndoableEditListener {
 	 */
 	protected void paintLinks(Graphics2D g) {
 		if (selectedNodes.size() != 0) {
-			for (VisualNode n : selectedNodes){
-				// iterate through all the rest of the node and find what's the best move between them
-				Collection<LearningEditProposal> proposals = n.probNode.getProposedEdits();
-				for (LearningEditProposal proposal : proposals) {
-					PNEdit proposedEdit = proposal.getEdit();
-					LearningEditMotivation proposedEditMotivation = proposal.getMotivation();
-					if (proposedEdit instanceof AddLinkEdit) {
-						AddLinkEdit newEdit = (AddLinkEdit) proposedEdit;
-						VisualNode source = null;
-						VisualNode destination = null;
-						for (VisualNode node : visualNodes) {
-							if (newEdit.node1.equals(node.probNode)) {
-								source = node;
-							}
-							if (newEdit.node2.equals(node.probNode	)) {
-								destination = node;
-							}
-						}
-						Link l = new Link(newEdit.node1.node, newEdit.node2.node, true);
-						l.setLookAhead(1);
-						VisualLink tempLink = new VisualLink(l, source, destination);
-						tempLink.paint(g);
-						probNet.removeLink(newEdit.node1, newEdit.node2, true);
-					} else if (proposedEdit instanceof RemoveLinkEdit) {
-						RemoveLinkEdit newEdit = (RemoveLinkEdit) proposedEdit;
-						VisualNode source = null;
-						VisualNode destination = null;
-						for (VisualNode node : visualNodes) {
-							if (newEdit.node1.equals(node.probNode)) {
-								source = node;
-							}
-							if (newEdit.node2.equals(node.probNode	)) {
-								destination = node;
-							}
-						}
-						Link l = new Link(newEdit.node1.node, newEdit.node2.node, true);
-						l.setLookAhead(2);
-						VisualLink tempLink = new VisualLink(l, source, destination);
-						tempLink.paint(g);
-						probNet.removeLink(newEdit.node1, newEdit.node2, true);
-					} else {
-						InvertLinkEdit newEdit = (InvertLinkEdit) proposedEdit;
-						VisualNode source = null;
-						VisualNode destination = null;
-						for (VisualNode node : visualNodes) {
-							if (newEdit.node1.equals(node.probNode)) {
-								source = node;
-							}
-							if (newEdit.node2.equals(node.probNode	)) {
-								destination = node;
-							}
-						}
-						Link l = new Link(newEdit.node1.node, newEdit.node2.node, true);
-						l.setLookAhead(3);
-						VisualLink tempLink = new VisualLink(l, source, destination);
-						tempLink.paint(g);
-						probNet.removeLink(newEdit.node1, newEdit.node2, true);
-					}
-				}
-			}
-			//for all visualLink in visualLinks, if them are not related to selected nodes, then set stroke color to be grey
-			for (VisualLink visualLink : visualLinks) {
-				VisualNode source = visualLink.getSourceNode();
-				VisualNode destination = visualLink.getDestinationNode();
-				//selectednodes does not contian source or destination
-				if (!selectedNodes.contains(source) && !selectedNodes.contains(destination)) {
-					visualLink.paintGrayLink(g);
-				}
-			}
+			paintLinksWhenNodeSelected(g);
 		}
 		 else {
 			
