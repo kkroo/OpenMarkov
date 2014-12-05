@@ -19,6 +19,7 @@ import org.openmarkov.core.exception.WrongCriterionException;
 import org.openmarkov.core.inference.InferenceAlgorithm;
 import org.openmarkov.core.inference.annotation.InferenceManager;
 import org.openmarkov.core.model.network.EvidenceCase;
+import org.openmarkov.core.model.network.Finding;
 import org.openmarkov.core.model.network.ProbNet;
 import org.openmarkov.core.model.network.Variable;
 import org.openmarkov.core.model.network.potential.TablePotential;
@@ -66,19 +67,29 @@ public class Classification implements UndoableEditListener, PNUndoableEditListe
 		}
 		List<Variable> variablesOfInterest = new ArrayList<Variable>();
 		variablesOfInterest.add(testVariable);
-		HashMap<Variable, TablePotential> probs;
-		double val1 = 0;
-		EvidenceCase test = new EvidenceCase(evidence.get(4));
-		try {
-			test.removeFinding(testVariable);
-			this.inferenceAlgorithm.setPreResolutionEvidence(test);
-			probs = inferenceAlgorithm.getProbsAndUtilities (variablesOfInterest);
-			TablePotential test2 = inferenceAlgorithm.getJointProbability(variablesOfInterest);
-			TablePotential test3 = inferenceAlgorithm.getJointProbability(test.getVariables());
-			val1 = probs.get(testVariable).getProbability(test);
-		} catch (IncompatibleEvidenceException | UnexpectedInferenceException | NoFindingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		cachedScore = 0.0;
+		int N = evidence.size();
+		for (int i=0; i<N; i++){
+			try {
+				EvidenceCase testCase = evidence.get(i);
+				if (!testCase.contains(testVariable)) {
+					continue;
+				}
+				
+				EvidenceCase testCaseMissingFinding = new EvidenceCase(testCase);
+				if (testCaseMissingFinding.contains(testVariable)) {
+					testCaseMissingFinding.removeFinding(testVariable);
+				}
+				
+				this.inferenceAlgorithm.setPreResolutionEvidence(testCaseMissingFinding);
+				TablePotential probs = inferenceAlgorithm.getJointProbability(variablesOfInterest);
+				if ( probs.contains(testVariable) && probs.getProbability(testCase) > classifyThreshold ) {
+					cachedScore += 1.0 / N;
+				}
+			} catch (IncompatibleEvidenceException | UnexpectedInferenceException | NoFindingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		//inferenceAlgorithm.setConditioningVariables(conditioningVariables);
 		return cachedScore;

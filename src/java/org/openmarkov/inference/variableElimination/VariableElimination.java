@@ -905,10 +905,10 @@ public class VariableElimination extends InferenceAlgorithm {
 		// not compatible we will find it out anyway while performing inference
 		// checkIfEvidenceIsCompatible(net, evidence);
 		
-		List<Variable> terminalUtilityVariables = BasicOperations.getTerminalUtilityVariables(net);
-		terminalUtilityVariables.retainAll(interestVariables);
+		//List<Variable> terminalUtilityVariables = BasicOperations.getTerminalUtilityVariables(net);
+		//terminalUtilityVariables.retainAll(interestVariables);
 		
-		performInference(net, InferencePurpose.POSTERIOR_UTIL, terminalUtilityVariables, evidence);
+		performInference(net, InferencePurpose.POSTERIOR_UTIL, interestVariables, evidence);
 		for (TablePotential utilityPotential : utilityPotentials) {
 			if(utilityPotential.getUtilityVariable()!= null && interestVariables.contains(utilityPotential.getUtilityVariable()))
 			{
