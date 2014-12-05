@@ -439,6 +439,9 @@ public class VisualNetwork implements PNUndoableEditListener {
 		//}
 	}
 	
+	/*
+	 * for Edit View, when nodes are selected, should only be called by paintLinks
+	 */
 	private void paintLinksWhenNodeSelected(Graphics2D g) {
 		for (VisualNode n : selectedNodes){
 			// iterate through all the rest of the node and find what's the best move between them
@@ -508,6 +511,17 @@ public class VisualNetwork implements PNUndoableEditListener {
 				visualLink.paintGrayLink(g);
 			}
 		}
+	}
+	
+	/**
+	 * Look-ahead mode, should only be called by paintLinks
+	 */
+	
+	private void paintLinksWhenLookahead(Graphics2D g) {
+		for (VisualLink visualLink : visualLinks) {
+			visualLink.paint(g);
+		}
+		
 	}
 
 	/**
