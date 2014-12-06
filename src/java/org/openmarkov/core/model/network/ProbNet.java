@@ -107,6 +107,10 @@ public class ProbNet implements Cloneable {
     
     private boolean isLookAheadButtonClicked;
     
+    private List<PNEdit> lookAheadEdits;
+    
+    private List<PNEdit> tempRemoval;
+    
     // Constructors
     public ProbNet(NetworkType networkType) {
         this.graph = new Graph();
@@ -115,6 +119,7 @@ public class ProbNet implements Cloneable {
         this.probNodeDepot = new ProbNodeDepot();
         this.lookAheadSteps = 0;
         this.isLookAheadButtonClicked = false;
+        this.lookAheadEdits = new ArrayList<PNEdit>();
         try {
             this.setNetworkType(networkType);
         } catch (ConstraintViolationException e) {
@@ -1539,5 +1544,48 @@ public class ProbNet implements Cloneable {
 	
 	public boolean getLookAheadButton(){
 		return isLookAheadButtonClicked;
+	}
+	
+	public List<PNEdit> getLookaheadStepsList() {
+		return lookAheadEdits;
+	}
+	
+	public void addLookAheadSteps(PNEdit newEdit) {
+		lookAheadEdits.add(newEdit);
+	}
+	
+	public void clearLookAheadSteps() {
+		lookAheadEdits.clear();
+	}
+	
+	public List<PNEdit> getTempRemoval() {
+		return tempRemoval;
+	}
+	
+	public void addTempRemoval(PNEdit newEdit){
+		tempRemoval.add(newEdit);
+	}
+	
+	public void restore(ProbNet pn) {
+		this.graph = pn.graph;
+        this.setpNESupport(pn.getPNESupport());
+        this.constraints = pn.constraints;
+        this.probNodeDepot = pn.probNodeDepot;
+        this.lookAheadSteps = pn.getLookAheadSteps();
+        this.isLookAheadButtonClicked = false;
+        this.additionalProperties = pn.additionalProperties;
+        this.agents = pn.agents;
+        this.decisionCriteria2 = pn.decisionCriteria2;
+        this.decisionCriteria = pn.decisionCriteria;
+        this.defaultStates = pn.defaultStates;
+        this.name = pn.name;
+        this.comment = pn.comment;
+        
+        //this.lookAheadEdits = new ArrayList<PNEdit>();
+        try {
+            this.setNetworkType(pn.getNetworkType());
+        } catch (ConstraintViolationException e) {
+            // Impossible to reach here as the net is empty
+        }
 	}
 }

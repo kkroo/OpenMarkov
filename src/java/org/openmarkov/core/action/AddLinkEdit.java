@@ -44,11 +44,11 @@ public class AddLinkEdit extends BaseLinkEdit {
     /**
      * parent node
      */
-    public ProbNode node1;
+    protected ProbNode node1;
     /**
      * child node
      */
-    public ProbNode node2;
+    protected ProbNode node2;
 
     // Constructor
     /** @param probNet <code>ProbNet</code>

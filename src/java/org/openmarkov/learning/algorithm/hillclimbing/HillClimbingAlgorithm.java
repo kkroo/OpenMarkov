@@ -117,10 +117,10 @@ public class HillClimbingAlgorithm extends ScoreAndSearchAlgorithm{
     public LearningEditProposal getNextEdit (boolean onlyAllowedEdits,
                                      boolean onlyPositiveEdits)
     {
-        LearningEditProposal bestEdit = getOptimalEdit (probNet, onlyAllowedEdits, onlyPositiveEdits);
+        LearningEditProposal bestEdit = getOptimalEdit (this.probNet, onlyAllowedEdits, onlyPositiveEdits);
         while(bestEdit != null && isBlocked(bestEdit.getEdit()))
         {
-            bestEdit = getOptimalEdit (probNet, onlyAllowedEdits, onlyPositiveEdits);
+            bestEdit = getOptimalEdit (this.probNet, onlyAllowedEdits, onlyPositiveEdits);
         }
         return bestEdit;
     }       
@@ -250,7 +250,7 @@ public class HillClimbingAlgorithm extends ScoreAndSearchAlgorithm{
      * @param learnedNet net to learn.
      * @return <code>PNEdit</code> edit with the highest associated score.
      */
-    private LearningEditProposal getOptimalEdit (ProbNet learnedNet,
+    public LearningEditProposal getOptimalEdit (ProbNet learnedNet,
                                                 boolean onlyAllowedEdits,
                                                 boolean onlyPositiveEdits)
     {

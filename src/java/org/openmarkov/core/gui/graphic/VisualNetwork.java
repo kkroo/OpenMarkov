@@ -29,6 +29,7 @@ import javax.imageio.ImageIO;
 import javax.swing.event.UndoableEditEvent;
 
 import org.openmarkov.core.action.AddLinkEdit;
+import org.openmarkov.core.action.BaseLinkEdit;
 import org.openmarkov.core.action.InvertLinkEdit;
 import org.openmarkov.core.action.PNESupport;
 import org.openmarkov.core.action.PNEdit;
@@ -453,53 +454,59 @@ public class VisualNetwork implements PNUndoableEditListener {
 					AddLinkEdit newEdit = (AddLinkEdit) proposedEdit;
 					VisualNode source = null;
 					VisualNode destination = null;
+					ProbNode pn1 = probNet.getProbNode(newEdit.getVariable1());
+					ProbNode pn2 = probNet.getProbNode(newEdit.getVariable2());
 					for (VisualNode node : visualNodes) {
-						if (newEdit.node1.equals(node.probNode)) {
+						if (pn1.equals(node.probNode)) {
 							source = node;
 						}
-						if (newEdit.node2.equals(node.probNode	)) {
+						if (pn2.equals(node.probNode)) {
 							destination = node;
 						}
 					}
-					Link l = new Link(newEdit.node1.node, newEdit.node2.node, true);
+					Link l = new Link(newEdit.getProbNode1().node, newEdit.getProbNode2().node, true);
 					l.setLookAhead(1);
 					VisualLink tempLink = new VisualLink(l, source, destination);
 					tempLink.paint(g);
-					probNet.removeLink(newEdit.node1, newEdit.node2, true);
+					probNet.removeLink(newEdit.getProbNode1(), newEdit.getProbNode2(), true);
 				} else if (proposedEdit instanceof RemoveLinkEdit) {
 					RemoveLinkEdit newEdit = (RemoveLinkEdit) proposedEdit;
 					VisualNode source = null;
 					VisualNode destination = null;
+					ProbNode pn1 = probNet.getProbNode(newEdit.getVariable1());
+					ProbNode pn2 = probNet.getProbNode(newEdit.getVariable2());
 					for (VisualNode node : visualNodes) {
-						if (newEdit.node1.equals(node.probNode)) {
+						if (pn1.equals(node.probNode)) {
 							source = node;
 						}
-						if (newEdit.node2.equals(node.probNode	)) {
+						if (pn2.equals(node.probNode)) {
 							destination = node;
 						}
 					}
-					Link l = new Link(newEdit.node1.node, newEdit.node2.node, true);
+					Link l = new Link(newEdit.getProbNode1().node, newEdit.getProbNode2().node, true);
 					l.setLookAhead(2);
 					VisualLink tempLink = new VisualLink(l, source, destination);
 					tempLink.paint(g);
-					probNet.removeLink(newEdit.node1, newEdit.node2, true);
+					probNet.removeLink(newEdit.getProbNode1(), newEdit.getProbNode2(), true);
 				} else {
 					InvertLinkEdit newEdit = (InvertLinkEdit) proposedEdit;
 					VisualNode source = null;
 					VisualNode destination = null;
+					ProbNode pn1 = probNet.getProbNode(newEdit.getVariable1());
+					ProbNode pn2 = probNet.getProbNode(newEdit.getVariable2());
 					for (VisualNode node : visualNodes) {
-						if (newEdit.node1.equals(node.probNode)) {
+						if (pn1.equals(node.probNode)) {
 							source = node;
 						}
-						if (newEdit.node2.equals(node.probNode	)) {
+						if (pn2.equals(node.probNode)) {
 							destination = node;
 						}
 					}
-					Link l = new Link(newEdit.node1.node, newEdit.node2.node, true);
+					Link l = new Link(newEdit.getProbNode1().node, newEdit.getProbNode2().node, true);
 					l.setLookAhead(3);
 					VisualLink tempLink = new VisualLink(l, source, destination);
 					tempLink.paint(g);
-					probNet.removeLink(newEdit.node1, newEdit.node2, true);
+					probNet.removeLink(newEdit.getProbNode1(), newEdit.getProbNode2(), true);
 				}
 			}
 		}
@@ -519,8 +526,41 @@ public class VisualNetwork implements PNUndoableEditListener {
 	
 	private void paintLinksWhenLookahead(Graphics2D g) {
 		for (VisualLink visualLink : visualLinks) {
+			//paint them in normal strokes
 			visualLink.paint(g);
 		}
+		
+		
+		
+//		for (PNEdit edit : probNet.getLookaheadStepsList()) {
+//		//get the proposal, make new visual links, paint it gray
+//			VisualNode source = null;
+//			VisualNode destination = null;
+//			if (edit instanceof AddLinkEdit) {
+//				AddLinkEdit newEdit = (AddLinkEdit) edit;
+//				Link l = new Link(newEdit.getProbNode1().node, newEdit.getProbNode2().node, true);
+//				ProbNode pn1 = probNet.getProbNode(newEdit.getVariable1());
+//				ProbNode pn2 = probNet.getProbNode(newEdit.getVariable2());
+//				for (VisualNode node : visualNodes) {
+//					if (pn1.equals(node.probNode)) {
+//						source = node;
+//					}
+//					if (pn2.equals(node.probNode)) {
+//						destination = node;
+//					}
+//				}
+//				VisualLink tempLink = new VisualLink(l, source, destination);
+//				tempLink.paintGrayLink(g);
+//				probNet.removeLink(newEdit.getProbNode1(), newEdit.getProbNode2(), true);
+//			} else if (edit instanceof RemoveLinkEdit) {
+//				RemoveLinkEdit newEdit  = (RemoveLinkEdit) edit;
+//				probNet.addTempRemoval(newEdit);
+//				probNet.removeLink(newEdit.getProbNode1(), newEdit.getProbNode2(), true);
+//				//remove the visualLink here
+//			} else if (edit instanceof InvertLinkEdit) {
+//				//hide the original Link and add a new VisualLink on top
+//			}
+//		}
 		
 	}
 
@@ -534,8 +574,12 @@ public class VisualNetwork implements PNUndoableEditListener {
 		if (selectedNodes.size() != 0) {
 			paintLinksWhenNodeSelected(g);
 		}
-		 else {
+		else if (probNet.getLookAheadButton()) {
+			paintLinksWhenLookahead(g);
 			
+			probNet.setLookAheadButton(false);
+		}
+		 else {		
 			for (VisualLink visualLink : visualLinks) {
 //				if (probNet.getLookAheadButton() == true) {
 //					visualLink.getLink().setLookAhead(4);

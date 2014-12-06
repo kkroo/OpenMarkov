@@ -194,7 +194,7 @@ public class LookAheadToolBar extends ToolBarBasic implements MouseMotionListene
 		      int value = lookAheadSteps.getValue();
 		     // label.setText(Integer.toString(value));
 		      MainPanelListenerAssistant mpla = MainPanel.getUniqueInstance().getMainPanelListenerAssistant();
-		      mpla.getCurrentNetworkPanel().probNet.setLookAheadSteps(value);
+		      mpla.getCurrentNetworkPanel().setLookAheadSteps(value);
 		      //pb.setLookAheadSteps(value);
 		    }
 		  }

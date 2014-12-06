@@ -97,6 +97,10 @@ public class NetworkPanel extends FrameContentPanel
      */
     private int               workingMode            = EDITION_WORKING_MODE;
 	private CaseDatabase caseDB;
+	
+	private ProbNet realProbNet;
+	
+	private int lookAheadSteps;
 
     /**
      * Constructor that creates the instance.
@@ -919,5 +923,25 @@ public class NetworkPanel extends FrameContentPanel
 
     public void createNextSliceNode() {
         editorPanel.createNextSliceNode();
+    }
+    
+    public void setCurrentProbNet(ProbNet pn) {
+    	this.probNet = pn;
+    }
+    
+    public void probNetScreenShot() {
+    	this.realProbNet = this.probNet;
+    }
+    
+    public void restoreProbNet() {
+    	this.probNet = this.realProbNet;
+    }
+    
+    public void setLookAheadSteps(int k) {
+    	lookAheadSteps = k;
+    }
+    
+    public int getLookAheadStep() {
+    	return lookAheadSteps;
     }
 }

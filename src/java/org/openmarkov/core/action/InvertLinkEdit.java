@@ -28,11 +28,11 @@ public class InvertLinkEdit extends BaseLinkEdit {
     /**
      * parent node
      */
-    public ProbNode node1;
+    protected ProbNode node1;
     /**
      * child node
      */
-    public ProbNode node2;
+    protected ProbNode node2;
     
     /**
      * Parent node's old potentials
@@ -166,6 +166,14 @@ public class InvertLinkEdit extends BaseLinkEdit {
     public BaseLinkEdit getUndoEdit ()
     {
         return new InvertLinkEdit (getProbNet (), getVariable2 (), getVariable1 (), isDirected ());
+    }
+    
+    public ProbNode getProbNode1() {
+    	return node1;
+    }
+    
+    public ProbNode getProbNode2() {
+    	return node2;
     }
 
 }

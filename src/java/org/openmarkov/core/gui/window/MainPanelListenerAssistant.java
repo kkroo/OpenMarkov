@@ -27,6 +27,8 @@ import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
 
 import org.apache.commons.io.FilenameUtils;
+import org.openmarkov.core.action.BaseLinkEdit;
+import org.openmarkov.core.action.PNEdit;
 import org.openmarkov.core.exception.CanNotDoEditException;
 import org.openmarkov.core.exception.CanNotWriteNetworkToFileException;
 import org.openmarkov.core.exception.ConstraintViolationException;
@@ -78,6 +80,7 @@ import org.openmarkov.core.model.network.ProbNode;
 import org.openmarkov.core.model.network.Variable;
 import org.openmarkov.core.oopn.Instance.ParameterArity;
 import org.openmarkov.core.oopn.OOPNet;
+import org.openmarkov.learning.algorithm.hillclimbing.HillClimbingAlgorithm;
 import org.openmarkov.learning.core.algorithm.LearningAlgorithm;
 import org.openmarkov.learning.core.util.LearningEditProposal;
 
@@ -126,6 +129,8 @@ public class MainPanelListenerAssistant extends WindowAdapter implements ActionL
     private static final double zoomChangeValue = 0.2;
 
     private StringDatabase      stringDatabase  = null;
+    
+    public ProbNet probNetCopy;
 
     /**
      * Constructor that save the references to the objects that this class
@@ -328,55 +333,89 @@ public class MainPanelListenerAssistant extends WindowAdapter implements ActionL
         } else if (actionCommand.equals(ActionCommands.NEXT_SLICE_NODE)) {
             this.getCurrentNetworkPanel().createNextSliceNode();
         } else if (actionCommand.equals(ActionCommands.LOOK_AHEAD)) {
+        	//swich to a temp pronNet
         	//create lookAhead Graph
         	LearningPanel lp = (LearningPanel) this.getCurrentNetworkPanel();
+        	ProbNet pn = lp.getProbNet();
+        	probNetCopy = lp.probNet.copy();
+        	//lp.probNetScreenShot();
+        	//lp.setCurrentProbNet(pnCopy);
         	LearningAlgorithm la = lp.getLearningAlgorithm();
-        	LearningEditProposal curr = la.getBestEdit(true, true);
-        	ProbNet pn = lp.probNet; 
-        	int k = pn.getLookAheadSteps();
-        	pn.setLookAheadSteps(k);
-        	for (int i = k; i > 0; i--) {
-        		if (curr != null) {
-        			//apply edits
-        			//Pop up window if no next steps?
-        			try {
-        				//Dont add directly to probNet, create visual links
-        				//set lookahead bool to be true
-        				pn.setLookAheadButton(true);
+//        	LearningEditProposal curr = la.getBestEdit(true, true);
+        	int k = lp.getLookAheadStep();
+//        	pnCopy.setLookAheadSteps(k);
+			pn.setLookAheadButton(true);
+			for (int i = 0; i < k; i++) {
+				LearningEditProposal curr = la.getBestEdit( true, true);
+				if (curr != null ) {
+					try {
 						pn.doEdit(curr.getEdit());
-						pn.setLookAheadButton(false);
-					} catch (ConstraintViolationException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} catch (CanNotDoEditException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} catch (NonProjectablePotentialException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} catch (WrongCriterionException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} catch (DoEditException e1) {
+					} catch (ConstraintViolationException
+							| CanNotDoEditException
+							| NonProjectablePotentialException
+							| WrongCriterionException | DoEditException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-        		}
-        		curr = la.getNextEdit(true, true);
-        	}
+				}
+			}
+//			
+//        	for (int i = k; i > 0; i--) {
+//        		if (curr != null) {
+//					//pn.doEdit(curr.getEdit());
+//        			//Storing those steps here, and will paint visual links in VZ
+//    				//pnCopy.addLookAheadSteps(curr.getEdit());
+//					//pn.setLookAheadButton(false);
+//        			//apply edits
+//        			//Pop up window if no next steps?
+//        			try {
+//						pnCopy.doEdit(curr.getEdit());
+////        				pn.addLookAheadSteps(curr.getEdit());
+////						pn.setLookAheadButton(false);
+//					} catch (ConstraintViolationException e1) {
+//						// TODO Auto-generated catch block
+//						e1.printStackTrace();
+//					} catch (CanNotDoEditException e1) {
+//						// TODO Auto-generated catch block
+//						e1.printStackTrace();
+//					} catch (NonProjectablePotentialException e1) {
+//						// TODO Auto-generated catch block
+//						e1.printStackTrace();
+//					} catch (WrongCriterionException e1) {
+//						// TODO Auto-generated catch block
+//						e1.printStackTrace();
+//					} catch (DoEditException e1) {
+//						// TODO Auto-generated catch block
+//						e1.printStackTrace();
+//					}
+//        		}
+//        		curr = la.getNextEdit(true, true);
+//        	}
         	
         } else if (actionCommand.equals(ActionCommands.LOOK_AHEAD_RESET)) {
         	//look ahead reset
         	//create an arrayList of history?
-        	ProbNet pn = this.getCurrentNetworkPanel().probNet;
-        	int stepsToReset = pn.getLookAheadSteps();
-        	while (stepsToReset > 0) {
-        		pn.setLookAheadButton(true);
-        		pn.getpNESupport().undo();
-        		pn.setLookAheadButton(false);
-        		stepsToReset --;
+        	LearningPanel lp = (LearningPanel) this.getCurrentNetworkPanel();
+        	if (this.probNetCopy != null) {       		
+        		lp.getProbNet().restore(probNetCopy);
         	}
-        	pn.setLookAheadSteps(0);
+        	//this.getCurrentNetworkPanel().restoreProbNet();
+        	//LearningPanel lp = (LearningPanel) this.getCurrentNetworkPanel();
+        	getCurrentNetworkPanel().setModified(true);
+        	getCurrentNetworkPanel().getEditorPanel().repaint();
+        	
+//        	int stepsToReset = pn.getLookAheadSteps();
+//        	while (stepsToReset > 0) {
+//        		pn.setLookAheadButton(true);
+//        		pn.getpNESupport().undo();
+//        		pn.setLookAheadButton(false);
+//        		stepsToReset --;
+//        	}
+//        	for (PNEdit edit : pn.getLookaheadStepsList()) {
+//        		//remove those visualLinks
+//        	}
+        	//pn.setLookAheadSteps(0);
+        	//pn.clearLookAheadSteps();
         } else if (actionCommand.equals(ActionCommands.LOOK_AHEAD_APPLY_EDIT)) {
         	//look ahead apply edit
         	LearningPanel lp = (LearningPanel) this.getCurrentNetworkPanel();

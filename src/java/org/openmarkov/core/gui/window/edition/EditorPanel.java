@@ -465,7 +465,7 @@ public class EditorPanel extends JPanel
             } else {
             	if (networkPanel.getWorkingMode () == NetworkPanel.EDITION_WORKING_MODE) {
             		if ((node = visualNetwork.whatNodeInPosition (cursorPosition, g)) != null) {
-            			g.drawImage(legendImage, 100, 100, null);
+            			//g.drawImage(legendImage, 100, 100, null);
             		}
             	}
             }

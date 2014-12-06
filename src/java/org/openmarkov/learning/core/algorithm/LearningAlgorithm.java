@@ -125,6 +125,16 @@ public abstract class LearningAlgorithm {
      */
     public abstract LearningEditProposal getBestEdit (boolean onlyAllowedEdits, boolean onlyPositiveEdits);
     
+    
+    public LearningEditProposal getBestEdit (ProbNet probNet, boolean onlyAllowedEdits, boolean onlyPositiveEdits){
+    	ProbNet curNet = this.probNet;
+    	this.probNet = probNet;
+    	LearningEditProposal bestEdit = getBestEdit (onlyAllowedEdits, onlyPositiveEdits);
+    	this.probNet = curNet;
+    	return bestEdit;
+    	
+    }
+    
     /**
      * This method returns the next best edition (and its associated score)
      * that can be done to the network that is being learnt. 

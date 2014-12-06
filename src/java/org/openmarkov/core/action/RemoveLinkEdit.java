@@ -40,11 +40,11 @@ public class RemoveLinkEdit extends BaseLinkEdit {
 	 * /**
 	 * parent node
 	 */
-	public ProbNode node1;
+	protected ProbNode node1;
 	/**
 	 * child node
 	 */
-	public ProbNode node2;
+	protected ProbNode node2;
 
 	/**
 	 * The new <code>Potential</code> of the second node
@@ -191,6 +191,14 @@ public class RemoveLinkEdit extends BaseLinkEdit {
     public BaseLinkEdit getUndoEdit ()
     {
         return new AddLinkEdit (getProbNet (), getVariable1 (), getVariable2 (), isDirected ());
-    }	
+    }
+    
+    public ProbNode getProbNode1() {
+    	return node1;
+    }
+    
+    public ProbNode getProbNode2() {
+    	return node2;
+    }
 
 }
