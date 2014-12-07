@@ -188,12 +188,51 @@ public class VisualLink extends VisualArrow {
         setDoubleStriped(hasAbsoluteLinkRestriction);
         setSingleStriped(link.hasRestrictions() && !hasAbsoluteLinkRestriction);
         setStartPoint(source.getCutPoint(line, g));
+        
         setEndPoint(destination.getCutPoint(line, g));
 
         setIndependence((float) link.getIndependence());
+        Point2D.Double newEndPoint = fixEndPointWithEdgeWidth(this.endPoint);
+        setEndPoint(newEndPoint);
 		//String foo = this.source.probNode.getName(); debug statement 
         super.paint(g);
         
+    }
+    
+    private Point2D.Double fixEndPointWithEdgeWidth(Point2D.Double original) {
+    	Double x = original.getX();
+    	Double y = original.getY();
+    	Double indep = (double) INDEPENDENCE / 8;
+    	//depending on direction?
+    	int direction = getDirection();
+    	if (direction == 1) {
+    		original.setLocation(x + indep, y + indep);
+    	} else if (direction == 2) {
+    		original.setLocation(x - indep, y + indep);
+    	} else if (direction == 3) {
+    		original.setLocation(x + indep, y - indep);
+    	} else {
+    		original.setLocation(x - indep, y - indep);
+    	}
+    	return original;
+    }
+    
+    private int getDirection() {
+    	VisualNode source = getSourceNode();
+    	VisualNode destination = getDestinationNode();
+    	double x1 = source.getPosition().getX();
+    	double y1 = source.getPosition().getY();
+    	double x2 = destination.getPosition().getX();
+    	double y2 = destination.getPosition().getY();
+    	if (x2 <= x1 && y2 <= y1) {
+    		return 1;
+    	} else if (x2 >= x1 && y2 <= y1) {
+    		return 2;
+    	} else if (x2 <= x1 && y2 >= y1) {
+    		return 3;
+    	} else {
+    		return 4;
+    	}
     }
     
     /**

@@ -1580,6 +1580,7 @@ public class ProbNet implements Cloneable {
         this.defaultStates = pn.defaultStates;
         this.name = pn.name;
         this.comment = pn.comment;
+        this.lookAheadEdits = new ArrayList<PNEdit>();
         
         //this.lookAheadEdits = new ArrayList<PNEdit>();
         try {

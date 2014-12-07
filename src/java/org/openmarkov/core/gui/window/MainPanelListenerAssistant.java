@@ -131,6 +131,8 @@ public class MainPanelListenerAssistant extends WindowAdapter implements ActionL
     private StringDatabase      stringDatabase  = null;
     
     public ProbNet probNetCopy;
+    
+    private boolean firstTimeLookAhead;
 
     /**
      * Constructor that save the references to the objects that this class
@@ -146,6 +148,7 @@ public class MainPanelListenerAssistant extends WindowAdapter implements ActionL
         // .getBundleMessages();
         this.networkPanels = new ArrayList<NetworkPanel>();
         this.stringDatabase = StringDatabase.getUniqueInstance();
+        this.firstTimeLookAhead = true;
     }
 
     /**
@@ -337,7 +340,11 @@ public class MainPanelListenerAssistant extends WindowAdapter implements ActionL
         	//create lookAhead Graph
         	LearningPanel lp = (LearningPanel) this.getCurrentNetworkPanel();
         	ProbNet pn = lp.getProbNet();
-        	probNetCopy = lp.probNet.copy();
+        	//Update my local copy of probNet if want to revert back to current ProbNet when restored
+        	if (firstTimeLookAhead) {
+        		probNetCopy = lp.probNet.copy();
+        		firstTimeLookAhead = false;
+        	}
         	//lp.probNetScreenShot();
         	//lp.setCurrentProbNet(pnCopy);
         	LearningAlgorithm la = lp.getLearningAlgorithm();
@@ -349,6 +356,7 @@ public class MainPanelListenerAssistant extends WindowAdapter implements ActionL
 				LearningEditProposal curr = la.getBestEdit( true, true);
 				if (curr != null ) {
 					try {
+						pn.addLookAheadSteps(curr.getEdit());
 						pn.doEdit(curr.getEdit());
 					} catch (ConstraintViolationException
 							| CanNotDoEditException
@@ -398,11 +406,12 @@ public class MainPanelListenerAssistant extends WindowAdapter implements ActionL
         	LearningPanel lp = (LearningPanel) this.getCurrentNetworkPanel();
         	if (this.probNetCopy != null) {       		
         		lp.getProbNet().restore(probNetCopy);
+        		firstTimeLookAhead = true;
         	}
         	//this.getCurrentNetworkPanel().restoreProbNet();
         	//LearningPanel lp = (LearningPanel) this.getCurrentNetworkPanel();
         	getCurrentNetworkPanel().setModified(true);
-        	getCurrentNetworkPanel().getEditorPanel().repaint();
+        	getCurrentNetworkPanel().getEditorPanel().getVisualNetwork().constructVisualInfo2();
         	
 //        	int stepsToReset = pn.getLookAheadSteps();
 //        	while (stepsToReset > 0) {

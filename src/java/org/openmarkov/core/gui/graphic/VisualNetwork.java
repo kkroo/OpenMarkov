@@ -197,7 +197,12 @@ public class VisualNetwork implements PNUndoableEditListener {
 		return networkBounds;
 
 	}
-
+	
+	public void constructVisualInfo2() {
+		this.constructVisualInfo();
+	}
+	
+	
 	/**
 	 * This method constructs the lists of the visual nodes and visual links. It
 	 * only creates visual information for the new nodes and links and delete
@@ -525,8 +530,11 @@ public class VisualNetwork implements PNUndoableEditListener {
 	 */
 	
 	private void paintLinksWhenLookahead(Graphics2D g) {
+		//probNet.get
 		for (VisualLink visualLink : visualLinks) {
+			//if they are addLinkEdit or invertLinkEdit, then paint them in gray
 			//paint them in normal strokes
+			visualLink.setStroke(10);
 			visualLink.paint(g);
 		}
 		

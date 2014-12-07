@@ -90,11 +90,12 @@ public class VisualOONetwork extends VisualNetwork
         selectionListeners = new HashSet<> ();
     }
 
+
     /**
      * Constructs visual elements
      */
     @Override
-    protected void constructVisualInfo ()
+    protected void constructVisualInfo()
     {
         super.constructVisualInfo ();
        

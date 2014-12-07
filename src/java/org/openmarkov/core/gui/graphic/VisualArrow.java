@@ -59,7 +59,7 @@ public class VisualArrow extends VisualElement {
 	/**
 	 * independence of underlying link
 	 */
-	private static float INDEPENDENCE;
+	protected static float INDEPENDENCE;
 
 	/***
 	 * Heigth of the stripe
@@ -84,7 +84,7 @@ public class VisualArrow extends VisualElement {
 	/**
 	 * End point.
 	 */
-	private Point2D.Double endPoint = null;
+	protected Point2D.Double endPoint = null;
 
 	/**
 	 * Is the link directed
@@ -552,6 +552,9 @@ public class VisualArrow extends VisualElement {
 		g.setPaint(linkColor);
 
 		stroke = setStroke(INDEPENDENCE);
+		
+		//for Lookahead
+		
 
 		if (isDoubleStriped) {
 			paintDoubleStripe(g, startPoint, endPoint, stroke);
