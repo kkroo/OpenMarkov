@@ -105,7 +105,7 @@ public class VisualArrow extends VisualElement {
 
 	private Color linkColor = FOREGROUND_COLOR;
 
-	private Stroke stroke;
+	protected Stroke stroke;
 	
 	private LookAheadState lookAheadState;
 
@@ -123,6 +123,7 @@ public class VisualArrow extends VisualElement {
 		this.startPoint = newStartPoint;
 		this.endPoint = newEndPoint;
 		this.isDirected = isDirected;
+		this.lookAheadState = LookAheadState.NORMAL;
 	}
 
 	public VisualArrow(Point2D.Double newStartPoint, Point2D.Double newEndPoint) {
@@ -549,43 +550,28 @@ public class VisualArrow extends VisualElement {
 	 */
 	@Override
 	public void paint(Graphics2D g) {
-		if (getLookAheadState() == LookAheadState.LOOKAHEAD_EXISITED) {
-			setStroke(1.0f);
-		} else if (getLookAheadState() == LookAheadState.LOOKAHEAD_NEW_ADD) {
-			setStroke(2.0f);
-			setLinkColor(LOOKAHEAD_OVERLAY);
-		} else {
-			stroke = setStroke(INDEPENDENCE);
-		}
 		
 		if (isSelected()) {
 			setLinkColor(SELECTED_LINK_COLOR);
-		}
-		g.setPaint(linkColor);
-
-		//for Lookahead
-		
-		if (getLookAheadState() == LookAheadState.LOOKAHEAD_EXISITED) {
-			setStroke(1.0f);
 		} else if (getLookAheadState() == LookAheadState.LOOKAHEAD_NEW_ADD) {
-			setStroke(2.0f);
 			setLinkColor(LOOKAHEAD_OVERLAY);
 		}
 		
+		g.setPaint(linkColor);
 
 		if (isDoubleStriped) {
-			paintDoubleStripe(g, startPoint, endPoint, stroke);
+			paintDoubleStripe(g, startPoint, endPoint, getStroke());
 		}
 		if (isSingleStriped) {
-			paintSingleStripe(g, startPoint, endPoint, stroke);
+			paintSingleStripe(g, startPoint, endPoint, getStroke());
 		}
 		if (isDirected) {
 			// Paint the arrow while the user has not released the button of the
 			// mouse
-			paintArrow(g, startPoint, endPoint, stroke);
+			paintArrow(g, startPoint, endPoint, getStroke());
 			setIndependence(1);
 		} else {
-			paintLine(g, startPoint, endPoint, stroke);
+			paintLine(g, startPoint, endPoint, getStroke());
 		}
 	}
 
@@ -636,7 +622,7 @@ public class VisualArrow extends VisualElement {
 	 *            the width to make the stroke
 	 */
 	public Stroke setStroke(double x) {
-		this.stroke = new BasicStroke((float) ((x / 100) * max_stroke_width)+1);
+		this.stroke = new BasicStroke((float) ((x / 100) * max_stroke_width)+2);
 		return this.stroke;
 	}
 

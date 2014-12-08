@@ -453,15 +453,18 @@ public class VisualNetwork implements PNUndoableEditListener {
 		for (VisualNode n : selectedNodes){
 			// iterate through all the rest of the node and find what's the best move between them
 			Collection<LearningEditProposal> proposals = n.probNode.getProposedEdits();
+			VisualNode source = null;
+			VisualNode destination = null;
+			VisualLink vlink = null;
 			for (LearningEditProposal proposal : proposals) {
-				PNEdit proposedEdit = proposal.getEdit();
+				BaseLinkEdit proposedEdit = (BaseLinkEdit) proposal.getEdit();
 				LearningEditMotivation proposedEditMotivation = proposal.getMotivation();
+				ProbNode pn1 = probNet.getProbNode(proposedEdit.getVariable1());
+				ProbNode pn2 = probNet.getProbNode(proposedEdit.getVariable2());
+				
 				if (proposedEdit instanceof AddLinkEdit) {
 					AddLinkEdit newEdit = (AddLinkEdit) proposedEdit;
-					VisualNode source = null;
-					VisualNode destination = null;
-					ProbNode pn1 = probNet.getProbNode(newEdit.getVariable1());
-					ProbNode pn2 = probNet.getProbNode(newEdit.getVariable2());
+
 					for (VisualNode node : visualNodes) {
 						if (pn1.equals(node.probNode)) {
 							source = node;
@@ -471,48 +474,27 @@ public class VisualNetwork implements PNUndoableEditListener {
 						}
 					}
 					Link l = new Link(newEdit.getProbNode1().node, newEdit.getProbNode2().node, true);
-					l.setLookAhead(1);
+					l.setLookAhead(Link.LOOKAHEAD_ADD);
 					VisualLink tempLink = new VisualLink(l, source, destination);
 					tempLink.paint(g);
 					probNet.removeLink(newEdit.getProbNode1(), newEdit.getProbNode2(), true);
-				} else if (proposedEdit instanceof RemoveLinkEdit) {
-					RemoveLinkEdit newEdit = (RemoveLinkEdit) proposedEdit;
-					VisualNode source = null;
-					VisualNode destination = null;
-					ProbNode pn1 = probNet.getProbNode(newEdit.getVariable1());
-					ProbNode pn2 = probNet.getProbNode(newEdit.getVariable2());
-					for (VisualNode node : visualNodes) {
-						if (pn1.equals(node.probNode)) {
-							source = node;
-						}
-						if (pn2.equals(node.probNode)) {
-							destination = node;
+				} else{
+					
+					for (VisualLink link: visualLinks) {
+						if ( (link.getLink().getNode1().getObject() == pn1
+								&& link.getLink().getNode2().getObject() == pn2) ||
+							 (link.getLink().getNode1().getObject() == pn2
+								&& link.getLink().getNode2().getObject() == pn1) ){
+							vlink = link;
+							break;
 						}
 					}
-					Link l = new Link(newEdit.getProbNode1().node, newEdit.getProbNode2().node, true);
-					l.setLookAhead(2);
-					VisualLink tempLink = new VisualLink(l, source, destination);
-					tempLink.paint(g);
-					probNet.removeLink(newEdit.getProbNode1(), newEdit.getProbNode2(), true);
-				} else {
-					InvertLinkEdit newEdit = (InvertLinkEdit) proposedEdit;
-					VisualNode source = null;
-					VisualNode destination = null;
-					ProbNode pn1 = probNet.getProbNode(newEdit.getVariable1());
-					ProbNode pn2 = probNet.getProbNode(newEdit.getVariable2());
-					for (VisualNode node : visualNodes) {
-						if (pn1.equals(node.probNode)) {
-							source = node;
-						}
-						if (pn2.equals(node.probNode)) {
-							destination = node;
-						}
+					
+					if (vlink != null) {
+							int mode = ( proposedEdit instanceof RemoveLinkEdit) ? Link.LOOKAHEAD_DELETE : Link.LOOKAHEAD_INVERT;
+							vlink.getLink().setLookAhead(mode);
 					}
-					Link l = new Link(newEdit.getProbNode1().node, newEdit.getProbNode2().node, true);
-					l.setLookAhead(3);
-					VisualLink tempLink = new VisualLink(l, source, destination);
-					tempLink.paint(g);
-					probNet.removeLink(newEdit.getProbNode1(), newEdit.getProbNode2(), true);
+					
 				}
 			}
 		}
@@ -520,9 +502,14 @@ public class VisualNetwork implements PNUndoableEditListener {
 			VisualNode source = visualLink.getSourceNode();
 			VisualNode destination = visualLink.getDestinationNode();
 			//selectednodes does not contian source or destination
-			if (!selectedNodes.contains(source) && !selectedNodes.contains(destination)) {
+//			if (!selectedNodes.contains(source) && !selectedNodes.contains(destination)) {
+				if (visualLink.getLink().getLookAhead() != Link.NON_LOOKAHEAD) {
+					visualLink.paint(g);
+					visualLink.getLink().setLookAhead(Link.NON_LOOKAHEAD);
+				} else {
 				visualLink.paintGrayLink(g);
-			}
+				}
+//			}
 		}
 	}
 	
@@ -543,8 +530,8 @@ public class VisualNetwork implements PNUndoableEditListener {
 					result.put(source, arr);
 				}
 			} else if (edit instanceof InvertLinkEdit) {
-				ProbNode source = ((AddLinkEdit) edit).getProbNode1();
-				ProbNode destination = ((AddLinkEdit) edit).getProbNode2();
+				ProbNode source = ((InvertLinkEdit) edit).getProbNode1();
+				ProbNode destination = ((InvertLinkEdit) edit).getProbNode2();
 				if (result.containsKey(source)) {
 					result.get(source).add(destination);
 				} else {

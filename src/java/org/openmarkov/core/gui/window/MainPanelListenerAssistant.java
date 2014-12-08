@@ -373,7 +373,7 @@ public class MainPanelListenerAssistant extends WindowAdapter implements ActionL
 					}
 				} else {
 					//jump out the pop warning window
-					mainPanel.showWarning(); 	
+//					mainPanel.showWarning(); 	
 					break;
 				}
 			}

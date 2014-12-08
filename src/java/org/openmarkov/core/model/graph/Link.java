@@ -33,10 +33,10 @@ import org.openmarkov.core.model.network.potential.TablePotential;
  */
 public class Link {
 	
-	private static final int NON_LOOKAHEAD = 0;
-	private static final int LOOKAHEAD_ADD = 1;
-	private static final int LOOKAHEAD_DELETE = 2;
-	private static final int LOOKAHEAD_INVERT = 3;
+	public static final int NON_LOOKAHEAD = 0;
+	public static final int LOOKAHEAD_ADD = 1;
+	public static final int LOOKAHEAD_DELETE = 2;
+	public static final int LOOKAHEAD_INVERT = 3;
 
 	// Attributes
 	/** The first node. If the link is directed, this node is the parent. */

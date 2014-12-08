@@ -713,6 +713,10 @@ public class NetworkPanel extends FrameContentPanel
     	Node srcNode, destNode;
     	CrossEntropyIndependenceTester independenceTester = new CrossEntropyIndependenceTester();
     	for (Link link : probNet.getGraph().getLinks()){
+    		if (link.getLookAhead() != Link.NON_LOOKAHEAD) {
+    			continue;
+    		}
+    		
     		srcNode = link.getNode1();
     		destNode = link.getNode2();
     		
@@ -722,7 +726,8 @@ public class NetworkPanel extends FrameContentPanel
     		}
     		
     		ArrayList<ProbNode> nodesZ = new ArrayList<ProbNode>(nodesYZ);
-    		nodesZ.remove(nodesZ.indexOf(srcNode.getObject()));
+    		int idx = nodesZ.indexOf(srcNode.getObject());
+    		nodesZ.remove(idx);
 
     		double test = 0;
     		try {

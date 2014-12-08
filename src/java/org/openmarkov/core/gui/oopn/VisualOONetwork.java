@@ -605,7 +605,7 @@ public class VisualOONetwork extends VisualNetwork
         if ((selectedElement = getReferenceLinkInPosition (cursorPosition, g)) != null)
         {
             setSelectedAllObjects (false);
-            setSelectedElement(selectedElement, true);
+			setSelectedElement(selectedElement, true);
         } else if ((selectedElement = getInstanceInPosition (cursorPosition, g)) != null)
         {
             setSelectedAllObjects (false);

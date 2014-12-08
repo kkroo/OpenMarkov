@@ -40,6 +40,7 @@ import javax.swing.ListCellRenderer;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.UndoableEditEvent;
 
+import org.openmarkov.core.action.BaseLinkEdit;
 import org.openmarkov.core.action.PNEdit;
 import org.openmarkov.core.action.PNUndoableEditListener;
 import org.openmarkov.core.exception.CanNotDoEditException;
@@ -645,11 +646,17 @@ public class InteractiveLearningDialog extends javax.swing.JDialog implements Ed
         	btnRedo.setEnabled(false);
         btnUndo.setEnabled(true);
 
-		double metricScore = ((ScoreEditMotivation) learningManager.getMotivation((PNEdit) event.getEdit())).getScore();
+		double metricScore = 0;
 		if (metricHistory.getItemCount() > 0) {
 			Number y = metricHistory.getY(metricHistory.getItemCount() - 1);
 			metricScore += y.doubleValue();
-		}			
+		}	
+		PNEdit edit = (PNEdit) event.getEdit();
+		if (edit instanceof BaseLinkEdit) {
+			ScoreEditMotivation motivation = (ScoreEditMotivation) learningManager.getMotivation(edit);
+			metricScore += motivation.getScore();
+		}
+	
 		metricHistory.add(metricHistory.getItemCount(), metricScore);
 
 		ArrayList<EvidenceCase> evidence = learningPanel.getEditorPanel().getEvidence();
