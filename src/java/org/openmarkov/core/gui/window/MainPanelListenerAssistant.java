@@ -20,6 +20,7 @@ import java.util.List;
 
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -27,8 +28,11 @@ import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
 
 import org.apache.commons.io.FilenameUtils;
+import org.openmarkov.core.action.AddLinkEdit;
 import org.openmarkov.core.action.BaseLinkEdit;
+import org.openmarkov.core.action.InvertLinkEdit;
 import org.openmarkov.core.action.PNEdit;
+import org.openmarkov.core.action.RemoveLinkEdit;
 import org.openmarkov.core.exception.CanNotDoEditException;
 import org.openmarkov.core.exception.CanNotWriteNetworkToFileException;
 import org.openmarkov.core.exception.ConstraintViolationException;
@@ -49,6 +53,8 @@ import org.openmarkov.core.gui.dialog.AboutBox;
 import org.openmarkov.core.gui.dialog.HelpViewer;
 import org.openmarkov.core.gui.dialog.LanguageDialog;
 import org.openmarkov.core.gui.dialog.SelectZoomDialog;
+import org.openmarkov.core.gui.dialog.common.com.hexidec.ekit.compoment.SimpleInfoDialog;
+import org.openmarkov.core.gui.dialog.common.com.hexidec.util.Translatrix;
 import org.openmarkov.core.gui.dialog.configuration.PreferencesDialog;
 import org.openmarkov.core.gui.dialog.io.DBReaderFileChooser;
 import org.openmarkov.core.gui.dialog.io.FileChooser;
@@ -365,6 +371,10 @@ public class MainPanelListenerAssistant extends WindowAdapter implements ActionL
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
+				} else {
+					//jump out the pop warning window
+					mainPanel.showWarning(); 	
+					break;
 				}
 			}
 //			
@@ -428,37 +438,75 @@ public class MainPanelListenerAssistant extends WindowAdapter implements ActionL
         } else if (actionCommand.equals(ActionCommands.LOOK_AHEAD_APPLY_EDIT)) {
         	//look ahead apply edit
         	LearningPanel lp = (LearningPanel) this.getCurrentNetworkPanel();
-        	LearningAlgorithm la = lp.getLearningAlgorithm();
-        	LearningEditProposal curr = la.getBestEdit(true, true);
-        	ProbNet pn = lp.probNet; 
-        	int k = pn.getLookAheadSteps();
-        	pn.setLookAheadSteps(k);
-        	for (int i = k; i >= 0; i--) {
-        		if (curr != null) {
-        			//apply edits
-        			//Pop up window if no next steps?
+        	ProbNet pn = lp.getProbNet();
+        	if (this.probNetCopy != null) {
+        		List<PNEdit> list = lp.getProbNet().getLookaheadStepsList();
+        		pn.restore(probNetCopy);
+        		firstTimeLookAhead = true;
+        		for (PNEdit edit : list) {
         			try {
-        				//Dont add directly to probNet
-						pn.doEdit(curr.getEdit());
-					} catch (ConstraintViolationException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} catch (CanNotDoEditException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} catch (NonProjectablePotentialException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} catch (WrongCriterionException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} catch (DoEditException e1) {
+        				//what about the other types?
+        				if (edit instanceof AddLinkEdit) {
+        					Variable v1 = ((AddLinkEdit) edit).getVariable1();
+        					Variable v2 = ((AddLinkEdit) edit).getVariable2();
+        					((AddLinkEdit) edit).setProbNode1(pn.getProbNode(v1));
+        					((AddLinkEdit) edit).setProbNode2(pn.getProbNode(v2));
+        				}
+        				
+        				if (edit instanceof RemoveLinkEdit) {
+        					Variable v1 = ((RemoveLinkEdit) edit).getVariable1();
+        					Variable v2 = ((RemoveLinkEdit) edit).getVariable2();
+        					((RemoveLinkEdit) edit).setProbNode1(pn.getProbNode(v1));
+        					((RemoveLinkEdit) edit).setProbNode2(pn.getProbNode(v2));
+        				}
+        				
+        				if (edit instanceof InvertLinkEdit) {
+        					Variable v1 = ((InvertLinkEdit) edit).getVariable1();
+        					Variable v2 = ((InvertLinkEdit) edit).getVariable2();
+        					((InvertLinkEdit) edit).setProbNode1(pn.getProbNode(v1));
+        					((InvertLinkEdit) edit).setProbNode2(pn.getProbNode(v2));
+        				}
+						pn.doEdit(edit);
+					} catch (ConstraintViolationException
+							| CanNotDoEditException
+							| NonProjectablePotentialException
+							| WrongCriterionException | DoEditException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
         		}
-        		curr = la.getNextEdit(true, true);
         	}
+//        	LearningAlgorithm la = lp.getLearningAlgorithm();
+//        	LearningEditProposal curr = la.getBestEdit(true, true);
+//        	ProbNet pn = lp.probNet; 
+//        	int k = pn.getLookAheadSteps();
+//        	pn.setLookAheadSteps(k);
+//        	for (int i = k; i >= 0; i--) {
+//        		if (curr != null) {
+//        			//apply edits
+//        			//Pop up window if no next steps?
+//        			try {
+//        				//Dont add directly to probNet
+//						pn.doEdit(curr.getEdit());
+//					} catch (ConstraintViolationException e1) {
+//						// TODO Auto-generated catch block
+//						e1.printStackTrace();
+//					} catch (CanNotDoEditException e1) {
+//						// TODO Auto-generated catch block
+//						e1.printStackTrace();
+//					} catch (NonProjectablePotentialException e1) {
+//						// TODO Auto-generated catch block
+//						e1.printStackTrace();
+//					} catch (WrongCriterionException e1) {
+//						// TODO Auto-generated catch block
+//						e1.printStackTrace();
+//					} catch (DoEditException e1) {
+//						// TODO Auto-generated catch block
+//						e1.printStackTrace();
+//					}
+//        		}
+//        		curr = la.getNextEdit(true, true);
+//        	}
         } else {
             ToolPluginManager.getInstance().processCommand(actionCommand, mainPanel.getMainFrame());
         }

@@ -173,7 +173,7 @@ public class VisualLink extends VisualArrow {
         		setLinkColor(Color.red);
         	} else if(link.getLookAhead() == LOOKAHEAD_INVERT) {
         		setLinkColor(Color.blue);
-        	} else if (link.getLookAhead() == LOOKAHEAD_BUTTON) {
+        	} else if (link.getLookAhead() == LOOKAHEAD_BUTTON || this.getLookAheadState() == LookAheadState.LOOKAHEAD_NEW_ADD) {
         		setLinkColor(Color.gray);
         	}
         }

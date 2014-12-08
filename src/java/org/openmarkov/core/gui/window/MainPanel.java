@@ -17,6 +17,7 @@ import java.awt.FlowLayout;
 
 import javax.swing.JApplet;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import org.openmarkov.core.gui.menutoolbar.common.MenuToolBarBasic;
@@ -115,6 +116,8 @@ public class MainPanel extends JPanel {
 	private JFrame mainFrame = null;
 
 	private ToolbarManager toolbarManager;
+	
+	private JFrame warningFrame;
 
 	/**
 	 * Creates a new instance with a clear declared parent.
@@ -129,7 +132,7 @@ public class MainPanel extends JPanel {
 		mainFrame = parentFrame;
 		mainFrame.setName(parentFrame.getName());
         toolbarManager = new ToolbarManager (this);
-
+        warningFrame = new JFrame("warning");
         initialize();
 	}
 
@@ -451,5 +454,9 @@ public class MainPanel extends JPanel {
     public ToolbarManager getToolbarManager ()
     {
         return toolbarManager;
+    }
+    
+    public void showWarning() {
+    	JOptionPane.showMessageDialog(warningFrame, "Warning: only  positive look-ahead steps found" );
     }
 }

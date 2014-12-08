@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.PriorityQueue;
@@ -526,15 +527,56 @@ public class VisualNetwork implements PNUndoableEditListener {
 	}
 	
 	/**
+	 * Helper function to iterate through current LookAhead proposed edits
+	 */
+	private HashMap<ProbNode, ArrayList<ProbNode>> iterateLookAhead(List<PNEdit> list) {
+		HashMap<ProbNode, ArrayList<ProbNode>> result = new HashMap<ProbNode, ArrayList<ProbNode>>();
+		for (PNEdit edit : list) {
+			if (edit instanceof AddLinkEdit) {
+				ProbNode source = ((AddLinkEdit) edit).getProbNode1();
+				ProbNode destination = ((AddLinkEdit) edit).getProbNode2();
+				if (result.containsKey(source)) {
+					result.get(source).add(destination);
+				} else {
+					ArrayList<ProbNode> arr = new ArrayList<ProbNode>();
+					arr.add(destination);
+					result.put(source, arr);
+				}
+			} else if (edit instanceof InvertLinkEdit) {
+				ProbNode source = ((AddLinkEdit) edit).getProbNode1();
+				ProbNode destination = ((AddLinkEdit) edit).getProbNode2();
+				if (result.containsKey(source)) {
+					result.get(source).add(destination);
+				} else {
+					ArrayList<ProbNode> arr = new ArrayList<ProbNode>();
+					arr.add(destination);
+					result.put(source, arr);
+				}
+			}
+			
+		}
+		return result;
+	}
+	
+	/**
 	 * Look-ahead mode, should only be called by paintLinks
 	 */
 	
 	private void paintLinksWhenLookahead(Graphics2D g) {
 		//probNet.get
+		List<PNEdit> proposedEdits = probNet.getLookaheadStepsList();
+		HashMap<ProbNode, ArrayList<ProbNode>> hm = iterateLookAhead(proposedEdits);
 		for (VisualLink visualLink : visualLinks) {
 			//if they are addLinkEdit or invertLinkEdit, then paint them in gray
 			//paint them in normal strokes
-			visualLink.setStroke(10);
+			ProbNode source = visualLink.getSourceNode().probNode;
+			ProbNode destination = visualLink.getDestinationNode().probNode;
+			ArrayList<ProbNode> arr = hm.get(source);
+			if (arr != null && arr.contains(destination)) {
+				visualLink.setLookAheadState(LookAheadState.LOOKAHEAD_NEW_ADD);
+			} else {
+				visualLink.setLookAheadState(LookAheadState.LOOKAHEAD_EXISITED);
+			}
 			visualLink.paint(g);
 		}
 		

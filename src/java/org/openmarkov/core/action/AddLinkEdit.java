@@ -205,6 +205,15 @@ public class AddLinkEdit extends BaseLinkEdit {
    {
        return link;
    }
+   
+   public void setProbNode1(ProbNode p) {
+	   this.node1 = p;
+	   
+   }
+   
+   public void setProbNode2(ProbNode p) {
+	   this.node2 = p;
+   }
 
     @Override
     public BaseLinkEdit getUndoEdit ()

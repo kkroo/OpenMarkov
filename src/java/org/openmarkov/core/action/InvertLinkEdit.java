@@ -176,4 +176,14 @@ public class InvertLinkEdit extends BaseLinkEdit {
     	return node2;
     }
 
+	public void setProbNode1(ProbNode probNode) {
+		// TODO Auto-generated method stub
+		this.node1 = probNode;
+		
+	}
+	
+	public void setProbNode2(ProbNode probNode) {
+		this.node2 = probNode;
+	}
+
 }

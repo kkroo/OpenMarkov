@@ -38,6 +38,8 @@ public class VisualArrow extends VisualElement {
 	 * selected link color
 	 */
 	private static final Color SELECTED_LINK_COLOR = Color.yellow;
+	
+	private static final Color LOOKAHEAD_OVERLAY = Color.GRAY;
 
 	/**
 	 * Height of the top of arrow.
@@ -104,6 +106,8 @@ public class VisualArrow extends VisualElement {
 	private Color linkColor = FOREGROUND_COLOR;
 
 	private Stroke stroke;
+	
+	private LookAheadState lookAheadState;
 
 	/**
 	 * Creates a new visual link from the two points that define the start and
@@ -545,15 +549,28 @@ public class VisualArrow extends VisualElement {
 	 */
 	@Override
 	public void paint(Graphics2D g) {
-
+		if (getLookAheadState() == LookAheadState.LOOKAHEAD_EXISITED) {
+			setStroke(1.0f);
+		} else if (getLookAheadState() == LookAheadState.LOOKAHEAD_NEW_ADD) {
+			setStroke(2.0f);
+			setLinkColor(LOOKAHEAD_OVERLAY);
+		} else {
+			stroke = setStroke(INDEPENDENCE);
+		}
+		
 		if (isSelected()) {
 			setLinkColor(SELECTED_LINK_COLOR);
 		}
 		g.setPaint(linkColor);
 
-		stroke = setStroke(INDEPENDENCE);
-		
 		//for Lookahead
+		
+		if (getLookAheadState() == LookAheadState.LOOKAHEAD_EXISITED) {
+			setStroke(1.0f);
+		} else if (getLookAheadState() == LookAheadState.LOOKAHEAD_NEW_ADD) {
+			setStroke(2.0f);
+			setLinkColor(LOOKAHEAD_OVERLAY);
+		}
 		
 
 		if (isDoubleStriped) {
@@ -644,6 +661,14 @@ public class VisualArrow extends VisualElement {
 	 */
 	public void setSingleStriped(boolean isSingleStriped) {
 		this.isSingleStriped = isSingleStriped;
+	}
+	
+	public LookAheadState getLookAheadState() {
+		return lookAheadState;
+	}
+	
+	public void setLookAheadState(LookAheadState k) {
+		lookAheadState = k;
 	}
 
 }
