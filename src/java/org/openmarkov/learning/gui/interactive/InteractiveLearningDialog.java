@@ -677,6 +677,7 @@ public class InteractiveLearningDialog extends javax.swing.JDialog implements Ed
 	public void undoEditHappened(UndoableEditEvent event) {
 		if (learningManager.getLearnedNet().getLookAheadButton() == false) {
 			updateEditionsTable(onlyAllowed, onlyPositive, learningManager.getBlockedEdits());
+
 			btnRedo.setEnabled(true);
 			if (!learningManager.getLearnedNet().getPNESupport().getUndoManager().canUndo())
 				btnUndo.setEnabled(false);

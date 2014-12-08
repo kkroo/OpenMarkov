@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.PriorityQueue;
 
-
-
 import org.openmarkov.core.exception.NormalizeNullVectorException;
 import org.openmarkov.core.exception.NotEvaluableNetworkException;
 import org.openmarkov.core.exception.ProbNodeNotFoundException;
@@ -64,6 +62,20 @@ public class LearningPanel extends NetworkPanel {
     	learningAlgorithm.updateProposedEdits(getProbNet(), true, onlyPositiveEdits);
     	getEditorPanel().getVisualNetwork().resetMotivationExtrema();
     	calculateIndependence();
+//    	InferenceAlgorithm inferenceAlgorithm;
+//    	double k = 0;
+//		try {
+//			inferenceAlgorithm = this.getEditorPanel().getInferenceManager().getDefaultInferenceAlgorithm(getProbNet());
+//	        Classification test = new Classification(inferenceAlgorithm);
+//	        ArrayList<EvidenceCase> evidence = getEditorPanel().getEvidence();
+//	        test.init(learningAlgorithm.parametricLearning(), evidence);
+//			k =	 test.classify(probNet.getVariable("TuberculosisOrCancer"), 0.5);
+//		} catch (NotEvaluableNetworkException | ProbNodeNotFoundException | NormalizeNullVectorException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
+//		System.out.println(k);
+
 
     }
     	

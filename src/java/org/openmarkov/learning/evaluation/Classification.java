@@ -68,8 +68,8 @@ public class Classification implements UndoableEditListener, PNUndoableEditListe
 		List<Variable> variablesOfInterest = new ArrayList<Variable>();
 		variablesOfInterest.add(testVariable);
 		cachedScore = 0.0;
-		int N = evidence.size();
-		for (int i=0; i<N; i++){
+		int N = 0;
+		for (int i=0; i<evidence.size(); i++){
 			try {
 				EvidenceCase testCase = evidence.get(i);
 				if (!testCase.contains(testVariable)) {
@@ -83,8 +83,11 @@ public class Classification implements UndoableEditListener, PNUndoableEditListe
 				
 				this.inferenceAlgorithm.setPreResolutionEvidence(testCaseMissingFinding);
 				TablePotential probs = inferenceAlgorithm.getJointProbability(variablesOfInterest);
-				if ( probs.contains(testVariable) && probs.getProbability(testCase) > classifyThreshold ) {
-					cachedScore += 1.0 / N;
+				if ( probs.contains(testVariable) ) {
+					if ( probs.getProbability(testCase) > classifyThreshold ) {
+						cachedScore += 1.0;
+					}
+					N += 1;
 				}
 			} catch (IncompatibleEvidenceException | UnexpectedInferenceException | NoFindingException e) {
 				// TODO Auto-generated catch block
@@ -92,7 +95,7 @@ public class Classification implements UndoableEditListener, PNUndoableEditListe
 			}
 		}
 		//inferenceAlgorithm.setConditioningVariables(conditioningVariables);
-		return cachedScore;
+		return cachedScore / N;
 		
 	}
 
