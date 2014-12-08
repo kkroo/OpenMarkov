@@ -431,7 +431,6 @@ public class InteractiveLearningDialog extends javax.swing.JDialog implements Ed
 //      
       ChartPanel cp = new ChartPanel(chart);
       
-      generalTabbedPane.addTab(stringDatabase.getString("Learning.General"), editionTablePanel); 
       javax.swing.GroupLayout lookaheadLayout = new javax.swing.GroupLayout(lookaheadPanel);
       lookaheadPanel.setLayout(lookaheadLayout);
 
@@ -498,7 +497,8 @@ public class InteractiveLearningDialog extends javax.swing.JDialog implements Ed
     
       
      generalTabbedPane.addTab("Objective Function", lookaheadPanel);
-
+     generalTabbedPane.addTab(stringDatabase.getString("Learning.General"), editionTablePanel); 
+     
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
